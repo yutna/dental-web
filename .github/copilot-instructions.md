@@ -19,10 +19,10 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 | Ruby security scan | `bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error` |
 | Gem vulnerability scan | `bin/bundler-audit` |
 | Importmap package audit | `bin/importmap audit` |
-| Full test suite | `bin/rails test` |
-| Single test file | `bin/rails test test/models/example_test.rb` |
-| Single test at a specific line | `bin/rails test test/models/example_test.rb:42` |
-| System tests | `bin/rails test:system` |
+| Full test suite | `bin/rspec --exclude-pattern "spec/system/**/*_spec.rb"` |
+| Single test file | `bin/rspec spec/models/example_spec.rb` |
+| Single test at a specific line | `bin/rspec spec/models/example_spec.rb:42` |
+| System tests | `bin/rspec spec/system` |
 | Run a dedicated Solid Queue worker | `bin/jobs` |
 | Replant test seeds the same way CI does | `env RAILS_ENV=test bin/rails db:seed:replant` |
 | Asset precompile check | `SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile` |
@@ -41,9 +41,9 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 
 ## Key conventions
 
-- **`bin/ci` is the canonical verification workflow.** It runs setup, RuboCop, `bundler-audit`, `importmap audit`, Brakeman, `bin/rails test`, and `db:seed:replant`. If a change affects setup, seeds, or verification, keep that end-to-end command working.
+- **`bin/ci` is the canonical verification workflow.** It runs setup, RuboCop, `bundler-audit`, `importmap audit`, Brakeman, `bin/rspec --exclude-pattern "spec/system/**/*_spec.rb"`, and `db:seed:replant`. If a change affects setup, seeds, or verification, keep that end-to-end command working.
 - **`bin/setup` is the canonical local bootstrap.** It installs gems, prepares the database, clears logs and tmp files, and then hands off to `bin/dev` unless `--skip-server` is passed.
-- **Tests use Minitest with fixtures and parallel execution.** `test/test_helper.rb` enables `parallelize(workers: :number_of_processors)` and `fixtures :all`, so tests should avoid depending on shared mutable state and should fit the standard `test/` directory layout.
+- **Tests use RSpec with Rails integration and Factory Bot.** Core setup lives in `spec/rails_helper.rb` with support files under `spec/support/`; prefer the standard `spec/` directory layout and shared helpers over ad-hoc setup.
 - **System tests are separate from the default local CI path.** GitHub Actions runs them in a dedicated `system-test` job, while `bin/ci` leaves them commented out as an optional step.
 - **Seeds are expected to be idempotent.** CI explicitly replants seeds in the test environment.
 - **Browser support is intentionally modern-only.** `ApplicationController` uses `allow_browser versions: :modern`, so UI work can assume modern browser capabilities instead of legacy fallbacks.
