@@ -9,4 +9,13 @@ th:
     languages:
       english: อังกฤษ
       thai: ไทย
+    tailwind_demo:
+      badge: Tailwind CSS พร้อมใช้งาน
+      chips:
+        gradients: พื้นหลังไล่สี
+        responsive: ระยะห่างแบบตอบสนอง
+        rounded: องค์ประกอบมุมมน
+      description: หากคุณเห็นการ์ดไล่สี ป้ายมุมมน และระยะห่างที่สวยงาม แปลว่า utility
+        classes ของ Tailwind ทำงานแล้ว
+      heading: ตัวอย่างคอมโพเนนต์ Tailwind
     title: เดนทัล เว็บ

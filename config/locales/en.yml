@@ -9,4 +9,13 @@ en:
     languages:
       english: English
       thai: Thai
+    tailwind_demo:
+      badge: Tailwind CSS active
+      chips:
+        gradients: Gradient background
+        responsive: Responsive spacing
+        rounded: Rounded components
+      description: If you can see the gradient card, rounded pills, and spacing, Tailwind
+        utilities are working.
+      heading: Tailwind sample components
     title: Dental Web
