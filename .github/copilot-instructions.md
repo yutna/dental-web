@@ -2,7 +2,7 @@
 
 ## Project snapshot
 
-This repository is a Rails 8.1 application on Ruby 4.0.2 that is still close to the generated framework defaults. There are no domain-specific routes, models, or controllers yet beyond the Rails health check at `/up`, so the most important context lives in the runtime and deployment configuration.
+This repository is a Rails 8.1 application on Ruby 4.0.2 and remains close to framework defaults, with a localized homepage at `/:locale` (`/en`, `/th`) plus the Rails health check at `/up`.
 
 Use the repository binstubs (`bin/...`) instead of global commands. CI, setup scripts, and deploy tooling are all wired around those entry points.
 
@@ -19,6 +19,7 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 | Ruby security scan | `bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error` |
 | Gem vulnerability scan | `bin/bundler-audit` |
 | Importmap package audit | `bin/importmap audit` |
+| I18n key health check | `bundle exec i18n-tasks health` |
 | Full test suite | `bin/rspec --exclude-pattern "spec/system/**/*_spec.rb"` |
 | Single test file | `bin/rspec spec/models/example_spec.rb` |
 | Single test at a specific line | `bin/rspec spec/models/example_spec.rb:42` |
@@ -36,7 +37,7 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 - **Single-server deployment is the default operating model.** `config/deploy.yml` sets `SOLID_QUEUE_IN_PUMA=true`, and `config/puma.rb` loads the Solid Queue plugin when that variable is present, so jobs run inside the Puma web process unless deployment is later split into dedicated job hosts.
 - **Production is container-first.** `Dockerfile` builds the production image, precompiles assets, and starts the app with `bin/thrust ./bin/rails server`. `bin/docker-entrypoint` automatically runs `db:prepare` before that server command. `config/deploy.yml` is the Kamal deployment config for that containerized flow.
 - **Persistent disk storage matters.** The Kamal deploy config mounts `/rails/storage`, which is where production SQLite databases and local Active Storage files live. Active Storage stays on local disk by default (`storage/` in development/production and `tmp/storage` in test).
-- **The app surface is intentionally minimal right now.** `config/routes.rb` only exposes `/up`, while the root route and PWA endpoints remain commented out. New features usually need coordinated changes across routes, views, and deployment/runtime config rather than extending existing domain code.
+- **The app surface is intentionally minimal right now.** `config/routes.rb` exposes `/up` and locale-scoped homepage routes at `/:locale`. New features usually need coordinated changes across routes, views, localization, and runtime/deployment config rather than extending existing domain code.
 - **PWA support is scaffolded but not enabled end-to-end.** Templates exist under `app/views/pwa/`, but the matching routes in `config/routes.rb` and the manifest link in `app/views/layouts/application.html.erb` are still commented out. If a feature depends on installable-app behavior or push handling, those pieces must be enabled together.
 
 ## Key conventions
@@ -46,6 +47,8 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 - **Tests use RSpec with Rails integration and Factory Bot.** Core setup lives in `spec/rails_helper.rb` with support files under `spec/support/`; prefer the standard `spec/` directory layout and shared helpers over ad-hoc setup.
 - **System tests are separate from the default local CI path.** GitHub Actions runs them in a dedicated `system-test` job, while `bin/ci` leaves them commented out as an optional step.
 - **Seeds are expected to be idempotent.** CI explicitly replants seeds in the test environment.
+- **Locale is URL-scoped and required for user-facing pages.** Use `/en` and `/th`; unprefixed root redirects to `/en`, and links should preserve `params[:locale]` via `default_url_options`.
+- **I18n maintenance uses `i18n-tasks`.** Keep locale files (`config/locales/en.yml`, `config/locales/th.yml`) normalized and free of missing keys with `bundle exec i18n-tasks health`.
 - **Browser support is intentionally modern-only.** `ApplicationController` uses `allow_browser versions: :modern`, so UI work can assume modern browser capabilities instead of legacy fallbacks.
 - **Importmap changes are part of normal page invalidation.** `ApplicationController` calls `stale_when_importmap_changes`, so front-end additions should go through `config/importmap.rb` and the standard importmap entrypoints rather than ad-hoc script tags.
 - **Shared Ruby code can be placed in `lib/` without manual requires.** `config.autoload_lib(ignore: %w[assets tasks])` autoloads most of `lib/`.
