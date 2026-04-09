@@ -9,4 +9,43 @@ th:
     languages:
       english: อังกฤษ
       thai: ไทย
+    plugin_demo:
+      aspect_ratio:
+        caption: คลาส aspect-w / aspect-h สร้างกรอบอัตราส่วน 16:9 แบบคงที่
+        title: ปลั๊กอินอัตราส่วนภาพ
+      description: การ์ดเหล่านี้ใช้ปลั๊กอินทางการของ Tailwind โดยตรงในหน้านี้
+      forms:
+        name_label: ชื่อผู้นัดหมาย
+        name_placeholder: สมชาย ใจดี
+        notify_label: แจ้งเตือนฉันทางอีเมล
+        service_label: บริการ
+        services:
+          cleaning: ทำความสะอาดฟัน
+          whitening: ฟอกสีฟัน
+        submit: ตัวอย่างการจอง
+        title: ปลั๊กอินฟอร์ม
+      heading: ตัวอย่างปลั๊กอินทางการของ Tailwind
+      typography:
+        lead: ส่วนนี้ใช้คลาส prose จาก @tailwindcss/typography
+        link_label: อ่านเอกสารปลั๊กอิน Typography
+        point_one: หัวข้อ รายการ และลิงก์ถูกจัดสไตล์ให้อัตโนมัติ
+        point_two: ยังสามารถใช้ prose ร่วมกับ utility classes ปกติได้
+        title: ปลั๊กอิน Typography
+    tailwind_demo:
+      badge: Tailwind CSS พร้อมใช้งาน
+      chips:
+        gradients: พื้นหลังไล่สี
+        responsive: ระยะห่างแบบตอบสนอง
+        rounded: องค์ประกอบมุมมน
+      description: หากคุณเห็นการ์ดไล่สี ป้ายมุมมน และระยะห่างที่สวยงาม แปลว่า utility
+        classes ของ Tailwind ทำงานแล้ว
+      heading: ตัวอย่างคอมโพเนนต์ Tailwind
+    theme:
+      label: ธีม
+      modes:
+        dark: มืด
+        light: สว่าง
+        system: ตามระบบ
+      resolved_label: 'ธีมที่ใช้งาน:'
+      system_hint: โหมดระบบจะใช้ตามการตั้งค่าของเครื่องคุณ
     title: เดนทัล เว็บ
