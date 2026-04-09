@@ -2,61 +2,61 @@
 
 <main class="mx-auto w-full max-w-5xl space-y-8 px-6 py-10">
   <header class="space-y-3">
-    <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100"><%= t("home.heading") %></h1>
-    <p class="max-w-2xl text-base text-slate-600 dark:text-slate-300"><%= t("home.description") %></p>
+    <h1 class="text-3xl font-bold tracking-tight text-app-text-primary sm:text-4xl"><%= t("home.heading") %></h1>
+    <p class="max-w-2xl text-base text-app-text-secondary"><%= t("home.description") %></p>
   </header>
 
-  <section class="rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50 via-sky-50 to-emerald-50 p-6 shadow-sm dark:border-indigo-900/40 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-    <span class="inline-flex items-center rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+  <section class="rounded-2xl border border-border-brand-secondary bg-gradient-to-r from-bg-brand-primary via-bg-brand-secondary to-bg-brand-tertiary p-6 shadow-sm">
+    <span class="inline-flex items-center rounded-full bg-app-brand-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide text-app-brand-inverse">
       <%= t("home.tailwind_demo.badge") %>
     </span>
-    <h2 class="mt-4 text-xl font-semibold text-slate-900 dark:text-slate-100"><%= t("home.tailwind_demo.heading") %></h2>
-    <p class="mt-2 text-sm text-slate-700 dark:text-slate-300"><%= t("home.tailwind_demo.description") %></p>
+    <h2 class="mt-4 text-xl font-semibold text-app-text-primary"><%= t("home.tailwind_demo.heading") %></h2>
+    <p class="mt-2 text-sm text-app-text-secondary"><%= t("home.tailwind_demo.description") %></p>
 
-    <div class="mt-5 flex flex-wrap gap-2 text-xs font-medium text-slate-700 dark:text-slate-200">
-      <span class="rounded-full bg-white/80 px-3 py-1 ring-1 ring-slate-200 dark:bg-slate-900/60 dark:ring-slate-700"><%= t("home.tailwind_demo.chips.gradients") %></span>
-      <span class="rounded-full bg-white/80 px-3 py-1 ring-1 ring-slate-200 dark:bg-slate-900/60 dark:ring-slate-700"><%= t("home.tailwind_demo.chips.rounded") %></span>
-      <span class="rounded-full bg-white/80 px-3 py-1 ring-1 ring-slate-200 dark:bg-slate-900/60 dark:ring-slate-700"><%= t("home.tailwind_demo.chips.responsive") %></span>
+    <div class="mt-5 flex flex-wrap gap-2 text-xs font-medium text-app-text-secondary">
+      <span class="rounded-full bg-app-surface-primary px-3 py-1 ring-1 ring-app-border-primary"><%= t("home.tailwind_demo.chips.gradients") %></span>
+      <span class="rounded-full bg-app-surface-primary px-3 py-1 ring-1 ring-app-border-primary"><%= t("home.tailwind_demo.chips.rounded") %></span>
+      <span class="rounded-full bg-app-surface-primary px-3 py-1 ring-1 ring-app-border-primary"><%= t("home.tailwind_demo.chips.responsive") %></span>
     </div>
   </section>
 
   <section class="space-y-4">
     <div class="space-y-2">
-      <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100"><%= t("home.plugin_demo.heading") %></h2>
-      <p class="text-sm text-slate-600 dark:text-slate-300"><%= t("home.plugin_demo.description") %></p>
+      <h2 class="text-2xl font-semibold text-app-text-primary"><%= t("home.plugin_demo.heading") %></h2>
+      <p class="text-sm text-app-text-secondary"><%= t("home.plugin_demo.description") %></p>
     </div>
 
     <div class="grid gap-6 lg:grid-cols-3">
-      <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <h3 class="text-base font-semibold text-slate-900 dark:text-slate-100"><%= t("home.plugin_demo.forms.title") %></h3>
+      <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+        <h3 class="text-base font-semibold text-app-text-primary"><%= t("home.plugin_demo.forms.title") %></h3>
         <form class="mt-4 space-y-3">
           <div>
-            <label for="demo-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300"><%= t("home.plugin_demo.forms.name_label") %></label>
-            <input id="demo-name" type="text" class="form-input mt-1 block w-full" placeholder="<%= t("home.plugin_demo.forms.name_placeholder") %>">
+            <label for="demo-name" class="block text-sm font-medium text-app-text-secondary"><%= t("home.plugin_demo.forms.name_label") %></label>
+            <input id="demo-name" type="text" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" placeholder="<%= t("home.plugin_demo.forms.name_placeholder") %>">
           </div>
 
           <div>
-            <label for="demo-service" class="block text-sm font-medium text-slate-700 dark:text-slate-300"><%= t("home.plugin_demo.forms.service_label") %></label>
-            <select id="demo-service" class="form-select mt-1 block w-full">
+            <label for="demo-service" class="block text-sm font-medium text-app-text-secondary"><%= t("home.plugin_demo.forms.service_label") %></label>
+            <select id="demo-service" class="form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary">
               <option><%= t("home.plugin_demo.forms.services.cleaning") %></option>
               <option><%= t("home.plugin_demo.forms.services.whitening") %></option>
             </select>
           </div>
 
-          <label class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-            <input type="checkbox" class="form-checkbox">
+          <label class="inline-flex items-center gap-2 text-sm text-app-text-secondary">
+            <input type="checkbox" class="form-checkbox border-app-border-primary bg-app-surface-primary text-app-brand-primary focus:ring-app-brand-primary">
             <span><%= t("home.plugin_demo.forms.notify_label") %></span>
           </label>
 
-          <button type="button" class="inline-flex rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-indigo-700">
+          <button type="button" class="inline-flex rounded-md bg-app-brand-primary px-3 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
             <%= t("home.plugin_demo.forms.submit") %>
           </button>
         </form>
       </article>
 
-      <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <h3 class="text-base font-semibold text-slate-900 dark:text-slate-100"><%= t("home.plugin_demo.typography.title") %></h3>
-        <div class="prose prose-slate prose-sm mt-4 max-w-none dark:prose-invert">
+      <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+        <h3 class="text-base font-semibold text-app-text-primary"><%= t("home.plugin_demo.typography.title") %></h3>
+        <div class="prose prose-sm mt-4 max-w-none prose-a:text-app-brand-primary prose-a:no-underline hover:prose-a:text-app-brand-active dark:prose-invert">
           <p><%= t("home.plugin_demo.typography.lead") %></p>
           <ul>
             <li><%= t("home.plugin_demo.typography.point_one") %></li>
@@ -70,12 +70,12 @@
         </div>
       </article>
 
-      <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <h3 class="text-base font-semibold text-slate-900 dark:text-slate-100"><%= t("home.plugin_demo.aspect_ratio.title") %></h3>
-        <div class="mt-4 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
-          <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-500 p-6">
-            <div class="flex h-full flex-col justify-between text-white">
-              <span class="inline-flex self-start rounded-full bg-white/20 px-3 py-1 text-xs font-medium backdrop-blur">
+      <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+        <h3 class="text-base font-semibold text-app-text-primary"><%= t("home.plugin_demo.aspect_ratio.title") %></h3>
+        <div class="mt-4 overflow-hidden rounded-xl border border-app-border-primary">
+          <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-app-brand-primary via-app-brand-secondary to-bg-brand-tertiary p-6">
+            <div class="flex h-full flex-col justify-between text-app-brand-inverse">
+              <span class="inline-flex self-start rounded-full bg-app-brand-inverse/20 px-3 py-1 text-xs font-medium backdrop-blur">
                 <%= t("home.tailwind_demo.badge") %>
               </span>
               <p class="text-sm font-medium"><%= t("home.plugin_demo.aspect_ratio.caption") %></p>
@@ -91,24 +91,24 @@
       data-controller="theme"
       data-theme-light-label-value="<%= t("home.theme.modes.light") %>"
       data-theme-dark-label-value="<%= t("home.theme.modes.dark") %>"
-      class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+      class="rounded-lg border border-app-border-primary bg-app-surface-primary p-4 shadow-sm"
     >
-      <label for="theme-mode" class="block text-sm font-medium text-slate-700 dark:text-slate-300"><%= t("home.theme.label") %></label>
-      <select id="theme-mode" data-theme-target="select" data-action="change->theme#change" class="form-select mt-2 w-52">
+      <label for="theme-mode" class="block text-sm font-medium text-app-text-secondary"><%= t("home.theme.label") %></label>
+      <select id="theme-mode" data-theme-target="select" data-action="change->theme#change" class="form-select mt-2 w-52 border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary">
         <option value="light"><%= t("home.theme.modes.light") %></option>
         <option value="dark"><%= t("home.theme.modes.dark") %></option>
         <option value="system"><%= t("home.theme.modes.system") %></option>
       </select>
-      <p class="mt-2 text-xs text-slate-500 dark:text-slate-400"><%= t("home.theme.system_hint") %></p>
-      <p class="mt-1 text-xs text-slate-600 dark:text-slate-300">
+      <p class="mt-2 text-xs text-app-text-tertiary"><%= t("home.theme.system_hint") %></p>
+      <p class="mt-1 text-xs text-app-text-secondary">
         <%= t("home.theme.resolved_label") %>
         <span data-theme-target="resolvedLabel" class="font-semibold"></span>
       </p>
     </div>
 
-    <nav aria-label="<%= t("home.language_switcher_label") %>" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-      <%= link_to t("home.languages.english"), url_for(locale: :en), class: "rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-100" %>
-      <%= link_to t("home.languages.thai"), url_for(locale: :th), class: "rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-100" %>
+    <nav aria-label="<%= t("home.language_switcher_label") %>" class="inline-flex items-center gap-2 rounded-lg border border-app-border-primary bg-app-surface-primary p-1 shadow-sm">
+      <%= link_to t("home.languages.english"), url_for(locale: :en), class: "rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary" %>
+      <%= link_to t("home.languages.thai"), url_for(locale: :th), class: "rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary" %>
     </nav>
   </section>
 </main>

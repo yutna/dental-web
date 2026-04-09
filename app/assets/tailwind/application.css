@@ -3,3 +3,4 @@
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
+@import "./tokens.generated.css";

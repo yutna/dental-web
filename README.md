@@ -27,10 +27,15 @@ bin/rspec spec/system
 - Official plugins enabled: `@tailwindcss/forms`, `@tailwindcss/typography`, `@tailwindcss/aspect-ratio`
 - Tailwind v4 includes container queries and line clamp in core utilities (no plugin install needed)
 - Theme switching supports `light`, `dark`, and `system` (follows device preference) on the homepage
+- Brand token source: `config/design_tokens/brand_tokens.json`
+- Generated theme tokens: `app/assets/tailwind/tokens.generated.css` via `bin/rails design_tokens:build`
 
 ```bash
 # One-off Tailwind build
 bin/rails tailwindcss:build
+
+# Regenerate Tailwind color tokens from design source
+bin/rails design_tokens:build
 
 # Production-style asset precompile check
 SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile

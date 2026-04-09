@@ -1,0 +1,374 @@
+{
+  "Primitive": {
+    "Red": {
+      "50": "#fef2f2",
+      "100": "#ffe2e2",
+      "200": "#ffc9c9",
+      "300": "#ffa2a2",
+      "400": "#ff6467",
+      "500": "#fb2c36",
+      "600": "#fb2c36",
+      "700": "#c10007",
+      "800": "#9f0712",
+      "900": "#82181a"
+    },
+    "Green": {
+      "50": "#f0fdf4",
+      "100": "#dcfce7",
+      "200": "#b9f8cf",
+      "300": "#7bf1a8",
+      "400": "#05df72",
+      "500": "#00c950",
+      "600": "#00a63e",
+      "700": "#008236",
+      "800": "#016630",
+      "900": "#0d542b"
+    },
+    "Yellow": {
+      "50": "#fefce8",
+      "100": "#fef9c2",
+      "200": "#fff085",
+      "300": "#ffdf20",
+      "400": "#fdc700",
+      "500": "#f0b100",
+      "600": "#d08700",
+      "700": "#a65f00",
+      "800": "#894b00",
+      "900": "#733e0a"
+    },
+    "Orange": {
+      "50": "#fff7ed",
+      "100": "#ffedd4",
+      "200": "#ffd6a7",
+      "300": "#ffb86a",
+      "400": "#ff8904",
+      "500": "#ff6900",
+      "600": "#f54900",
+      "700": "#ca3500",
+      "800": "#9f2d00",
+      "900": "#7e2a0c"
+    },
+    "Blue": {
+      "50": "#eff6ff",
+      "100": "#dbeafe",
+      "200": "#bedbff",
+      "300": "#8ec5ff",
+      "400": "#51a2ff",
+      "500": "#2b7fff",
+      "600": "#155dfc",
+      "700": "#1447e6",
+      "800": "#193cb8",
+      "900": "#1c398e"
+    },
+    "Pink": {
+      "50": "#fdf2f8",
+      "100": "#fce7f3",
+      "200": "#fccee8",
+      "300": "#fda5d5",
+      "400": "#fb64b6",
+      "500": "#f6339a",
+      "600": "#e60076",
+      "700": "#c6005c",
+      "800": "#a3004c",
+      "900": "#861043"
+    },
+    "Indigo": {
+      "50": "#eef2ff",
+      "100": "#e0e7ff",
+      "200": "#c6d2ff",
+      "300": "#a3b3ff",
+      "400": "#7c86ff",
+      "500": "#615fff",
+      "600": "#4f39f6",
+      "700": "#432dd7",
+      "800": "#372aac",
+      "900": "#312c85"
+    },
+    "Purple": {
+      "50": "#faf5ff",
+      "100": "#f3e8ff",
+      "200": "#e9d4ff",
+      "300": "#dab2ff",
+      "400": "#c27aff",
+      "500": "#ad46ff",
+      "600": "#9810fa",
+      "700": "#8200db",
+      "800": "#6e11b0",
+      "900": "#59168b"
+    },
+    "Violet": {
+      "50": "#f5f3ff",
+      "100": "#ede9fe",
+      "200": "#ddd6ff",
+      "300": "#c4b4ff",
+      "400": "#a684ff",
+      "500": "#8e51ff",
+      "600": "#7f22fe",
+      "700": "#7008e7",
+      "800": "#5d0ec0",
+      "900": "#4d179a"
+    },
+    "Neutral": {
+      "50": "#fafafa",
+      "100": "#f5f5f5",
+      "200": "#e5e5e5",
+      "300": "#d4d4d4",
+      "400": "#a1a1a1",
+      "500": "#737373",
+      "600": "#525252",
+      "700": "#404040",
+      "800": "#262626",
+      "900": "#171717"
+    },
+    "Stone": {
+      "50": "#fafaf9",
+      "100": "#f5f5f4",
+      "200": "#e7e5e4",
+      "300": "#d6d3d1",
+      "400": "#a6a09b",
+      "500": "#79716b",
+      "600": "#57534d",
+      "700": "#44403b",
+      "800": "#292524",
+      "900": "#1c1917"
+    },
+    "Gray": {
+      "0": "#ffffff",
+      "50": "#f9fafb",
+      "100": "#f3f4f6",
+      "200": "#e5e7eb",
+      "300": "#d1d5dc",
+      "400": "#99a1af",
+      "500": "#6a7282",
+      "600": "#4a5565",
+      "700": "#364153",
+      "800": "#1e2939",
+      "900": "#101828",
+      "999": "#0a0a0a",
+      "White": "#ffffff",
+      "Black": "#000000"
+    }
+  },
+  "Semantic": {
+    "Brand Colors": {
+      "Primary": "{Indigo.600}",
+      "Active": "{Indigo.700}",
+      "Secondary": "{Violet.500}",
+      "Inverse": "{Gray.0}"
+    },
+    "Background": {
+      "Neutral": {
+        "Primary": "{Gray.0}",
+        "Secondary": "{Neutral.50}",
+        "Disabled": "{Neutral.100}",
+        "Tertiary": "{Neutral.200}"
+      },
+      "Neutral Inverse": {
+        "Primary": "{Neutral.800}",
+        "Secondary": "{Neutral.500}",
+        "Tertiary": "{Neutral.400}"
+      },
+      "Brand": {
+        "Default": "{Gray.50}",
+        "Primary": "{Violet.50}",
+        "Secondary": "{Violet.100}",
+        "Tertiary": "{Violet.300}"
+      },
+      "Semantic": {
+        "Success": {
+          "Subtle": "{Green.100}",
+          "Bold": "{Green.500}",
+          "Default": "{Green.50}"
+        },
+        "Urgent": {
+          "Subtle": "{Orange.100}",
+          "Bold": "{Orange.500}",
+          "Default": "{Orange.50}"
+        },
+        "Warning": {
+          "Subtle": "{Yellow.100}",
+          "Bold": "{Yellow.600}",
+          "Default": "{Yellow.50}"
+        },
+        "Error": {
+          "Subtle": "{Red.100}",
+          "Bold": "{Red.500}",
+          "Default": "{Red.50}"
+        },
+        "Info": {
+          "Subtle": "{Blue.100}",
+          "Bold": "{Blue.500}",
+          "Default": "{Blue.50}"
+        },
+        "Process": {
+          "Default": "{Indigo.50}",
+          "Subtle": "{Indigo.100}",
+          "Bold": "{Indigo.600}",
+          "Disable": "{Gray.200}",
+          "Secondary": "{Indigo.500}"
+        },
+        "Ready": {
+          "Subtle": "{Purple.100}",
+          "Bold": "{Purple.700}",
+          "Default": "{Purple.50}"
+        }
+      }
+    },
+    "Text": {
+      "Neutral": {
+        "Primary": "{Neutral.900}",
+        "Secondary": "{Neutral.500}",
+        "Tertiary": "{Neutral.400}",
+        "Disabled": "{Neutral.600}"
+      },
+      "Neutral Inverse": {
+        "Primary": "{Gray.0}",
+        "Secondary": "{Gray.50}",
+        "Tertiary": "{Gray.600}"
+      },
+      "Brand": {
+        "Primary": "{Indigo.600}",
+        "Active": "{Indigo.700}",
+        "Secondary": "{Violet.500}",
+        "Inverse": "{Gray.0}"
+      },
+      "Semantic": {
+        "Success": {
+          "Primary": "{Green.800}",
+          "Secondary": "{Green.700}",
+          "Default": "{Green.600}",
+          "Inverse": "{Gray.0}"
+        },
+        "Urgent": {
+          "Primary": "{Orange.700}",
+          "Secondary": "{Orange.600}",
+          "Default": "{Orange.500}",
+          "Inverse": "{Gray.0}"
+        },
+        "Warning": {
+          "Defaults": "{Yellow.800}",
+          "Primary": "{Yellow.700}",
+          "Secondary": "{Yellow.600}",
+          "Default": "{Yellow.500}",
+          "Inverse": "{Gray.0}"
+        },
+        "Error": {
+          "Primary": "{Red.800}",
+          "Secondary": "{Red.700}",
+          "Default": "{Red.600}",
+          "Inverse": "{Gray.0}"
+        },
+        "Info": {
+          "Primary": "{Blue.700}",
+          "Secondary": "{Blue.600}",
+          "Default": "{Blue.500}",
+          "Inverse": "{Gray.0}"
+        },
+        "Ready": {
+          "Primary": "{Purple.700}",
+          "Secondary": "{Purple.600}",
+          "Default": "{Purple.500}",
+          "Inverse": "{Gray.0}"
+        }
+      }
+    },
+    "Icon": {
+      "Semantic": {
+        "Urgent": {
+          "Primary": "{Orange.600}",
+          "Secondary": "{Orange.500}",
+          "Default": "{Orange.400}",
+          "Inverse": "{Gray.0}"
+        },
+        "Success": {
+          "Default": "{Green.400}",
+          "Primary": "{Green.800}",
+          "Secondary": "{Green.700}",
+          "Inverse": "{Gray.0}"
+        },
+        "Warning": {
+          "Default": "{Yellow.300}",
+          "Primary": "{Yellow.700}",
+          "Secondary": "{Yellow.600}",
+          "Inverse": "{Gray.0}"
+        },
+        "Error": {
+          "Default": "{Red.400}",
+          "Primary": "{Red.800}",
+          "Secondary": "{Red.700}",
+          "Inverse": "{Gray.0}"
+        },
+        "Info": {
+          "Default": "{Blue.400}",
+          "Primary": "{Blue.700}",
+          "Secondary": "{Blue.600}",
+          "Inverse": "{Gray.0}"
+        },
+        "Ready": {
+          "Default": "{Violet.400}",
+          "Primary": "{Purple.700}",
+          "Secondary": "{Purple.600}",
+          "Inverse": "{Gray.0}"
+        }
+      },
+      "Neutral": {
+        "Primary": "{Neutral.900}",
+        "Secondary": "{Neutral.500}",
+        "Tertiary": "{Neutral.400}",
+        "Disabled": "{Neutral.600}"
+      },
+      "Neutral Inverse": {
+        "Primary": "{Gray.0}",
+        "Secondary": "{Gray.50}",
+        "Tertiary": "{Gray.600}"
+      },
+      "Brand": {
+        "Primary": "{Indigo.600}",
+        "Active": "{Indigo.700}",
+        "Secondary": "{Violet.500}",
+        "Inverse": "{Gray.0}"
+      }
+    },
+    "Border": {
+      "Semantic": {
+        "Urgent": {
+          "Secondary": "{Orange.200}",
+          "Primary": "{Orange.300}"
+        },
+        "Success": {
+          "Primary": "{Green.200}",
+          "Secondary": "{Green.300}"
+        },
+        "Warning": {
+          "Primary": "{Yellow.200}",
+          "Secondary": "{Yellow.300}"
+        },
+        "Error": {
+          "Primary": "{Red.200}",
+          "Secondary": "{Red.300}",
+          "Default": "{Red.600}"
+        },
+        "Info": {
+          "Primary": "{Blue.200}",
+          "Secondary": "{Blue.300}"
+        },
+        "Ready": {
+          "Primary": "{Purple.200}",
+          "Secondary": "{Purple.300}"
+        }
+      },
+      "Neutral": {
+        "Primary": "{Gray.200}",
+        "Secondary": "{Gray.300}"
+      },
+      "Neutral Inverse": {
+        "Primary": "{Neutral.600}",
+        "Secondary": "{Neutral.700}"
+      },
+      "Brand": {
+        "Primary": "{Indigo.200}",
+        "Secondary": "{Violet.300}"
+      }
+    }
+  }
+}
