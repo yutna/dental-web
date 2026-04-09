@@ -164,9 +164,9 @@
         "Tertiary": "{Neutral.200}"
       },
       "Neutral Inverse": {
-        "Primary": "{Neutral.800}",
-        "Secondary": "{Neutral.500}",
-        "Tertiary": "{Neutral.400}"
+        "Primary": "{Neutral.900}",
+        "Secondary": "{Neutral.800}",
+        "Tertiary": "{Neutral.700}"
       },
       "Brand": {
         "Default": "{Gray.50}",
@@ -223,8 +223,8 @@
       },
       "Neutral Inverse": {
         "Primary": "{Gray.0}",
-        "Secondary": "{Gray.50}",
-        "Tertiary": "{Gray.600}"
+        "Secondary": "{Neutral.200}",
+        "Tertiary": "{Neutral.400}"
       },
       "Brand": {
         "Primary": "{Indigo.600}",
@@ -319,8 +319,8 @@
       },
       "Neutral Inverse": {
         "Primary": "{Gray.0}",
-        "Secondary": "{Gray.50}",
-        "Tertiary": "{Gray.600}"
+        "Secondary": "{Neutral.200}",
+        "Tertiary": "{Neutral.400}"
       },
       "Brand": {
         "Primary": "{Indigo.600}",

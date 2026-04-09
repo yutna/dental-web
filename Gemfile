@@ -18,6 +18,14 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+# HTTP client for BFF integrations
+gem "faraday"
+gem "faraday-retry"
+# Authorization for BFF policy layer
+gem "pundit"
+# Pagination and searching primitives for data-heavy screens
+gem "pagy"
+gem "ransack"
 # Locale data and pluralization rules for Rails I18n
 gem "rails-i18n"
 

@@ -46,6 +46,12 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 - **`bin/setup` is the canonical local bootstrap.** It installs gems, prepares the database, clears logs and tmp files, and then hands off to `bin/dev` unless `--skip-server` is passed.
 - **Tests use RSpec with Rails integration and Factory Bot.** Core setup lives in `spec/rails_helper.rb` with support files under `spec/support/`; prefer the standard `spec/` directory layout and shared helpers over ad-hoc setup.
 - **System tests are separate from the default local CI path.** GitHub Actions runs them in a dedicated `system-test` job, while `bin/ci` leaves them commented out as an optional step.
+- **BFF contract is front-end owned.** Keep UI-facing payloads canonical in Rails and map all local/remote provider responses through `app/integrations/backend/mappers`.
+- **Provider switching is configuration-based.** Use `BFF_PROVIDER_MODE` (`local`, `remote`, `dual_compare`) and avoid branching feature code paths by provider inside views/controllers.
+- **Custom app layers are root autoload namespaces.** Classes under `app/use_cases/*`, `app/integrations/*`, and `app/queries/*` are resolved from those roots (e.g., `Security::SignIn`, `Backend::ProviderRegistry`, `Workspace::AppointmentRowsQuery`).
+- **Authorization is policy-first via Pundit.** Gate admin routes with `admin:access` and workspace routes with `workspace:read`; do not check raw roles in controllers.
+- **Advanced UI component contracts are centralized.** Keep baseline behavior and acceptance criteria in `config/ui_component_specs.yml` and keep UI work aligned with those contracts.
+- **Feature prompts to AI should include contract + policy context.** Include bounded context, canonical request/response shape, policy requirement, mapper expectations, i18n keys, and accessibility checks.
 - **Seeds are expected to be idempotent.** CI explicitly replants seeds in the test environment.
 - **Locale is URL-scoped and required for user-facing pages.** Use `/en` and `/th`; unprefixed root redirects to `/en`, and links should preserve `params[:locale]` via `default_url_options`.
 - **I18n maintenance uses `i18n-tasks`.** Keep locale files (`config/locales/en.yml`, `config/locales/th.yml`) normalized and free of missing keys with `bundle exec i18n-tasks health`.

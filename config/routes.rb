@@ -16,6 +16,13 @@ Rails.application.routes.draw do
 
   scope ":locale", locale: locale do
     root "home#index"
+    resource :session, only: %i[new create destroy], module: :auth
+    resource :workspace, only: :show, controller: "workspace"
+
+    namespace :admin do
+      root "dashboard#show"
+      resources :clinic_services, except: :show
+    end
   end
 
   get "/:locale", to: redirect("/#{I18n.default_locale}", status: 302), constraints: { locale: invalid_locale }, as: nil

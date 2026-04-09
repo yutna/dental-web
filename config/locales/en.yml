@@ -1,8 +1,72 @@
 ---
 en:
+  admin:
+    clinic_services:
+      back_to_admin: Back to admin
+      confirm_delete: Delete this service?
+      created: Service created successfully.
+      description: Manage reference service data for admin-facing CRUD operations.
+      destroyed: Service deleted successfully.
+      edit: Edit service
+      edit_description: Update service %{code}.
+      form:
+        active: Active
+        cancel: Cancel
+        code: Service code
+        default_duration: Default duration (minutes)
+        error_heading: Please fix the following issues
+        name: Service name
+      heading: Service catalog
+      new: New service
+      new_description: Create a service available for clinical workflows.
+      status:
+        active: Active
+        inactive: Inactive
+      table:
+        actions: Actions
+        code: Code
+        delete: Delete
+        duration: Duration
+        edit: Edit
+        empty: No services yet.
+        name: Name
+        status: Status
+      title: Admin services
+      updated: Service updated successfully.
+    dashboard:
+      active_services: Active services
+      description: Admin-only controls for operational reference data.
+      heading: Admin dashboard
+      manage_services: Manage services
+      title: Admin dashboard
+      total_services: Total services
+      workspace_link: Back to workspace
   app:
     name: Dental Web
+  auth:
+    sessions:
+      contract_mismatch: 'Contract mismatch: %{message}'
+      demo_hint: Any non-empty credentials can sign in while provider mode is set
+        to local.
+      description: Authentication is handled by the Rails BFF layer and can switch
+        between local and remote providers.
+      email_label: Email
+      heading: Sign in to continue
+      invalid_credentials: Invalid email or password.
+      login_required: Please sign in before accessing the clinical workspace.
+      not_authorized: You are not authorized to access this section.
+      password_label: Password
+      signed_in: Signed in successfully.
+      signed_out: Signed out successfully.
+      submit: Sign in
+      title: Sign in
   home:
+    bff_baseline:
+      description: Start from a local full implementation in Rails BFF, then switch
+        adapters to the real backend API without rewriting the UI contract.
+      heading: BFF implementation baseline
+      sign_in_link: Open sign-in flow
+      workspace_link: Open clinical workspace
     description: This site supports English and Thai.
     heading: Welcome to Dental Web
     language_switcher_label: Language switcher
@@ -49,3 +113,58 @@ en:
       resolved_label: 'Active theme:'
       system_hint: System follows your device preference.
     title: Dental Web
+  workspace:
+    components:
+      loading:
+        description: Use skeleton shimmer for waits longer than 300ms while preserving
+          layout.
+        heading: Loading pattern
+      select:
+        description: Searchable combobox baseline for richer, keyboard-friendly select
+          behavior.
+        heading: Advanced select baseline
+        label: Service status lookup
+        placeholder: Type to filter statuses
+    description: A 2026-ready dental app shell with server-led BFF orchestration and
+      data-dense UI patterns.
+    filters:
+      all_statuses: All statuses
+      apply: Apply
+      reset: Reset
+      search_label: Search queue
+      search_placeholder: Search by patient, HN, service, or dentist
+      status_label: Status
+    heading: Clinical Workspace
+    queue:
+      description: Server-side filtering keeps the canonical payload stable regardless
+        of provider mode.
+      heading: Appointment queue (data grid baseline)
+    shell:
+      nav:
+        admin: Admin
+        components: Components
+        overview: Overview
+        queue: Queue
+      navigation_label: Workspace navigation
+      sign_out: Sign out
+      subtitle: BFF-first operational shell
+    statuses:
+      completed: Completed
+      in_progress: In progress
+      ready: Ready
+      scheduled: Scheduled
+    summary:
+      completed: Completed
+      in_progress: In progress
+      ready: Ready
+      total: Total visits
+    table:
+      appointment_id: Appointment
+      dentist: Dentist
+      empty: No appointments found for your current filters.
+      mrn: HN
+      patient: Patient
+      service: Service
+      start_time: Start
+      status: Status
+    title: Clinical Workspace

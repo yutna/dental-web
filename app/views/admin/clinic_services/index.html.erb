@@ -1,0 +1,52 @@
+<% content_for :title, t("admin.clinic_services.title") %>
+
+<main class="mx-auto w-full max-w-6xl space-y-5 px-6 py-10">
+  <header class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("admin.clinic_services.heading") %></h1>
+      <p class="mt-1 text-sm text-app-text-secondary"><%= t("admin.clinic_services.description") %></p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to t("admin.clinic_services.back_to_admin"), admin_root_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+      <%= link_to t("admin.clinic_services.new"), new_admin_clinic_service_path, class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
+    </div>
+  </header>
+
+  <div class="overflow-x-auto rounded-xl border border-app-border-primary bg-app-surface-primary">
+    <table class="min-w-full divide-y divide-app-border-primary text-sm">
+      <thead class="bg-app-surface-secondary">
+        <tr>
+          <th class="px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("admin.clinic_services.table.code") %></th>
+          <th class="px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("admin.clinic_services.table.name") %></th>
+          <th class="px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("admin.clinic_services.table.duration") %></th>
+          <th class="px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("admin.clinic_services.table.status") %></th>
+          <th class="px-3 py-2 text-right font-semibold text-app-text-secondary"><%= t("admin.clinic_services.table.actions") %></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-app-border-primary">
+        <% if @clinic_services.empty? %>
+          <tr>
+            <td colspan="5" class="px-3 py-6 text-center text-app-text-tertiary"><%= t("admin.clinic_services.table.empty") %></td>
+          </tr>
+        <% else %>
+          <% @clinic_services.each do |clinic_service| %>
+            <tr class="transition hover:bg-app-surface-secondary">
+              <td class="px-3 py-2 text-app-text-primary"><%= clinic_service.code %></td>
+              <td class="px-3 py-2 text-app-text-primary"><%= clinic_service.name %></td>
+              <td class="px-3 py-2 text-app-text-secondary"><%= clinic_service.default_duration_minutes %> min</td>
+              <td class="px-3 py-2 text-app-text-secondary">
+                <%= clinic_service.active? ? t("admin.clinic_services.status.active") : t("admin.clinic_services.status.inactive") %>
+              </td>
+              <td class="px-3 py-2 text-right">
+                <div class="inline-flex gap-2">
+                  <%= link_to t("admin.clinic_services.table.edit"), edit_admin_clinic_service_path(clinic_service), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-1.5 text-xs font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+                  <%= button_to t("admin.clinic_services.table.delete"), admin_clinic_service_path(clinic_service), method: :delete, form: { data: { turbo_confirm: t("admin.clinic_services.confirm_delete") } }, class: "rounded-md border border-border-semantic-error-primary bg-bg-semantic-error-default px-3 py-1.5 text-xs font-medium text-text-semantic-error-primary transition hover:bg-bg-semantic-error-subtle" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</main>

@@ -1,0 +1,25 @@
+<% content_for :title, t("admin.dashboard.title") %>
+
+<main class="mx-auto w-full max-w-6xl space-y-6 px-6 py-10">
+  <header class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("admin.dashboard.heading") %></h1>
+      <p class="mt-1 text-sm text-app-text-secondary"><%= t("admin.dashboard.description") %></p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to t("admin.dashboard.workspace_link"), workspace_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+      <%= link_to t("admin.dashboard.manage_services"), admin_clinic_services_path, class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
+    </div>
+  </header>
+
+  <section class="grid gap-4 sm:grid-cols-2">
+    <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+      <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("admin.dashboard.total_services") %></p>
+      <p class="mt-2 text-2xl font-semibold text-app-text-primary"><%= @clinic_services_count %></p>
+    </article>
+    <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+      <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("admin.dashboard.active_services") %></p>
+      <p class="mt-2 text-2xl font-semibold text-text-semantic-success-primary"><%= @active_services_count %></p>
+    </article>
+  </section>
+</main>

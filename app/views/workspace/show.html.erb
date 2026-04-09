@@ -1,0 +1,127 @@
+<% content_for :title, t("workspace.title") %>
+
+<main class="min-h-dvh bg-app-surface-secondary">
+  <div class="mx-auto flex min-h-dvh w-full max-w-[120rem]">
+    <aside class="hidden w-72 border-r border-app-border-primary bg-app-surface-primary p-6 lg:flex lg:flex-col">
+      <h1 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.title") %></h1>
+      <p class="mt-1 text-xs text-app-text-tertiary"><%= t("workspace.shell.subtitle") %></p>
+
+      <nav aria-label="<%= t("workspace.shell.navigation_label") %>" class="mt-6 space-y-2">
+        <a href="#overview" class="block rounded-md bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary"><%= t("workspace.shell.nav.overview") %></a>
+        <a href="#queue" class="block rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.queue") %></a>
+        <a href="#components" class="block rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.components") %></a>
+        <% if current_principal.allowed?("admin:access") %>
+          <%= link_to t("workspace.shell.nav.admin"), admin_root_path, class: "block rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary" %>
+        <% end %>
+      </nav>
+
+      <div class="mt-auto rounded-xl border border-app-border-primary bg-app-surface-secondary p-4">
+        <p class="text-sm font-medium text-app-text-primary"><%= current_principal.display_name %></p>
+        <p class="mt-1 text-xs text-app-text-tertiary"><%= current_principal.email %></p>
+        <%= button_to t("workspace.shell.sign_out"), session_path, method: :delete, class: "mt-3 inline-flex w-full items-center justify-center rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+      </div>
+    </aside>
+
+    <section class="flex-1">
+      <header class="sticky top-0 z-20 border-b border-app-border-primary bg-app-surface-primary/95 px-6 py-4 backdrop-blur">
+        <h2 class="text-xl font-semibold text-app-text-primary"><%= t("workspace.heading") %></h2>
+        <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.description") %></p>
+      </header>
+
+      <div class="space-y-6 px-6 py-6">
+        <section id="overview" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.total") %></p>
+            <p class="mt-2 text-2xl font-semibold text-app-text-primary"><%= @result[:summary][:total] %></p>
+          </article>
+          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.in_progress") %></p>
+            <p class="mt-2 text-2xl font-semibold text-text-semantic-info-primary"><%= @result[:summary][:in_progress] %></p>
+          </article>
+          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.ready") %></p>
+            <p class="mt-2 text-2xl font-semibold text-text-semantic-success-primary"><%= @result[:summary][:ready] %></p>
+          </article>
+          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.completed") %></p>
+            <p class="mt-2 text-2xl font-semibold text-text-semantic-ready-primary"><%= @result[:summary][:completed] %></p>
+          </article>
+        </section>
+
+        <section id="queue" class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm" data-controller="frame-loading">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.queue.heading") %></h3>
+              <p class="text-sm text-app-text-secondary"><%= t("workspace.queue.description") %></p>
+            </div>
+          </div>
+
+          <%= form_with url: workspace_path, method: :get, class: "mt-4 grid gap-3 md:grid-cols-[1fr_220px_auto]", data: { turbo_frame: "appointments_grid" } do %>
+            <div>
+              <label for="search" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.search_label") %></label>
+              <%= text_field_tag :search, @result[:filters][:search], id: "search", class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary", placeholder: t("workspace.filters.search_placeholder") %>
+            </div>
+
+            <div>
+              <label for="status" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.status_label") %></label>
+              <%= select_tag :status, options_for_select([[t("workspace.filters.all_statuses"), ""]] + @result[:status_options].map { |status| [t("workspace.statuses.#{status}"), status] }, @result[:filters][:status]), id: "status", class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+            </div>
+
+            <div class="flex items-end gap-2">
+              <button type="submit" class="inline-flex h-10 items-center justify-center rounded-md bg-app-brand-primary px-4 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
+                <%= t("workspace.filters.apply") %>
+              </button>
+              <%= link_to t("workspace.filters.reset"), workspace_path, class: "inline-flex h-10 items-center justify-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+            </div>
+          <% end %>
+
+          <div data-frame-loading-target="skeleton" class="mt-4 hidden space-y-2">
+            <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+            <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+            <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+          </div>
+
+          <turbo-frame id="appointments_grid" data-frame-loading-target="frame" class="mt-4 block">
+            <%= render "appointments_grid", result: @result %>
+          </turbo-frame>
+        </section>
+
+        <section id="components" class="grid gap-4 lg:grid-cols-2">
+          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+            <h3 class="text-base font-semibold text-app-text-primary"><%= t("workspace.components.select.heading") %></h3>
+            <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.components.select.description") %></p>
+
+            <div data-controller="combobox" class="relative mt-4">
+              <input type="hidden" data-combobox-target="hiddenInput">
+              <label for="demo-combobox" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.components.select.label") %></label>
+              <input id="demo-combobox" type="text" autocomplete="off" data-combobox-target="input" data-action="focus->combobox#open input->combobox#filter keydown->combobox#keydown click@window->combobox#closeOnOutsideClick" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" placeholder="<%= t("workspace.components.select.placeholder") %>">
+              <ul data-combobox-target="menu" class="absolute z-10 mt-1 hidden max-h-48 w-full overflow-y-auto rounded-md border border-app-border-primary bg-app-surface-primary p-1 shadow-lg">
+                <% @result[:status_options].each do |status| %>
+                  <li
+                    data-combobox-target="option"
+                    data-value="<%= status %>"
+                    data-label="<%= t("workspace.statuses.#{status}") %>"
+                    data-action="mousedown->combobox#select"
+                    class="cursor-pointer rounded px-3 py-2 text-sm text-app-text-primary transition hover:bg-app-surface-secondary"
+                  >
+                    <%= t("workspace.statuses.#{status}") %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </article>
+
+          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+            <h3 class="text-base font-semibold text-app-text-primary"><%= t("workspace.components.loading.heading") %></h3>
+            <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.components.loading.description") %></p>
+            <div class="mt-4 space-y-2">
+              <div class="h-4 w-3/4 rounded bg-app-surface-secondary skeleton-shimmer"></div>
+              <div class="h-4 w-full rounded bg-app-surface-secondary skeleton-shimmer"></div>
+              <div class="h-4 w-5/6 rounded bg-app-surface-secondary skeleton-shimmer"></div>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+  </div>
+</main>

@@ -1,0 +1,34 @@
+<div class="overflow-x-auto rounded-xl border border-app-border-primary">
+  <table class="min-w-full divide-y divide-app-border-primary text-sm">
+    <thead class="bg-app-surface-secondary">
+      <tr>
+        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.appointment_id") %></th>
+        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.patient") %></th>
+        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.mrn") %></th>
+        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.service") %></th>
+        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.dentist") %></th>
+        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.start_time") %></th>
+        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.status") %></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-app-border-primary bg-app-surface-primary">
+      <% if result[:rows].empty? %>
+        <tr>
+          <td colspan="7" class="px-3 py-6 text-center text-sm text-app-text-tertiary"><%= t("workspace.table.empty") %></td>
+        </tr>
+      <% else %>
+        <% result[:rows].each do |row| %>
+          <tr class="transition hover:bg-app-surface-secondary">
+            <td class="whitespace-nowrap px-3 py-2 font-medium text-app-text-primary"><%= row[:id] %></td>
+            <td class="whitespace-nowrap px-3 py-2 text-app-text-primary"><%= row[:patient_name] %></td>
+            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:mrn] %></td>
+            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:service] %></td>
+            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:dentist] %></td>
+            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:starts_at] %></td>
+            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= t("workspace.statuses.#{row[:status]}") %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

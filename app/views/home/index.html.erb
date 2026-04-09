@@ -86,6 +86,15 @@
     </div>
   </section>
 
+  <section class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-6 shadow-sm">
+    <h2 class="text-xl font-semibold text-app-text-primary"><%= t("home.bff_baseline.heading") %></h2>
+    <p class="mt-2 max-w-3xl text-sm text-app-text-secondary"><%= t("home.bff_baseline.description") %></p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <%= link_to t("home.bff_baseline.sign_in_link"), new_session_path, class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
+      <%= link_to t("home.bff_baseline.workspace_link"), workspace_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+    </div>
+  </section>
+
   <section class="flex flex-wrap items-start gap-4">
     <div
       data-controller="theme"

@@ -1,8 +1,71 @@
 ---
 th:
+  admin:
+    clinic_services:
+      back_to_admin: กลับหน้าแอดมิน
+      confirm_delete: ลบบริการนี้หรือไม่?
+      created: สร้างบริการสำเร็จ
+      description: จัดการข้อมูลบริการอ้างอิงสำหรับงาน CRUD ฝั่งผู้ดูแลระบบ
+      destroyed: ลบบริการสำเร็จ
+      edit: แก้ไขบริการ
+      edit_description: แก้ไขบริการ %{code}
+      form:
+        active: เปิดใช้งาน
+        cancel: ยกเลิก
+        code: รหัสบริการ
+        default_duration: ระยะเวลาเริ่มต้น (นาที)
+        error_heading: กรุณาแก้ไขข้อมูลต่อไปนี้
+        name: ชื่อบริการ
+      heading: รายการบริการ
+      new: เพิ่มบริการ
+      new_description: สร้างบริการสำหรับใช้งานใน workflow ของคลินิก
+      status:
+        active: ใช้งาน
+        inactive: ไม่ใช้งาน
+      table:
+        actions: การทำงาน
+        code: รหัส
+        delete: ลบ
+        duration: ระยะเวลา
+        edit: แก้ไข
+        empty: ยังไม่มีข้อมูลบริการ
+        name: ชื่อ
+        status: สถานะ
+      title: บริการผู้ดูแลระบบ
+      updated: อัปเดตบริการสำเร็จ
+    dashboard:
+      active_services: บริการที่เปิดใช้งาน
+      description: พื้นที่ควบคุมข้อมูลอ้างอิงสำหรับผู้ดูแลระบบเท่านั้น
+      heading: แดชบอร์ดผู้ดูแลระบบ
+      manage_services: จัดการบริการ
+      title: แดชบอร์ดผู้ดูแลระบบ
+      total_services: จำนวนบริการทั้งหมด
+      workspace_link: กลับพื้นที่ทำงาน
   app:
     name: เดนทัล เว็บ
+  auth:
+    sessions:
+      contract_mismatch: 'โครงสร้างสัญญาข้อมูลไม่ตรงกัน: %{message}'
+      demo_hint: หากตั้ง provider mode เป็น local สามารถใช้ข้อมูลล็อกอินใดก็ได้ที่ไม่ว่างเปล่า
+      description: การยืนยันตัวตนถูกจัดการโดยชั้น Rails BFF และสามารถสลับระหว่าง local/remote
+        provider ได้
+      email_label: อีเมล
+      heading: ลงชื่อเข้าใช้งาน
+      invalid_credentials: อีเมลหรือรหัสผ่านไม่ถูกต้อง
+      login_required: กรุณาลงชื่อเข้าใช้ก่อนเข้าสู่พื้นที่ทำงานคลินิก
+      not_authorized: คุณไม่มีสิทธิ์เข้าถึงส่วนนี้
+      password_label: รหัสผ่าน
+      signed_in: ลงชื่อเข้าใช้สำเร็จ
+      signed_out: ออกจากระบบสำเร็จ
+      submit: ลงชื่อเข้าใช้
+      title: ลงชื่อเข้าใช้
   home:
+    bff_baseline:
+      description: เริ่มจากการพัฒนาเต็มรูปแบบใน Rails BFF แล้วสลับ adapter ไปใช้ API
+        จริงของ backend ได้โดยไม่ต้องแก้สัญญาข้อมูลฝั่ง UI ใหม่ทั้งหมด
+      heading: พื้นฐานการพัฒนาแบบ BFF
+      sign_in_link: เปิดหน้าลงชื่อเข้าใช้
+      workspace_link: เปิดพื้นที่ทำงานคลินิก
     description: เว็บไซต์นี้รองรับภาษาอังกฤษและภาษาไทย
     heading: ยินดีต้อนรับสู่เดนทัล เว็บ
     language_switcher_label: ตัวสลับภาษา
@@ -49,3 +112,56 @@ th:
       resolved_label: 'ธีมที่ใช้งาน:'
       system_hint: โหมดระบบจะใช้ตามการตั้งค่าของเครื่องคุณ
     title: เดนทัล เว็บ
+  workspace:
+    components:
+      loading:
+        description: ใช้ skeleton shimmer เมื่อรอนานเกิน 300ms โดยยังคง layout เดิมไว้
+        heading: รูปแบบ Loading
+      select:
+        description: ฐานของ searchable combobox สำหรับช่องเลือกข้อมูลที่ค้นหาและใช้งานด้วยคีย์บอร์ดได้ดีขึ้น
+        heading: พื้นฐาน Advanced Select
+        label: ค้นหาสถานะบริการ
+        placeholder: พิมพ์เพื่อกรองสถานะ
+    description: โครงแอปทันตกรรมปี 2026+ ที่ใช้ BFF ฝั่งเซิร์ฟเวอร์เป็นแกนและออกแบบ
+      UI ให้รองรับข้อมูลหนาแน่น
+    filters:
+      all_statuses: ทุกสถานะ
+      apply: ใช้งาน
+      reset: ล้างค่า
+      search_label: ค้นหาคิว
+      search_placeholder: ค้นหาด้วยชื่อผู้ป่วย HN บริการ หรือทันตแพทย์
+      status_label: สถานะ
+    heading: พื้นที่ทำงานคลินิก
+    queue:
+      description: ใช้การกรองฝั่งเซิร์ฟเวอร์เพื่อคง canonical payload ให้เหมือนเดิมทุก
+        provider mode
+      heading: คิวนัดหมาย (พื้นฐาน data grid)
+    shell:
+      nav:
+        admin: ผู้ดูแลระบบ
+        components: คอมโพเนนต์
+        overview: ภาพรวม
+        queue: คิวนัดหมาย
+      navigation_label: เมนูนำทางพื้นที่ทำงาน
+      sign_out: ออกจากระบบ
+      subtitle: โครงปฏิบัติการแบบ BFF-first
+    statuses:
+      completed: เสร็จสิ้น
+      in_progress: กำลังให้บริการ
+      ready: พร้อมให้บริการ
+      scheduled: นัดหมายแล้ว
+    summary:
+      completed: เสร็จสิ้น
+      in_progress: กำลังให้บริการ
+      ready: พร้อมให้บริการ
+      total: จำนวนเข้ารับบริการทั้งหมด
+    table:
+      appointment_id: เลขนัด
+      dentist: ทันตแพทย์
+      empty: ไม่พบข้อมูลนัดหมายตามตัวกรองปัจจุบัน
+      mrn: HN
+      patient: ผู้ป่วย
+      service: บริการ
+      start_time: เวลาเริ่ม
+      status: สถานะ
+    title: พื้นที่ทำงานคลินิก

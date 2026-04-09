@@ -133,9 +133,9 @@
   --color-bg-brand-secondary: var(--color-violet-100);
   --color-bg-brand-tertiary: var(--color-violet-300);
   --color-bg-neutral-disabled: var(--color-neutral-100);
-  --color-bg-neutral-inverse-primary: var(--color-neutral-800);
-  --color-bg-neutral-inverse-secondary: var(--color-neutral-500);
-  --color-bg-neutral-inverse-tertiary: var(--color-neutral-400);
+  --color-bg-neutral-inverse-primary: var(--color-neutral-900);
+  --color-bg-neutral-inverse-secondary: var(--color-neutral-800);
+  --color-bg-neutral-inverse-tertiary: var(--color-neutral-700);
   --color-bg-neutral-primary: var(--color-gray-0);
   --color-bg-neutral-secondary: var(--color-neutral-50);
   --color-bg-neutral-tertiary: var(--color-neutral-200);
@@ -191,8 +191,8 @@
   --color-icon-brand-secondary: var(--color-violet-500);
   --color-icon-neutral-disabled: var(--color-neutral-600);
   --color-icon-neutral-inverse-primary: var(--color-gray-0);
-  --color-icon-neutral-inverse-secondary: var(--color-gray-50);
-  --color-icon-neutral-inverse-tertiary: var(--color-gray-600);
+  --color-icon-neutral-inverse-secondary: var(--color-neutral-200);
+  --color-icon-neutral-inverse-tertiary: var(--color-neutral-400);
   --color-icon-neutral-primary: var(--color-neutral-900);
   --color-icon-neutral-secondary: var(--color-neutral-500);
   --color-icon-neutral-tertiary: var(--color-neutral-400);
@@ -226,8 +226,8 @@
   --color-text-brand-secondary: var(--color-violet-500);
   --color-text-neutral-disabled: var(--color-neutral-600);
   --color-text-neutral-inverse-primary: var(--color-gray-0);
-  --color-text-neutral-inverse-secondary: var(--color-gray-50);
-  --color-text-neutral-inverse-tertiary: var(--color-gray-600);
+  --color-text-neutral-inverse-secondary: var(--color-neutral-200);
+  --color-text-neutral-inverse-tertiary: var(--color-neutral-400);
   --color-text-neutral-primary: var(--color-neutral-900);
   --color-text-neutral-secondary: var(--color-neutral-500);
   --color-text-neutral-tertiary: var(--color-neutral-400);

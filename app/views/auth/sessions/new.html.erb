@@ -1,0 +1,26 @@
+<% content_for :title, t("auth.sessions.title") %>
+
+<main class="mx-auto flex min-h-dvh w-full max-w-5xl items-center justify-center px-6 py-10">
+  <section class="w-full max-w-lg rounded-2xl border border-app-border-primary bg-app-surface-primary p-8 shadow-sm">
+    <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("auth.sessions.heading") %></h1>
+    <p class="mt-2 text-sm text-app-text-secondary"><%= t("auth.sessions.description") %></p>
+
+    <%= form_with url: session_path, method: :post, class: "mt-6 space-y-4" do %>
+      <div>
+        <label for="email" class="block text-sm font-medium text-app-text-secondary"><%= t("auth.sessions.email_label") %></label>
+        <input id="email" name="email" type="email" required autocomplete="email" value="<%= @email %>" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-app-text-secondary"><%= t("auth.sessions.password_label") %></label>
+        <input id="password" name="password" type="password" required autocomplete="current-password" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+      </div>
+
+      <button type="submit" class="inline-flex w-full items-center justify-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
+        <%= t("auth.sessions.submit") %>
+      </button>
+    <% end %>
+
+    <p class="mt-4 text-xs text-app-text-tertiary"><%= t("auth.sessions.demo_hint") %></p>
+  </section>
+</main>
