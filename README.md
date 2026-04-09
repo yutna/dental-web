@@ -1,24 +1,31 @@
-# README
+# Dental Web
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
 
-Things you may want to cover:
+```bash
+bin/setup
+```
 
-* Ruby version
+## Verification
 
-* System dependencies
+```bash
+bin/ci
+bin/rspec spec/system
+```
 
-* Configuration
+## Localization (English + Thai)
 
-* Database creation
+- Locale is required in the URL path: `/en`, `/th`
+- Unprefixed root `/` redirects to `/en`
+- Health check remains locale-agnostic at `/up`
+- Translation files:
+  - `config/locales/en.yml`
+  - `config/locales/th.yml`
 
-* Database initialization
+### I18n workflow
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+bundle exec i18n-tasks health
+bundle exec i18n-tasks missing
+bundle exec i18n-tasks normalize
+```

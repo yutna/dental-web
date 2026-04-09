@@ -16,6 +16,10 @@ module DentalWeb
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.i18n.available_locales = %i[en th]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
+
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: false,

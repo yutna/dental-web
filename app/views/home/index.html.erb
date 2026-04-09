@@ -1,0 +1,12 @@
+<% content_for :title, t("home.title") %>
+
+<main>
+  <h1><%= t("home.heading") %></h1>
+  <p><%= t("home.description") %></p>
+
+  <nav aria-label="<%= t("home.language_switcher_label") %>">
+    <%= link_to t("home.languages.english"), url_for(locale: :en) %>
+    |
+    <%= link_to t("home.languages.thai"), url_for(locale: :th) %>
+  </nav>
+</main>

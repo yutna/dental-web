@@ -1,0 +1,12 @@
+---
+th:
+  app:
+    name: เดนทัล เว็บ
+  home:
+    description: เว็บไซต์นี้รองรับภาษาอังกฤษและภาษาไทย
+    heading: ยินดีต้อนรับสู่เดนทัล เว็บ
+    language_switcher_label: ตัวสลับภาษา
+    languages:
+      english: อังกฤษ
+      thai: ไทย
+    title: เดนทัล เว็บ
