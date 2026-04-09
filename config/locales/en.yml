@@ -40,4 +40,12 @@ en:
       description: If you can see the gradient card, rounded pills, and spacing, Tailwind
         utilities are working.
       heading: Tailwind sample components
+    theme:
+      label: Theme
+      modes:
+        dark: Dark
+        light: Light
+        system: System
+      resolved_label: 'Active theme:'
+      system_hint: System follows your device preference.
     title: Dental Web

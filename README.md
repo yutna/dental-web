@@ -26,6 +26,7 @@ bin/rspec spec/system
 - `bin/dev` runs Rails + `bin/rails tailwindcss:watch` via `Procfile.dev`
 - Official plugins enabled: `@tailwindcss/forms`, `@tailwindcss/typography`, `@tailwindcss/aspect-ratio`
 - Tailwind v4 includes container queries and line clamp in core utilities (no plugin install needed)
+- Theme switching supports `light`, `dark`, and `system` (follows device preference) on the homepage
 
 ```bash
 # One-off Tailwind build

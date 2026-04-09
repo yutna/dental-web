@@ -6,9 +6,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="<%= t("app.name") %>">
     <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
@@ -18,12 +18,28 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%= javascript_tag nonce: true do %>
+      (() => {
+        const storageKey = "theme-preference";
+        const validModes = [ "light", "dark", "system" ];
+        const root = document.documentElement;
+        const systemTheme = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const storedMode = localStorage.getItem(storageKey);
+        const mode = validModes.includes(storedMode) ? storedMode : "system";
+        const resolvedTheme = mode === "system" ? systemTheme() : mode;
+
+        root.dataset.themeMode = mode;
+        root.dataset.theme = resolvedTheme;
+        root.classList.toggle("dark", resolvedTheme === "dark");
+      })();
+    <% end %>
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
     <%= yield %>
   </body>
 </html>
