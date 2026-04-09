@@ -9,6 +9,28 @@ en:
     languages:
       english: English
       thai: Thai
+    plugin_demo:
+      aspect_ratio:
+        caption: Legacy aspect-w / aspect-h utilities create a fixed 16:9 frame.
+        title: Aspect ratio plugin
+      description: These cards exercise official plugins directly on this page.
+      forms:
+        name_label: Appointment name
+        name_placeholder: John Doe
+        notify_label: Notify me by email
+        service_label: Service
+        services:
+          cleaning: Dental cleaning
+          whitening: Teeth whitening
+        submit: Preview booking
+        title: Forms plugin
+      heading: Official Tailwind plugin examples
+      typography:
+        lead: This block uses the prose classes from @tailwindcss/typography.
+        link_label: Read Typography plugin docs
+        point_one: Headings, lists, and links are automatically styled.
+        point_two: You can still combine prose with normal utility classes.
+        title: Typography plugin
     tailwind_demo:
       badge: Tailwind CSS active
       chips:

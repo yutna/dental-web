@@ -24,6 +24,8 @@ bin/rspec spec/system
 - Source file: `app/assets/tailwind/application.css`
 - Build output: `app/assets/builds/tailwind.css`
 - `bin/dev` runs Rails + `bin/rails tailwindcss:watch` via `Procfile.dev`
+- Official plugins enabled: `@tailwindcss/forms`, `@tailwindcss/typography`, `@tailwindcss/aspect-ratio`
+- Tailwind v4 includes container queries and line clamp in core utilities (no plugin install needed)
 
 ```bash
 # One-off Tailwind build

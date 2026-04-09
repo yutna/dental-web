@@ -13,6 +13,10 @@ RSpec.describe "Localization", type: :request do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Welcome to Dental Web")
     expect(response.body).to include("Tailwind CSS active")
+    expect(response.body).to include("Official Tailwind plugin examples")
+    expect(response.body).to include("form-input")
+    expect(response.body).to include("prose")
+    expect(response.body).to include("aspect-w-16")
     expect(response.body).to include('href="/th"')
   end
 
@@ -22,6 +26,10 @@ RSpec.describe "Localization", type: :request do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("ยินดีต้อนรับสู่เดนทัล เว็บ")
     expect(response.body).to include("Tailwind CSS พร้อมใช้งาน")
+    expect(response.body).to include("ตัวอย่างปลั๊กอินทางการของ Tailwind")
+    expect(response.body).to include("form-input")
+    expect(response.body).to include("prose")
+    expect(response.body).to include("aspect-w-16")
     expect(response.body).to include('href="/en"')
   end
 
