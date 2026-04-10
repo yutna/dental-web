@@ -4,10 +4,10 @@ Purpose: companion execution board for AI-driven implementation with strict atom
 
 Source coverage target: 100% of files in docs/tasks/dental-system and docs/ui/dental-system.
 
-Total source files covered: 58.
+Total source files covered: 59.
 
 - Requirements set: 11 files.
-- UI design/flows/states set: 47 files.
+- UI design/flows/states set: 48 files.
 
 ## Execution Contract (Mandatory)
 
@@ -36,6 +36,13 @@ Definition of Done for every task:
 - Lint clean.
 - No unrelated file churn.
 - Commit message format: [Txx.yy] short summary.
+
+Knowledge graph contract:
+
+1. Requirements knowledge graph is available at docs/tasks/dental-system/knowledge-graph.json.
+2. Design UI knowledge graph is available at docs/ui/dental-system/knowledge-graph.json.
+3. AI must treat this task board as execution source of truth and use both graphs for consistency and coverage verification.
+4. If board content and graph content conflict, AI must stop and report blocker instead of guessing.
 
 ## Group Roadmap (Smallest Playable Feature Slices)
 
@@ -518,6 +525,81 @@ Human handoff format after CI green:
 5. UAT checklist: group checklist
 6. Awaiting decision: APPROVE G0X or REJECT G0X
 
+## GitHub MCP Operation Contract
+
+Use this contract for remote execution with GitHub MCP when running one group as one PR.
+
+Preconditions:
+
+1. MCP has permission to push branch, create PR, and read check runs.
+2. Active group and next ticket are already set in Runtime State Block.
+3. Local checks for current ticket are green before any push.
+
+Step-by-step execution:
+
+1. Create or reuse group branch.
+2. Implement one ticket only.
+3. Run per-ticket checks and commit.
+4. Repeat steps 2 to 3 until group tickets are complete.
+5. Push branch and open one PR for this group.
+6. Wait for CI check runs.
+7. If CI fails, fix only in-group issues and push to same PR.
+8. Repeat step 6 and step 7 until CI is green or retry limit reached.
+9. When CI is green, move group to WAITING_UAT and stop.
+
+Runtime State Block updates by step:
+
+1. At branch ready:
+   - ACTIVE_PR_URL: NONE
+   - ACTIVE_PR_STATUS: NONE
+   - ACTIVE_CI_STATUS: NONE
+   - CI_RETRY_COUNT: 0
+2. After PR created:
+   - ACTIVE_PR_URL: real-pr-url
+   - ACTIVE_PR_STATUS: OPEN
+   - ACTIVE_CI_STATUS: RUNNING
+3. On CI failed cycle:
+   - ACTIVE_CI_STATUS: FAILED
+   - CI_RETRY_COUNT: previous + 1
+   - LAST_CHECKS_PASSED: local checks for current fix commit
+4. On CI green:
+   - ACTIVE_CI_STATUS: GREEN
+   - ACTIVE_PR_STATUS: READY_FOR_REVIEW
+   - GROUP_STATUS: WAITING_UAT
+   - NEXT_TICKET: NONE
+   - UAT_GATE_STATUS for active group: READY
+5. On retry limit exceeded:
+   - GROUP_STATUS: BLOCKED
+   - ACTIVE_PR_STATUS: BLOCKED
+   - ACTIVE_CI_STATUS: FAILED
+
+Allowed CI-fix scope:
+
+1. Test fixes for tickets in active group.
+2. Lint fixes caused by active group changes.
+3. Contract or policy fixes directly tied to active group acceptance checks.
+
+Disallowed CI-fix scope:
+
+1. Starting work from the next group.
+2. Refactors unrelated to failing checks.
+3. Merging PR automatically.
+
+Operational stop gates:
+
+1. Missing MCP permissions or GitHub API access.
+2. CI_RETRY_COUNT > CI_RETRY_LIMIT.
+3. Required fix is out of active group scope.
+
+Mandatory handoff payload when stopped for UAT:
+
+1. CURRENT_GROUP value
+2. ACTIVE_PR_URL value
+3. ACTIVE_CI_STATUS value
+4. Completed ticket list for that group
+5. Exact UAT checklist section for that group
+6. Required human decision: APPROVE G0X or REJECT G0X
+
 ## Human UAT Stop-Gate Checklists
 
 ### Gate 1 after G01
@@ -577,6 +659,7 @@ Human handoff format after CI green:
 | Source file | Covered by tickets |
 |---|---|
 | docs/ui/dental-system/README.md | T01.04, T02.03, T03.05, T07.01 |
+| docs/ui/dental-system/knowledge-graph.json | T01.03, T03.05, T07.06 |
 | docs/ui/dental-system/audit-third-pass-checklist.md | T02.08, T06.04, T07.06 |
 | docs/ui/dental-system/flow-01-visit-workflow-lifecycle.md | T03.01, T03.06, T03.09 |
 | docs/ui/dental-system/flow-02-clinical-forms-and-history.md | T04.01 to T04.08 |
