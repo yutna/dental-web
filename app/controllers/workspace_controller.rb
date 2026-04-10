@@ -10,8 +10,6 @@ class WorkspaceController < ApplicationController
       status: filter_params[:status],
       source: filter_params[:source]
     )
-
-    render(partial: "workspace/appointments_grid", locals: { result: @result }) if queue_only_request?
   rescue StandardError
     @result = {
       state: "error",
@@ -33,18 +31,12 @@ class WorkspaceController < ApplicationController
       error: true,
       polled_at: Time.current
     }
-
-    render(partial: "workspace/appointments_grid", locals: { result: @result }) if queue_only_request?
   end
 
   private
 
   def filter_params
     params.permit(:search, :status, :source, :queue_only, :loading)
-  end
-
-  def queue_only_request?
-    ActiveModel::Type::Boolean.new.cast(filter_params[:queue_only])
   end
 
   def queue_loading?

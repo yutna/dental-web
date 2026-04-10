@@ -19,6 +19,6 @@ RSpec.describe "Workspace", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("No appointments found for current filters.")
-    expect(response.body).not_to include("Profile menu")
+    expect(response.body).to include("Profile menu")
   end
 end
