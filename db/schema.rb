@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_154500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_155500) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -28,6 +28,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_154500) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_image_type_references_on_code", unique: true
+  end
+
+  create_table "dental_master_data_change_requests", force: :cascade do |t|
+    t.datetime "approved_at"
+    t.string "approved_by_id"
+    t.string "change_type", null: false
+    t.datetime "created_at", null: false
+    t.text "payload_json", null: false
+    t.string "requested_by_id", null: false
+    t.integer "resource_id", null: false
+    t.string "resource_type", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resource_type", "resource_id"], name: "index_dental_md_change_requests_on_resource"
+    t.index ["status"], name: "index_dental_master_data_change_requests_on_status"
   end
 
   create_table "dental_medication_profiles", force: :cascade do |t|

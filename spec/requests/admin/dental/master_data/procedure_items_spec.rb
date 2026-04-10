@@ -78,4 +78,67 @@ RSpec.describe "Admin dental procedure items", type: :request do
     expect(response).to redirect_to("/en/admin/dental/master_data/procedure_items")
     expect(item.reload.active).to be(false)
   end
+
+  it "submits a pending approval request for sensitive price changes" do
+    sign_in_as(username: "admin.test")
+    item = create(:dental_procedure_item, procedure_group: group, price_opd: 100, price_ipd: 200)
+
+    patch "/en/admin/dental/master_data/procedure_items/#{item.id}", params: {
+      dental_procedure_item: {
+        procedure_group_id: group.id,
+        code: item.code,
+        name: item.name,
+        price_opd: 999,
+        price_ipd: 200,
+        active: item.active,
+        lock_version: item.lock_version
+      },
+      require_approval: "true"
+    }
+
+    expect(response).to redirect_to("/en/admin/dental/master_data/procedure_items")
+    expect(item.reload.price_opd).to eq(100)
+
+    request = DentalMasterDataChangeRequest.order(:id).last
+    expect(request.status).to eq("pending")
+    expect(request.change_type).to eq("price_update")
+  end
+
+  it "blocks self-approval and allows approval by another admin" do
+    sign_in_as(username: "admin.test")
+    item = create(:dental_procedure_item, procedure_group: group, price_opd: 100, price_ipd: 200)
+
+    patch "/en/admin/dental/master_data/procedure_items/#{item.id}", params: {
+      dental_procedure_item: {
+        procedure_group_id: group.id,
+        code: item.code,
+        name: item.name,
+        price_opd: 777,
+        price_ipd: 200,
+        active: item.active,
+        lock_version: item.lock_version
+      },
+      require_approval: "true"
+    }
+
+    request = DentalMasterDataChangeRequest.order(:id).last
+
+    post "/en/admin/dental/master_data/procedure_items/#{item.id}/approve_price_change", params: {
+      change_request_id: request.id
+    }
+
+    expect(response).to redirect_to("/en/admin/dental/master_data/procedure_items")
+    expect(item.reload.price_opd).to eq(100)
+    expect(request.reload.status).to eq("pending")
+
+    sign_in_as(username: "admin@example.com")
+
+    post "/en/admin/dental/master_data/procedure_items/#{item.id}/approve_price_change", params: {
+      change_request_id: request.id
+    }
+
+    expect(response).to redirect_to("/en/admin/dental/master_data/procedure_items")
+    expect(item.reload.price_opd).to eq(777)
+    expect(request.reload.status).to eq("approved")
+  end
 end

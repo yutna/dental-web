@@ -34,6 +34,10 @@ Rails.application.routes.draw do
 
         namespace :master_data do
           resources :procedure_items, except: :show do
+            member do
+              post :approve_price_change
+            end
+
             collection do
               post :bulk_import_preview
               post :bulk_import_apply

@@ -34,6 +34,10 @@ module Admin
           admin_access?
         end
 
+        def approve_price_change?
+          admin_access?
+        end
+
         class Scope < ApplicationPolicy::Scope
           def resolve
             return scope.none unless user.allowed?("admin:access")

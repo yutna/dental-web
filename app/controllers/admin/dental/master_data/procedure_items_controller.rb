@@ -2,7 +2,7 @@ module Admin
   module Dental
     module MasterData
       class ProcedureItemsController < ::Admin::BaseController
-        before_action :set_procedure_item, only: %i[edit update destroy]
+        before_action :set_procedure_item, only: %i[edit update destroy approve_price_change]
 
         def index
           authorize([ :admin, :dental, :master_data, DentalProcedureItem ])
@@ -36,6 +36,18 @@ module Admin
         def update
           authorize([ :admin, :dental, :master_data, @procedure_item ])
 
+          if maker_checker_required?
+            ::Admin::Dental::MasterData::SubmitPriceChangeRequest.call(
+              item: @procedure_item,
+              requested_by_id: current_principal.id,
+              attributes: procedure_item_params.slice(:price_opd, :price_ipd)
+            )
+
+            redirect_to admin_dental_master_data_procedure_items_path,
+                        notice: t("admin.dental.procedure_items.change_request_submitted")
+            return
+          end
+
           if @procedure_item.update(procedure_item_params)
             redirect_to admin_dental_master_data_procedure_items_path,
                         notice: t("admin.dental.procedure_items.updated")
@@ -48,6 +60,22 @@ module Admin
           @procedure_item.errors.add(:base, t("admin.dental.procedure_items.lock_conflict"))
           load_procedure_groups
           render :edit, status: :conflict
+        end
+
+        def approve_price_change
+          authorize([ :admin, :dental, :master_data, @procedure_item ])
+
+          request = DentalMasterDataChangeRequest.pending.find(params[:change_request_id])
+          unless request.approve!(approver_id: current_principal.id)
+            redirect_to admin_dental_master_data_procedure_items_path,
+                        alert: t("admin.dental.procedure_items.self_approval_not_allowed")
+            return
+          end
+
+          @procedure_item.update!(request.payload.slice("price_opd", "price_ipd"))
+
+          redirect_to admin_dental_master_data_procedure_items_path,
+                      notice: t("admin.dental.procedure_items.change_request_approved")
         end
 
         def destroy
@@ -108,6 +136,16 @@ module Admin
             :active,
             :lock_version
           ])
+        end
+
+        def maker_checker_required?
+          params[:require_approval] == "true" && sensitive_price_change?
+        end
+
+        def sensitive_price_change?
+          attrs = procedure_item_params
+          attrs[:price_opd].to_s != @procedure_item.price_opd.to_s ||
+            attrs[:price_ipd].to_s != @procedure_item.price_ipd.to_s
         end
 
         def bulk_import_rows
