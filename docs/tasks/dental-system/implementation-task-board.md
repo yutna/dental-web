@@ -258,24 +258,24 @@ BOARD_MODE: SINGLE_FILE
 REQUIREMENTS_MUTABILITY: FROZEN
 
 CURRENT_GROUP: G03
-GROUP_STATUS: IN_PROGRESS
-NEXT_TICKET: T03.01
+GROUP_STATUS: WAITING_UAT
+NEXT_TICKET: NONE
 
-LAST_COMPLETED_TICKET: T02.09
-LAST_COMMIT_SHA: e5d51c4
-LAST_CHECKS_PASSED: rubocop, rspec, i18n, bin/ci, pr-ci
-LAST_UPDATED_UTC: 2026-04-10T16:31:27Z
+LAST_COMPLETED_TICKET: T03.10
+LAST_COMMIT_SHA: e54b915
+LAST_CHECKS_PASSED: rubocop, rspec, bin/ci
+LAST_UPDATED_UTC: 2026-04-10T17:03:01Z
 
-ACTIVE_PR_URL: NONE
-ACTIVE_PR_STATUS: NONE
-ACTIVE_CI_STATUS: NONE
+ACTIVE_PR_URL: https://github.com/yutna/dental-web/pull/14
+ACTIVE_PR_STATUS: OPEN
+ACTIVE_CI_STATUS: RUNNING
 CI_RETRY_COUNT: 0
 CI_RETRY_LIMIT: 5
 
 UAT_GATE_STATUS:
 - G01: APPROVED
 - G02: APPROVED
-- G03: PENDING
+- G03: READY
 - G04: PENDING
 - G05: PENDING
 - G06: PENDING
@@ -376,16 +376,16 @@ G02
 - T02.09: DONE
 
 G03
-- T03.01: TODO
-- T03.02: TODO
-- T03.03: TODO
-- T03.04: TODO
-- T03.05: TODO
-- T03.06: TODO
-- T03.07: TODO
-- T03.08: TODO
-- T03.09: TODO
-- T03.10: TODO
+- T03.01: DONE
+- T03.02: DONE
+- T03.03: DONE
+- T03.04: DONE
+- T03.05: DONE
+- T03.06: DONE
+- T03.07: DONE
+- T03.08: DONE
+- T03.09: DONE
+- T03.10: DONE
 
 G04
 - T04.01: TODO
@@ -543,6 +543,39 @@ Current run entries:
 2026-04-10T16:31:27Z | CI_GREEN | G02 | T02.09 | OK | pr-ci all checks successful on latest head
 2026-04-10T16:31:27Z | UAT_APPROVE | G02 | T02.09 | OK | user approved G02
 2026-04-10T16:31:27Z | RESUME | G03 | T03.01 | OK | move to next group per handoff contract
+2026-04-10T16:33:00Z | START | G03 | T03.01 | OK | begin implementation
+2026-04-10T16:36:30Z | CHECKS | G03 | T03.01 | OK | rubocop and targeted request/domain specs passed
+2026-04-10T16:37:19Z | COMMIT | G03 | T03.01 | OK | sha=d9cf4a3
+2026-04-10T16:37:19Z | RESUME | G03 | T03.02 | OK | runtime block updated
+2026-04-10T16:38:00Z | START | G03 | T03.02 | OK | begin implementation
+2026-04-10T16:39:00Z | CHECKS | G03 | T03.02 | OK | rubocop and targeted query specs passed
+2026-04-10T16:39:19Z | COMMIT | G03 | T03.02 | OK | sha=541d53f
+2026-04-10T16:39:19Z | RESUME | G03 | T03.03 | OK | runtime block updated
+2026-04-10T16:40:00Z | START | G03 | T03.03 | OK | begin implementation
+2026-04-10T16:41:20Z | CHECKS | G03 | T03.03 | OK | rubocop and targeted request specs passed
+2026-04-10T16:41:44Z | COMMIT | G03 | T03.03 | OK | sha=33099f7
+2026-04-10T16:41:44Z | RESUME | G03 | T03.04 | OK | runtime block updated
+2026-04-10T16:45:30Z | CHECKS | G03 | T03.04 | OK | rubocop and targeted model/request specs passed
+2026-04-10T16:45:50Z | COMMIT | G03 | T03.04 | OK | sha=675cabc
+2026-04-10T16:46:07Z | RESUME | G03 | T03.05 | OK | runtime block updated
+2026-04-10T16:51:40Z | CHECKS | G03 | T03.05 | OK | rubocop and targeted query/request specs passed
+2026-04-10T16:51:50Z | COMMIT | G03 | T03.05 | OK | sha=57f9589
+2026-04-10T16:52:07Z | RESUME | G03 | T03.06 | OK | runtime block updated
+2026-04-10T16:54:45Z | CHECKS | G03 | T03.06 | OK | rubocop and targeted workflow request/domain specs passed
+2026-04-10T16:54:58Z | COMMIT | G03 | T03.06 | OK | sha=48a4ffe
+2026-04-10T16:55:05Z | RESUME | G03 | T03.07 | OK | runtime block updated
+2026-04-10T16:57:20Z | CHECKS | G03 | T03.07 | OK | rubocop and targeted queue registration specs passed
+2026-04-10T16:57:32Z | COMMIT | G03 | T03.07 | OK | sha=b3365d8
+2026-04-10T16:57:38Z | RESUME | G03 | T03.08 | OK | runtime block updated
+2026-04-10T16:59:15Z | CHECKS | G03 | T03.08 | OK | rubocop and targeted workflow hook specs passed
+2026-04-10T16:59:22Z | COMMIT | G03 | T03.08 | OK | sha=ff810a2
+2026-04-10T16:59:29Z | RESUME | G03 | T03.09 | OK | runtime block updated
+2026-04-10T17:00:40Z | CHECKS | G03 | T03.09 | OK | rubocop and targeted workflow system specs passed
+2026-04-10T17:00:48Z | COMMIT | G03 | T03.09 | OK | sha=f1621ab
+2026-04-10T17:00:54Z | RESUME | G03 | T03.10 | OK | runtime block updated
+2026-04-10T17:01:35Z | CHECKS | G03 | T03.10 | OK | bin/ci passed
+2026-04-10T17:01:38Z | HOLD | G03 | T03.10 | OK | group set to WAITING_UAT and gate READY
+2026-04-10T17:03:01Z | PR_OPEN | G03 | T03.10 | OK | pr=https://github.com/yutna/dental-web/pull/14 ci=running
 ```
 
 ### Group Handoff Contract

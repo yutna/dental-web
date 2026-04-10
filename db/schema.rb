@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_161000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_170000) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -68,6 +68,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_161000) do
     t.index ["code"], name: "index_dental_medication_profiles_on_code", unique: true
   end
 
+  create_table "dental_payment_bridge_events", force: :cascade do |t|
+    t.string "actor_id"
+    t.datetime "created_at", null: false
+    t.string "from_stage", null: false
+    t.string "hook_type", null: false
+    t.text "payload_json", default: "{}", null: false
+    t.string "status", default: "pending", null: false
+    t.string "to_stage", null: false
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["hook_type"], name: "index_dental_payment_bridge_events_on_hook_type"
+    t.index ["status"], name: "index_dental_payment_bridge_events_on_status"
+    t.index ["visit_id", "created_at"], name: "index_dental_payment_events_on_visit_created"
+  end
+
   create_table "dental_procedure_groups", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -106,6 +121,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_161000) do
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_procedure_items_on_code", unique: true
     t.index ["procedure_group_id"], name: "index_dental_procedure_items_on_procedure_group_id"
+  end
+
+  create_table "dental_queue_entries", force: :cascade do |t|
+    t.string "actor_id"
+    t.datetime "created_at", null: false
+    t.string "dentist"
+    t.text "metadata_json", default: "{}", null: false
+    t.string "mrn", null: false
+    t.string "patient_name", null: false
+    t.string "service", null: false
+    t.string "source", null: false
+    t.string "starts_at", null: false
+    t.string "status", null: false
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["source"], name: "index_dental_queue_entries_on_source"
+    t.index ["status"], name: "index_dental_queue_entries_on_status"
+    t.index ["visit_id"], name: "index_dental_queue_entries_on_visit_id", unique: true
   end
 
   create_table "dental_supply_categories", force: :cascade do |t|
@@ -184,6 +217,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_161000) do
     t.integer "sort_order", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_tooth_surface_references_on_code", unique: true
+  end
+
+  create_table "dental_workflow_timeline_entries", force: :cascade do |t|
+    t.string "actor_id"
+    t.datetime "created_at", null: false
+    t.string "event_type", null: false
+    t.string "from_stage", null: false
+    t.text "metadata_json", default: "{}", null: false
+    t.string "to_stage", null: false
+    t.string "visit_id", null: false
+    t.index ["event_type"], name: "index_dental_workflow_timeline_entries_on_event_type"
+    t.index ["visit_id", "created_at"], name: "index_dental_workflow_timeline_on_visit_created"
   end
 
   add_foreign_key "dental_procedure_item_coverages", "dental_procedure_items", column: "procedure_item_id"

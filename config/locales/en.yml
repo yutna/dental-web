@@ -215,10 +215,12 @@ en:
       data-dense UI patterns.
     filters:
       all_statuses: All statuses
+      all_sources: All sources
       apply: Apply
       reset: Reset
       search_label: Search queue
       search_placeholder: Search by patient, HN, service, or dentist
+      source_label: Source
       status_label: Status
     heading: Clinical Workspace
     profile:
@@ -238,7 +240,9 @@ en:
     queue:
       description: Server-side filtering keeps the canonical payload stable regardless
         of provider mode.
+      create_check_in: Create Check-in
       heading: Appointment queue (data grid baseline)
+      sync_appointments: Sync Appointments
     shell:
       nav:
         overview: Overview
@@ -257,11 +261,17 @@ en:
       in_progress: In progress
       ready: Ready
       scheduled: Scheduled
+      waiting_payment: Waiting payment
+    sources:
+      appointment_sync: Appointment sync
+      referral: Referral
+      walk_in: Walk-in
     summary:
       completed: Completed
       in_progress: In progress
       ready: Ready
       total: Total visits
+      waiting_payment: Waiting payment
     table:
       appointment_id: Appointment
       dentist: Dentist
@@ -269,10 +279,12 @@ en:
       empty_title: No appointments found for current filters.
       error_description: Please retry. If the issue continues, contact support.
       error_title: Unable to refresh appointment queue right now.
+      last_updated_at: Last updated %{value}
       mrn: HN
       patient: Patient
       retry: Retry
       service: Service
+      source: Source
       start_time: Start
       status: Status
     title: Clinical Workspace

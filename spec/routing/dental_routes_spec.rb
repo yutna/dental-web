@@ -18,6 +18,16 @@ RSpec.describe "Dental routes", type: :routing do
       locale: "en",
       id: "VISIT-1"
     )
+
+    expect(post: "/en/dental/visits/check_in").to route_to(
+      "dental/visits#check_in",
+      locale: "en"
+    )
+
+    expect(post: "/en/dental/visits/sync_appointments").to route_to(
+      "dental/visits#sync_appointments",
+      locale: "en"
+    )
   end
 
   it "routes localized admin dental root" do

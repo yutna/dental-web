@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       root "home#show"
       get "visits/:id", to: "visits#show", as: :visit
       patch "visits/:id/transition", to: "visits#transition", as: :visit_transition
+      post "visits/check_in", to: "visits#check_in", as: :visit_check_in
+      post "visits/sync_appointments", to: "visits#sync_appointments", as: :visit_sync_appointments
     end
 
     namespace :admin do
