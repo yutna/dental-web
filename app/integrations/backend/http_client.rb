@@ -19,7 +19,27 @@ module Backend
       end
       parse_response(response)
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
-      raise Errors::UnexpectedResponseError, e.message
+      raise Errors::ServiceUnavailableError, e.message
+    end
+
+    def get_authenticated(path, access_token:, csrf_token:)
+      response = connection.get(path) do |request|
+        apply_auth_headers(request, access_token:, csrf_token:)
+      end
+      parse_response(response)
+    rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
+      raise Errors::ServiceUnavailableError, e.message
+    end
+
+    def post_authenticated(path, payload, access_token:, csrf_token:)
+      response = connection.post(path) do |request|
+        request.headers["Content-Type"] = "application/json"
+        apply_auth_headers(request, access_token:, csrf_token:)
+        request.body = JSON.generate(payload)
+      end
+      parse_response(response)
+    rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
+      raise Errors::ServiceUnavailableError, e.message
     end
 
     private
@@ -35,21 +55,32 @@ module Backend
       end
     end
 
+    def apply_auth_headers(request, access_token:, csrf_token:)
+      request.headers["Authorization"] = "Bearer #{access_token}"
+      request.headers["x-csrf-token"]  = csrf_token.to_s
+    end
+
     def parse_response(response)
       if [ 401, 403 ].include?(response.status)
-        raise Errors::AuthenticationError, "Invalid backend credentials"
+        raise Errors::AuthenticationError, "Invalid backend credentials (#{response.status})"
+      end
+
+      if response.status == 400
+        raise Errors::ValidationError, "Backend API validation error: #{response.body}"
       end
 
       unless response.success?
-        raise Errors::UnexpectedResponseError, "Backend API request failed with status #{response.status}"
+        raise Errors::UnexpectedResponseError, "Backend API returned #{response.status}"
       end
 
-      parsed_body = JSON.parse(response.body.to_s)
-      return parsed_body if parsed_body.is_a?(Hash)
+      return {} if response.body.blank?
+
+      parsed = JSON.parse(response.body.to_s)
+      return parsed if parsed.is_a?(Hash)
 
       raise Errors::UnexpectedResponseError, "Backend API response must be a JSON object"
     rescue JSON::ParserError => e
-      raise Errors::UnexpectedResponseError, "Backend API JSON parse failed: #{e.message}"
+      raise Errors::UnexpectedResponseError, "JSON parse failed: #{e.message}"
     end
   end
 end

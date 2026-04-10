@@ -5,16 +5,17 @@ module Backend
   module Providers
     module Local
       class SessionProvider
-        def sign_in(email:, password:)
-          if email.blank? || password.blank?
-            raise Errors::AuthenticationError, "Email and password are required"
+        def sign_in(username:, password:)
+          if username.blank? || password.blank?
+            raise Errors::AuthenticationError, "Username and password are required"
           end
 
-          email = email.strip.downcase
+          username = username.strip
           Security::SessionSnapshot.new(
-            access_token: SecureRandom.hex(24),
+            access_token:  SecureRandom.hex(24),
             refresh_token: SecureRandom.hex(24),
-            principal: build_principal(email)
+            csrf_token:    SecureRandom.hex(32),
+            principal:     build_principal(username)
           )
         end
 
@@ -22,19 +23,31 @@ module Backend
           true
         end
 
+        def refresh(snapshot)
+          return snapshot if snapshot.guest?
+
+          Security::SessionSnapshot.new(
+            access_token:  SecureRandom.hex(24),
+            refresh_token: SecureRandom.hex(24),
+            csrf_token:    SecureRandom.hex(32),
+            principal:     snapshot.principal
+          )
+        end
+
         private
 
-        def build_principal(email)
-          roles = email.include?("admin") ? [ "admin" ] : [ "clinician" ]
+        def build_principal(username)
+          roles       = username.include?("admin") ? [ "admin" ] : [ "clinician" ]
           permissions = [ "workspace:read" ]
           permissions << "admin:access" if roles.include?("admin")
 
           Security::Principal.new(
-            id: "local-#{Digest::SHA256.hexdigest(email).first(12)}",
-            email: email,
-            display_name: email.split("@").first.to_s.tr(".", " ").titleize,
-            roles: roles,
-            permissions: permissions
+            id:           "local-#{Digest::SHA256.hexdigest(username).first(12)}",
+            username:     username,
+            email:        nil,
+            display_name: username.tr(".", " ").split.map(&:capitalize).join(" "),
+            roles:        roles,
+            permissions:  permissions
           )
         end
       end

@@ -7,14 +7,14 @@ module Backend
           remote_provider: Remote::SessionProvider.new,
           reporter: ContractMismatchReporter.new
         )
-          @local_provider = local_provider
+          @local_provider  = local_provider
           @remote_provider = remote_provider
-          @reporter = reporter
+          @reporter        = reporter
         end
 
-        def sign_in(email:, password:)
-          local_snapshot = local_provider.sign_in(email:, password:)
-          remote_snapshot = remote_provider.sign_in(email:, password:)
+        def sign_in(username:, password:)
+          local_snapshot  = local_provider.sign_in(username:, password:)
+          remote_snapshot = remote_provider.sign_in(username:, password:)
 
           verify_contract!(local_snapshot:, remote_snapshot:)
           local_snapshot
@@ -23,6 +23,10 @@ module Backend
         def sign_out(snapshot)
           local_provider.sign_out(snapshot)
           remote_provider.sign_out(snapshot)
+        end
+
+        def refresh(snapshot)
+          local_provider.refresh(snapshot)
         end
 
         private
@@ -37,11 +41,10 @@ module Backend
         end
 
         def same_contract?(local_snapshot:, remote_snapshot:)
-          local_principal = local_snapshot.principal
+          local_principal  = local_snapshot.principal
           remote_principal = remote_snapshot.principal
 
-          local_principal.email == remote_principal.email &&
-            local_principal.roles == remote_principal.roles &&
+          local_principal.roles == remote_principal.roles &&
             local_principal.permissions == remote_principal.permissions
         end
 

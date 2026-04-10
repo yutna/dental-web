@@ -4,29 +4,66 @@ module Backend
       class << self
         def from_remote(payload)
           payload = payload.to_h.deep_stringify_keys
-          user_payload = payload["user"].presence || payload["principal"].presence || {}
 
-          access_token = payload["access_token"] || payload["accessToken"] || payload["token"]
-          refresh_token = payload["refresh_token"] || payload["refreshToken"]
-          email = user_payload["email"]
+          access_token  = payload["access_token"]
+          refresh_token = payload["refresh_token"]
+          csrf_token    = payload["csrf_token"]
 
-          if access_token.blank? || email.blank?
-            raise Errors::UnexpectedResponseError, "Remote auth payload is missing required canonical fields"
+          if access_token.blank?
+            raise Errors::UnexpectedResponseError, "Remote auth payload missing access_token"
+          end
+
+          user_session = decode_jwt_payload(access_token)["user_session"].presence || {}
+          email        = user_session["email"]
+
+          if email.blank?
+            raise Errors::UnexpectedResponseError, "Remote auth JWT missing user_session.email"
           end
 
           principal = Security::Principal.new(
-            id: user_payload["id"] || user_payload["user_id"] || user_payload["uid"] || email,
-            email: email,
-            display_name: user_payload["display_name"] || user_payload["displayName"] || email,
-            roles: user_payload["roles"],
-            permissions: payload["permissions"] || user_payload["permissions"] || []
+            id:           user_session["id"],
+            username:     user_session["username"],
+            email:        email,
+            display_name: build_display_name(user_session),
+            roles:        Array(user_session["roles"]),
+            permissions:  inject_bff_permissions(user_session)
           )
 
           Security::SessionSnapshot.new(
-            access_token: access_token,
+            access_token:  access_token,
             refresh_token: refresh_token,
-            principal: principal
+            csrf_token:    csrf_token,
+            principal:     principal
           )
+        end
+
+        private
+
+        def decode_jwt_payload(token)
+          segments = token.to_s.split(".")
+          return {} unless segments.length >= 2
+
+          padding = "=" * ((4 - segments[1].length % 4) % 4)
+          JSON.parse(Base64.urlsafe_decode64(segments[1] + padding))
+        rescue JSON::ParserError, ArgumentError
+          {}
+        end
+
+        def build_display_name(user_session)
+          fullname = user_session["fullname"].presence
+          return fullname if fullname
+
+          [ user_session["first_name_thai"], user_session["last_name_thai"] ].compact.join(" ").presence ||
+            [ user_session["first_name_eng"], user_session["last_name_eng"] ].compact.join(" ").presence ||
+            user_session["username"] ||
+            user_session["email"]
+        end
+
+        def inject_bff_permissions(user_session)
+          permissions = [ "workspace:read" ]
+          api_roles   = Array(user_session["roles"]).map(&:to_s)
+          permissions << "admin:access" if api_roles.include?("admin")
+          permissions
         end
       end
     end
