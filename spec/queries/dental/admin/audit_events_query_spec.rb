@@ -5,7 +5,7 @@ RSpec.describe Dental::Admin::AuditEventsQuery do
     create(:dental_admin_audit_event, actor_id: "actor-1", action: "procedure_item.updated")
     create(:dental_admin_audit_event, actor_id: "actor-2", action: "procedure_item.created")
 
-    result = described_class.call(filters: { actor_id: "actor-1", action: "procedure_item.updated" })
+    result = described_class.call(filters: { actor_id: "actor-1", event_action: "procedure_item.updated" })
 
     expect(result.size).to eq(1)
     expect(result.first.actor_id).to eq("actor-1")

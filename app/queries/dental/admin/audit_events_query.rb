@@ -6,7 +6,7 @@ module Dental
       def call(filters: {})
         scoped = DentalAdminAuditEvent.all
         scoped = scoped.where(actor_id: filters[:actor_id]) if filters[:actor_id].present?
-        scoped = scoped.where(action: filters[:action]) if filters[:action].present?
+        scoped = scoped.where(action: filters[:event_action]) if filters[:event_action].present?
         scoped = scoped.where(resource_type: filters[:resource_type]) if filters[:resource_type].present?
 
         if filters[:from].present?

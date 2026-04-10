@@ -11,13 +11,13 @@
 
   <section class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
     <%= form_with url: admin_dental_audit_events_path, method: :get, local: true, class: "grid gap-3 sm:grid-cols-3" do |f| %>
-      <%= f.text_field :actor_id, value: @filters["actor_id"], placeholder: t("admin.dental.audit_events.filters.actor_id"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
-      <%= f.text_field :action, value: @filters["action"], placeholder: t("admin.dental.audit_events.filters.action"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
-      <%= f.text_field :resource_type, value: @filters["resource_type"], placeholder: t("admin.dental.audit_events.filters.resource_type"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
-      <%= f.text_field :from, value: @filters["from"], placeholder: t("admin.dental.audit_events.filters.from"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
-      <%= f.text_field :to, value: @filters["to"], placeholder: t("admin.dental.audit_events.filters.to"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :actor_id, value: @filters[:actor_id], placeholder: t("admin.dental.audit_events.filters.actor_id"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :event_action, value: @filters[:event_action], placeholder: t("admin.dental.audit_events.filters.action"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :resource_type, value: @filters[:resource_type], placeholder: t("admin.dental.audit_events.filters.resource_type"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :from, value: @filters[:from], placeholder: t("admin.dental.audit_events.filters.from"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :to, value: @filters[:to], placeholder: t("admin.dental.audit_events.filters.to"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
       <div class="flex items-center gap-2">
-        <%= f.number_field :limit, value: @filters["limit"] || 100, min: 1, max: 500, class: "w-24 rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+        <%= f.number_field :limit, value: @filters[:limit] || 100, min: 1, max: 500, class: "w-24 rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
         <%= f.submit t("admin.dental.audit_events.filters.apply"), class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
       </div>
     <% end %>
