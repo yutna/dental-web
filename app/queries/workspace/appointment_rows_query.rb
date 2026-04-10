@@ -1,6 +1,6 @@
 module Workspace
   class AppointmentRowsQuery < BaseQuery
-    STATUS_OPTIONS = %w[scheduled in_progress ready completed].freeze
+    STATUS_OPTIONS = %w[scheduled in_progress ready waiting_payment completed].freeze
 
     SAMPLE_ROWS = [
       {
@@ -11,7 +11,8 @@ module Workspace
         service: "Root Canal",
         starts_at: "09:00",
         status: "in_progress",
-        dentist: "Dr. Suda"
+        dentist: "Dr. Suda",
+        source: "appointment_sync"
       },
       {
         id: "AP-1002",
@@ -21,7 +22,8 @@ module Workspace
         service: "Dental Cleaning",
         starts_at: "09:30",
         status: "ready",
-        dentist: "Dr. Korn"
+        dentist: "Dr. Korn",
+        source: "walk_in"
       },
       {
         id: "AP-1003",
@@ -30,8 +32,9 @@ module Workspace
         chair: "Chair 4",
         service: "Crown Fitting",
         starts_at: "10:00",
-        status: "scheduled",
-        dentist: "Dr. Nicha"
+        status: "waiting_payment",
+        dentist: "Dr. Nicha",
+        source: "appointment_sync"
       },
       {
         id: "AP-1004",
@@ -41,7 +44,8 @@ module Workspace
         service: "Whitening",
         starts_at: "10:30",
         status: "completed",
-        dentist: "Dr. Suda"
+        dentist: "Dr. Suda",
+        source: "referral"
       }
     ].freeze
 

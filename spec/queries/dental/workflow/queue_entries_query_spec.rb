@@ -14,7 +14,7 @@ RSpec.describe Dental::Workflow::QueueEntriesQuery do
 
     expect(result[:state]).to eq("empty")
     expect(result[:rows]).to eq([])
-    expect(result[:summary]).to eq(total: 0, in_progress: 0, ready: 0, completed: 0)
+    expect(result[:summary]).to eq(total: 0, in_progress: 0, ready: 0, waiting_payment: 0, completed: 0)
   end
 
   it "returns populated state when provider has rows" do
@@ -27,7 +27,21 @@ RSpec.describe Dental::Workflow::QueueEntriesQuery do
 
     expect(result[:state]).to eq("populated")
     expect(result[:rows]).to eq(rows)
-    expect(result[:summary]).to eq(total: 2, in_progress: 1, ready: 1, completed: 0)
+    expect(result[:summary]).to eq(total: 2, in_progress: 1, ready: 1, waiting_payment: 0, completed: 0)
+  end
+
+  it "filters rows by source and status" do
+    rows = [
+      { id: "AP-1", status: "in_progress", source: "walk_in" },
+      { id: "AP-2", status: "in_progress", source: "appointment_sync" },
+      { id: "AP-3", status: "completed", source: "walk_in" }
+    ]
+
+    result = described_class.call(rows_provider: -> { rows }, status: "in_progress", source: "walk_in")
+
+    expect(result[:state]).to eq("populated")
+    expect(result[:rows]).to contain_exactly({ id: "AP-1", status: "in_progress", source: "walk_in" })
+    expect(result[:filters]).to eq(search: "", status: "in_progress", source: "walk_in")
   end
 
   it "returns error state when provider raises" do

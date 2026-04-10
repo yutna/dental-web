@@ -212,10 +212,12 @@ th:
       UI ให้รองรับข้อมูลหนาแน่น
     filters:
       all_statuses: ทุกสถานะ
+      all_sources: ทุกแหล่งที่มา
       apply: ใช้งาน
       reset: ล้างค่า
       search_label: ค้นหาคิว
       search_placeholder: ค้นหาด้วยชื่อผู้ป่วย HN บริการ หรือทันตแพทย์
+      source_label: แหล่งที่มา
       status_label: สถานะ
     heading: พื้นที่ทำงานคลินิก
     profile:
@@ -235,7 +237,9 @@ th:
     queue:
       description: ใช้การกรองฝั่งเซิร์ฟเวอร์เพื่อคง canonical payload ให้เหมือนเดิมทุก
         provider mode
+      create_check_in: สร้างเช็คอิน
       heading: คิวนัดหมาย (พื้นฐาน data grid)
+      sync_appointments: ซิงก์นัดหมาย
     shell:
       nav:
         overview: ภาพรวม
@@ -254,11 +258,17 @@ th:
       in_progress: กำลังให้บริการ
       ready: พร้อมให้บริการ
       scheduled: นัดหมายแล้ว
+      waiting_payment: รอชำระเงิน
+    sources:
+      appointment_sync: ซิงก์นัดหมาย
+      referral: ส่งต่อ
+      walk_in: ผู้ป่วย walk-in
     summary:
       completed: เสร็จสิ้น
       in_progress: กำลังให้บริการ
       ready: พร้อมให้บริการ
       total: จำนวนเข้ารับบริการทั้งหมด
+      waiting_payment: รอชำระเงิน
     table:
       appointment_id: เลขนัด
       dentist: ทันตแพทย์
@@ -266,10 +276,12 @@ th:
       empty_title: ไม่พบนัดหมายตามตัวกรองที่เลือก
       error_description: กรุณาลองใหม่อีกครั้ง หากยังพบปัญหาโปรดติดต่อผู้ดูแลระบบ
       error_title: ไม่สามารถรีเฟรชคิวนัดหมายได้ในขณะนี้
+      last_updated_at: อัปเดตล่าสุด %{value}
       mrn: HN
       patient: ผู้ป่วย
       retry: ลองใหม่
       service: บริการ
+      source: แหล่งที่มา
       start_time: เวลาเริ่ม
       status: สถานะ
     title: พื้นที่ทำงานคลินิก

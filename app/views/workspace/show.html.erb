@@ -120,21 +120,28 @@
             <p class="mt-2 text-2xl font-semibold text-text-semantic-success-primary"><%= @result[:summary][:ready] %></p>
           </article>
           <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.completed") %></p>
-            <p class="mt-2 text-2xl font-semibold text-text-semantic-ready-primary"><%= @result[:summary][:completed] %></p>
+            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.waiting_payment") %></p>
+            <p class="mt-2 text-2xl font-semibold text-text-semantic-warning-primary"><%= @result[:summary][:waiting_payment] %></p>
           </article>
         </section>
 
         <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
-          <section id="queue" class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm" data-controller="frame-loading">
+          <section
+            id="queue"
+            class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm"
+            data-controller="frame-loading queue-polling"
+            data-queue-polling-frame-value="appointments_grid"
+            data-queue-polling-interval-value="30000"
+          >
             <div class="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h3 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.queue.heading") %></h3>
                 <p class="text-sm text-app-text-secondary"><%= t("workspace.queue.description") %></p>
               </div>
+              <%= link_to t("workspace.table.retry"), workspace_path(search: @result.dig(:filters, :search), status: @result.dig(:filters, :status), source: @result.dig(:filters, :source), queue_only: true), class: "inline-flex h-10 items-center justify-center rounded-lg border border-app-border-primary bg-app-surface-primary px-4 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary", data: { turbo_frame: "appointments_grid" } %>
             </div>
 
-            <%= form_with url: workspace_path, method: :get, class: "mt-4 grid gap-3 md:grid-cols-[1fr_220px_auto]", data: { turbo_frame: "appointments_grid" } do %>
+            <%= form_with url: workspace_path, method: :get, class: "mt-4 grid gap-3 md:grid-cols-[1fr_200px_200px_auto]", data: { turbo_frame: "appointments_grid", queue_polling_target: "filtersForm" } do %>
               <div>
                 <label for="search" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.search_label") %></label>
                 <%= text_field_tag :search, @result[:filters][:search], id: "search", class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary", placeholder: t("workspace.filters.search_placeholder") %>
@@ -145,7 +152,13 @@
                 <%= select_tag :status, options_for_select([[t("workspace.filters.all_statuses"), ""]] + @result[:status_options].map { |status| [t("workspace.statuses.#{status}"), status] }, @result[:filters][:status]), id: "status", class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
               </div>
 
+              <div>
+                <label for="source" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.source_label") %></label>
+                <%= select_tag :source, options_for_select([[t("workspace.filters.all_sources"), ""]] + @result[:source_options].map { |source| [t("workspace.sources.#{source}"), source] }, @result[:filters][:source]), id: "source", class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+              </div>
+
               <div class="flex items-end gap-2">
+                <%= hidden_field_tag :queue_only, "1" %>
                 <button type="submit" class="inline-flex h-10 items-center justify-center rounded-lg bg-app-brand-primary px-4 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
                   <%= t("workspace.filters.apply") %>
                 </button>
