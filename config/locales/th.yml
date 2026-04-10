@@ -61,48 +61,23 @@ th:
       title: ลงชื่อเข้าใช้
   home:
     bff_baseline:
-      description: เริ่มจากการพัฒนาเต็มรูปแบบใน Rails BFF แล้วสลับ adapter ไปใช้ API
-        จริงของ backend ได้โดยไม่ต้องแก้สัญญาข้อมูลฝั่ง UI ใหม่ทั้งหมด
-      heading: พื้นฐานการพัฒนาแบบ BFF
+      description: จุดเข้าใช้งานสำหรับการลงชื่อเข้าใช้และเข้าสู่พื้นที่ทำงาน ระหว่างเตรียมโมดูลแดชบอร์ดหลัก
+      heading: การเข้าถึงแดชบอร์ด
       sign_in_link: เปิดหน้าลงชื่อเข้าใช้
       workspace_link: เปิดพื้นที่ทำงานคลินิก
     description: เว็บไซต์นี้รองรับภาษาอังกฤษและภาษาไทย
     heading: ยินดีต้อนรับสู่เดนทัล เว็บ
-    language_switcher_label: ตัวสลับภาษา
-    languages:
-      english: อังกฤษ
-      thai: ไทย
-    plugin_demo:
-      aspect_ratio:
-        caption: คลาส aspect-w / aspect-h สร้างกรอบอัตราส่วน 16:9 แบบคงที่
-        title: ปลั๊กอินอัตราส่วนภาพ
-      description: การ์ดเหล่านี้ใช้ปลั๊กอินทางการของ Tailwind โดยตรงในหน้านี้
-      forms:
-        name_label: ชื่อผู้นัดหมาย
-        name_placeholder: สมชาย ใจดี
-        notify_label: แจ้งเตือนฉันทางอีเมล
-        service_label: บริการ
-        services:
-          cleaning: ทำความสะอาดฟัน
-          whitening: ฟอกสีฟัน
-        submit: ตัวอย่างการจอง
-        title: ปลั๊กอินฟอร์ม
-      heading: ตัวอย่างปลั๊กอินทางการของ Tailwind
-      typography:
-        lead: ส่วนนี้ใช้คลาส prose จาก @tailwindcss/typography
-        link_label: อ่านเอกสารปลั๊กอิน Typography
-        point_one: หัวข้อ รายการ และลิงก์ถูกจัดสไตล์ให้อัตโนมัติ
-        point_two: ยังสามารถใช้ prose ร่วมกับ utility classes ปกติได้
-        title: ปลั๊กอิน Typography
-    tailwind_demo:
-      badge: Tailwind CSS พร้อมใช้งาน
-      chips:
-        gradients: พื้นหลังไล่สี
-        responsive: ระยะห่างแบบตอบสนอง
-        rounded: องค์ประกอบมุมมน
-      description: หากคุณเห็นการ์ดไล่สี ป้ายมุมมน และระยะห่างที่สวยงาม แปลว่า utility
-        classes ของ Tailwind ทำงานแล้ว
-      heading: ตัวอย่างคอมโพเนนต์ Tailwind
+    permission_denied:
+      description: คุณยังไม่มีสิทธิ์เข้าถึงพื้นที่ทำงานคลินิก
+      help: กรุณาติดต่อผู้ดูแลระบบเพื่อขอสิทธิ์ workspace:read
+      title: ไม่ได้รับสิทธิ์เข้าใช้งานพื้นที่ทำงาน
+    title: เดนทัล เว็บ
+  public_menu:
+    language:
+      english: EN
+      label: ภาษา
+      thai: TH
+    open: ตัวเลือกการแสดงผล
     theme:
       label: ธีม
       modes:
@@ -110,18 +85,8 @@ th:
         light: สว่าง
         system: ตามระบบ
       resolved_label: 'ธีมที่ใช้งาน:'
-      system_hint: โหมดระบบจะใช้ตามการตั้งค่าของเครื่องคุณ
-    title: เดนทัล เว็บ
+      saved: บันทึกการตั้งค่าธีมแล้ว
   workspace:
-    components:
-      loading:
-        description: ใช้ skeleton shimmer เมื่อรอนานเกิน 300ms โดยยังคง layout เดิมไว้
-        heading: รูปแบบ Loading
-      select:
-        description: ฐานของ searchable combobox สำหรับช่องเลือกข้อมูลที่ค้นหาและใช้งานด้วยคีย์บอร์ดได้ดีขึ้น
-        heading: พื้นฐาน Advanced Select
-        label: ค้นหาสถานะบริการ
-        placeholder: พิมพ์เพื่อกรองสถานะ
     description: โครงแอปทันตกรรมปี 2026+ ที่ใช้ BFF ฝั่งเซิร์ฟเวอร์เป็นแกนและออกแบบ
       UI ให้รองรับข้อมูลหนาแน่น
     filters:
@@ -132,6 +97,20 @@ th:
       search_placeholder: ค้นหาด้วยชื่อผู้ป่วย HN บริการ หรือทันตแพทย์
       status_label: สถานะ
     heading: พื้นที่ทำงานคลินิก
+    profile:
+      language:
+        english: EN
+        label: ภาษา
+        thai: TH
+      open_menu: เมนูโปรไฟล์
+      theme:
+        label: ธีม
+        modes:
+          dark: มืด
+          light: สว่าง
+          system: ตามระบบ
+        resolved_label: 'ธีมที่ใช้งาน:'
+        saved: บันทึกการตั้งค่าธีมแล้ว
     queue:
       description: ใช้การกรองฝั่งเซิร์ฟเวอร์เพื่อคง canonical payload ให้เหมือนเดิมทุก
         provider mode
@@ -139,12 +118,17 @@ th:
     shell:
       nav:
         admin: ผู้ดูแลระบบ
-        components: คอมโพเนนต์
         overview: ภาพรวม
         queue: คิวนัดหมาย
       navigation_label: เมนูนำทางพื้นที่ทำงาน
       sign_out: ออกจากระบบ
       subtitle: โครงปฏิบัติการแบบ BFF-first
+    side_context:
+      description: พื้นที่นี้สงวนไว้สำหรับสรุปผลัดงานและประกาศภายใน
+      heading: ข้อมูลประกอบ
+      item_one: สรุปส่งเวร
+      item_three: ประกาศทีมงาน
+      item_two: คิวยืนยันที่รอดำเนินการ
     statuses:
       completed: เสร็จสิ้น
       in_progress: กำลังให้บริการ
@@ -158,9 +142,13 @@ th:
     table:
       appointment_id: เลขนัด
       dentist: ทันตแพทย์
-      empty: ไม่พบข้อมูลนัดหมายตามตัวกรองปัจจุบัน
+      empty_description: ลองค้นหาแบบกว้างขึ้นหรือล้างตัวกรองสถานะ
+      empty_title: ไม่พบนัดหมายตามตัวกรองที่เลือก
+      error_description: กรุณาลองใหม่อีกครั้ง หากยังพบปัญหาโปรดติดต่อผู้ดูแลระบบ
+      error_title: ไม่สามารถรีเฟรชคิวนัดหมายได้ในขณะนี้
       mrn: HN
       patient: ผู้ป่วย
+      retry: ลองใหม่
       service: บริการ
       start_time: เวลาเริ่ม
       status: สถานะ

@@ -1,9 +1,17 @@
 <% content_for :title, t("auth.sessions.title") %>
 
-<main class="mx-auto flex min-h-dvh w-full max-w-5xl items-center justify-center px-6 py-10">
-  <section class="w-full max-w-lg rounded-2xl border border-app-border-primary bg-app-surface-primary p-8 shadow-sm">
-    <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("auth.sessions.heading") %></h1>
-    <p class="mt-2 text-sm text-app-text-secondary"><%= t("auth.sessions.description") %></p>
+<main class="mx-auto flex min-h-dvh w-full max-w-6xl items-center justify-center px-6 py-10">
+  <section class="w-full max-w-lg rounded-3xl border border-app-border-primary bg-app-surface-primary p-8 shadow-sm ring-1 ring-app-border-primary/20">
+    <header>
+      <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("auth.sessions.heading") %></h1>
+      <p class="mt-2 text-sm text-app-text-secondary"><%= t("auth.sessions.description") %></p>
+    </header>
+
+    <% if @auth_error.present? %>
+      <div class="mt-5 rounded-xl border border-border-semantic-error-primary bg-bg-semantic-error-default px-4 py-3 text-sm text-text-semantic-error-primary" role="alert">
+        <%= @auth_error %>
+      </div>
+    <% end %>
 
     <%= form_with url: session_path, method: :post, class: "mt-6 space-y-4" do %>
       <div>
@@ -16,7 +24,7 @@
         <input id="password" name="password" type="password" required autocomplete="current-password" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
       </div>
 
-      <button type="submit" class="inline-flex w-full items-center justify-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
+      <button type="submit" class="inline-flex w-full items-center justify-center rounded-lg bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
         <%= t("auth.sessions.submit") %>
       </button>
     <% end %>

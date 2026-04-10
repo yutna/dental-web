@@ -12,19 +12,10 @@ RSpec.describe "Localization", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Welcome to Dental Web")
-    expect(response.body).to include("Tailwind CSS active")
-    expect(response.body).to include("Official Tailwind plugin examples")
-    expect(response.body).to include("Theme")
-    expect(response.body).to include("Active theme:")
-    expect(response.body).to include('id="theme-mode"')
-    expect(response.body).to include('value="system"')
-    expect(response.body).to include("bg-app-surface-primary")
-    expect(response.body).to include("text-app-text-primary")
-    expect(response.body).to include("bg-app-brand-primary")
-    expect(response.body).to include("form-input")
-    expect(response.body).to include("prose")
-    expect(response.body).to include("aspect-w-16")
-    expect(response.body).to include('href="/th"')
+    expect(response.body).to include("Display options")
+    expect(response.body).to include("Dashboard access")
+    expect(response.body).to include("Open sign-in flow")
+    expect(response.body).to include("Open clinical workspace")
   end
 
   it "renders Thai content at /th" do
@@ -32,19 +23,10 @@ RSpec.describe "Localization", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("ยินดีต้อนรับสู่เดนทัล เว็บ")
-    expect(response.body).to include("Tailwind CSS พร้อมใช้งาน")
-    expect(response.body).to include("ตัวอย่างปลั๊กอินทางการของ Tailwind")
-    expect(response.body).to include("ธีม")
-    expect(response.body).to include("ธีมที่ใช้งาน:")
-    expect(response.body).to include('id="theme-mode"')
-    expect(response.body).to include('value="system"')
-    expect(response.body).to include("bg-app-surface-primary")
-    expect(response.body).to include("text-app-text-primary")
-    expect(response.body).to include("bg-app-brand-primary")
-    expect(response.body).to include("form-input")
-    expect(response.body).to include("prose")
-    expect(response.body).to include("aspect-w-16")
-    expect(response.body).to include('href="/en"')
+    expect(response.body).to include("ตัวเลือกการแสดงผล")
+    expect(response.body).to include("การเข้าถึงแดชบอร์ด")
+    expect(response.body).to include("เปิดหน้าลงชื่อเข้าใช้")
+    expect(response.body).to include("เปิดพื้นที่ทำงานคลินิก")
   end
 
   it "redirects unsupported locale root to /en" do
@@ -57,5 +39,13 @@ RSpec.describe "Localization", type: :request do
     get "/jp/about"
 
     expect(response).to redirect_to("/en/about")
+  end
+
+  it "renders permission-denied guidance on localized home" do
+    get "/en", params: { reason: "workspace_denied" }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Workspace permission denied")
+    expect(response.body).to include("Request workspace:read permission from your administrator.")
   end
 end

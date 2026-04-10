@@ -25,9 +25,20 @@ export default class extends Controller {
     this.applyMode(event.target.value, { persist: true })
   }
 
+  selectMode(event) {
+    this.applyMode(event.target.value, { persist: true })
+  }
+
   syncFromDocument() {
     const mode = this.currentMode()
-    this.selectTarget.value = mode
+    if (this.hasSelectTarget) {
+      this.selectTarget.value = mode
+    }
+
+    this.element.querySelectorAll('input[name="workspace-theme-mode"]').forEach((input) => {
+      input.checked = input.value === mode
+    })
+
     this.updateResolvedLabel()
   }
 
@@ -53,9 +64,17 @@ export default class extends Controller {
 
     if (persist) {
       localStorage.setItem(THEME_STORAGE_KEY, mode)
+      this.dispatch("changed", { detail: { mode, resolvedTheme } })
     }
 
-    this.selectTarget.value = mode
+    if (this.hasSelectTarget) {
+      this.selectTarget.value = mode
+    }
+
+    this.element.querySelectorAll('input[name="workspace-theme-mode"]').forEach((input) => {
+      input.checked = input.value === mode
+    })
+
     this.updateResolvedLabel()
   }
 

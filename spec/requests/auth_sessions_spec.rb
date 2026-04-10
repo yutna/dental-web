@@ -6,6 +6,8 @@ RSpec.describe "Auth sessions", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Sign in to continue")
+    expect(response.body).to include("Display options")
+    expect(response.body).to include("Active theme:")
   end
 
   it "rejects blank credentials" do
@@ -13,6 +15,7 @@ RSpec.describe "Auth sessions", type: :request do
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.body).to include("Invalid email or password.")
+    expect(response.body).to include("role=\"alert\"")
   end
 
   it "creates a local session and opens workspace" do

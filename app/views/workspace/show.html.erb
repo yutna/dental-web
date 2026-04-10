@@ -1,125 +1,181 @@
 <% content_for :title, t("workspace.title") %>
 
-<main class="min-h-dvh bg-app-surface-secondary">
-  <div class="mx-auto flex min-h-dvh w-full max-w-[120rem]">
+<main
+  class="min-h-dvh bg-app-surface-secondary"
+  data-controller="theme"
+  data-theme-light-label-value="<%= t("workspace.profile.theme.modes.light") %>"
+  data-theme-dark-label-value="<%= t("workspace.profile.theme.modes.dark") %>"
+>
+  <div class="mx-auto flex min-h-dvh w-full max-w-480">
     <aside class="hidden w-72 border-r border-app-border-primary bg-app-surface-primary p-6 lg:flex lg:flex-col">
       <h1 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.title") %></h1>
       <p class="mt-1 text-xs text-app-text-tertiary"><%= t("workspace.shell.subtitle") %></p>
 
       <nav aria-label="<%= t("workspace.shell.navigation_label") %>" class="mt-6 space-y-2">
-        <a href="#overview" class="block rounded-md bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary"><%= t("workspace.shell.nav.overview") %></a>
-        <a href="#queue" class="block rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.queue") %></a>
-        <a href="#components" class="block rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.components") %></a>
+        <a href="#overview" class="block rounded-lg bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary"><%= t("workspace.shell.nav.overview") %></a>
+        <a href="#queue" class="block rounded-lg px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.queue") %></a>
         <% if current_principal.allowed?("admin:access") %>
-          <%= link_to t("workspace.shell.nav.admin"), admin_root_path, class: "block rounded-md px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary" %>
+          <%= link_to t("workspace.shell.nav.admin"), admin_root_path, class: "block rounded-lg px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary" %>
         <% end %>
       </nav>
-
-      <div class="mt-auto rounded-xl border border-app-border-primary bg-app-surface-secondary p-4">
-        <p class="text-sm font-medium text-app-text-primary"><%= current_principal.display_name %></p>
-        <p class="mt-1 text-xs text-app-text-tertiary"><%= current_principal.email %></p>
-        <%= button_to t("workspace.shell.sign_out"), session_path, method: :delete, class: "mt-3 inline-flex w-full items-center justify-center rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
-      </div>
     </aside>
 
     <section class="flex-1">
       <header class="sticky top-0 z-20 border-b border-app-border-primary bg-app-surface-primary/95 px-6 py-4 backdrop-blur">
-        <h2 class="text-xl font-semibold text-app-text-primary"><%= t("workspace.heading") %></h2>
-        <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.description") %></p>
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold text-app-text-primary"><%= t("workspace.heading") %></h2>
+            <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.description") %></p>
+          </div>
+
+          <div
+            class="relative"
+            data-controller="profile-menu"
+            data-action="keydown.esc@window->profile-menu#close"
+            data-profile-menu-theme-saved-message-value="<%= t("workspace.profile.theme.saved") %>"
+          >
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-xl border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-brand-primary"
+              data-profile-menu-target="button"
+              data-action="profile-menu#toggle"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="workspace-profile-menu"
+            >
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-app-brand-primary text-xs font-semibold text-app-brand-inverse">
+                <%= current_principal.display_name.to_s.first&.upcase || "U" %>
+              </span>
+              <span class="hidden text-left sm:block">
+                <span class="block leading-none"><%= current_principal.display_name %></span>
+                <span class="mt-1 block text-xs font-normal text-app-text-tertiary"><%= t("workspace.profile.open_menu") %></span>
+              </span>
+              <span aria-hidden="true" class="text-app-text-tertiary">▾</span>
+            </button>
+
+            <div
+              id="workspace-profile-menu"
+              class="absolute right-0 z-30 mt-2 hidden w-80 rounded-2xl border border-app-border-primary bg-app-surface-primary p-4 shadow-xl"
+              data-profile-menu-target="menu"
+              data-action="click->profile-menu#keepOpen keydown->profile-menu#onMenuKeydown"
+              role="menu"
+            >
+              <div class="rounded-xl border border-app-border-primary bg-app-surface-secondary p-3">
+                <p class="text-sm font-semibold text-app-text-primary"><%= current_principal.display_name %></p>
+                <p class="mt-1 text-xs text-app-text-tertiary"><%= current_principal.email %></p>
+              </div>
+
+              <div class="mt-4 border-t border-app-border-primary pt-3">
+                <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.profile.theme.label") %></p>
+                <fieldset class="mt-2 space-y-2">
+                  <% ["light", "dark", "system"].each do |mode| %>
+                    <label class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-sm text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary">
+                      <input
+                        type="radio"
+                        name="workspace-theme-mode"
+                        value="<%= mode %>"
+                        class="form-radio border-app-border-primary text-app-brand-primary focus:ring-app-brand-primary"
+                        data-action="change->theme#selectMode"
+                        <%= "checked" if mode == "system" %>
+                      >
+                      <span><%= t("workspace.profile.theme.modes.#{mode}") %></span>
+                    </label>
+                  <% end %>
+                </fieldset>
+                <p class="mt-2 text-xs text-app-text-tertiary">
+                  <%= t("workspace.profile.theme.resolved_label") %>
+                  <span data-theme-target="resolvedLabel" class="font-semibold text-app-text-secondary"></span>
+                </p>
+              </div>
+
+              <div class="mt-4 border-t border-app-border-primary pt-3">
+                <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.profile.language.label") %></p>
+                <div class="mt-2 inline-flex items-center rounded-xl border border-app-border-primary bg-app-surface-secondary p-1">
+                  <% [ :en, :th ].each do |locale| %>
+                    <% active = I18n.locale.to_sym == locale %>
+                    <%= link_to t("workspace.profile.language.#{locale == :en ? :english : :thai}"), workspace_path(locale: locale, search: @result[:filters][:search], status: @result[:filters][:status]), class: ["rounded-lg px-3 py-1 text-xs font-semibold transition", (active ? "bg-app-brand-primary text-app-brand-inverse" : "text-app-text-secondary hover:bg-app-surface-primary hover:text-app-text-primary")].join(" "), role: "menuitem" %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="mt-4 border-t border-app-border-primary pt-3">
+                <%= button_to t("workspace.shell.sign_out"), session_path, method: :delete, class: "inline-flex w-full items-center justify-center rounded-lg border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-primary" %>
+              </div>
+
+              <p class="mt-3 hidden text-xs text-app-text-secondary" data-profile-menu-target="announcement" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
       </header>
 
       <div class="space-y-6 px-6 py-6">
-        <section id="overview" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.total") %></p>
+        <section id="overview" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.total") %></p>
             <p class="mt-2 text-2xl font-semibold text-app-text-primary"><%= @result[:summary][:total] %></p>
           </article>
-          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.in_progress") %></p>
+          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.in_progress") %></p>
             <p class="mt-2 text-2xl font-semibold text-text-semantic-info-primary"><%= @result[:summary][:in_progress] %></p>
           </article>
-          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.ready") %></p>
+          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.ready") %></p>
             <p class="mt-2 text-2xl font-semibold text-text-semantic-success-primary"><%= @result[:summary][:ready] %></p>
           </article>
-          <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.completed") %></p>
+          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.completed") %></p>
             <p class="mt-2 text-2xl font-semibold text-text-semantic-ready-primary"><%= @result[:summary][:completed] %></p>
           </article>
         </section>
 
-        <section id="queue" class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm" data-controller="frame-loading">
-          <div class="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <h3 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.queue.heading") %></h3>
-              <p class="text-sm text-app-text-secondary"><%= t("workspace.queue.description") %></p>
-            </div>
-          </div>
-
-          <%= form_with url: workspace_path, method: :get, class: "mt-4 grid gap-3 md:grid-cols-[1fr_220px_auto]", data: { turbo_frame: "appointments_grid" } do %>
-            <div>
-              <label for="search" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.search_label") %></label>
-              <%= text_field_tag :search, @result[:filters][:search], id: "search", class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary", placeholder: t("workspace.filters.search_placeholder") %>
+        <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
+          <section id="queue" class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm" data-controller="frame-loading">
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h3 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.queue.heading") %></h3>
+                <p class="text-sm text-app-text-secondary"><%= t("workspace.queue.description") %></p>
+              </div>
             </div>
 
-            <div>
-              <label for="status" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.status_label") %></label>
-              <%= select_tag :status, options_for_select([[t("workspace.filters.all_statuses"), ""]] + @result[:status_options].map { |status| [t("workspace.statuses.#{status}"), status] }, @result[:filters][:status]), id: "status", class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+            <%= form_with url: workspace_path, method: :get, class: "mt-4 grid gap-3 md:grid-cols-[1fr_220px_auto]", data: { turbo_frame: "appointments_grid" } do %>
+              <div>
+                <label for="search" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.search_label") %></label>
+                <%= text_field_tag :search, @result[:filters][:search], id: "search", class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary", placeholder: t("workspace.filters.search_placeholder") %>
+              </div>
+
+              <div>
+                <label for="status" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.status_label") %></label>
+                <%= select_tag :status, options_for_select([[t("workspace.filters.all_statuses"), ""]] + @result[:status_options].map { |status| [t("workspace.statuses.#{status}"), status] }, @result[:filters][:status]), id: "status", class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+              </div>
+
+              <div class="flex items-end gap-2">
+                <button type="submit" class="inline-flex h-10 items-center justify-center rounded-lg bg-app-brand-primary px-4 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
+                  <%= t("workspace.filters.apply") %>
+                </button>
+                <%= link_to t("workspace.filters.reset"), workspace_path, class: "inline-flex h-10 items-center justify-center rounded-lg border border-app-border-primary bg-app-surface-primary px-4 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+              </div>
+            <% end %>
+
+            <div data-frame-loading-target="skeleton" class="mt-4 hidden space-y-2" aria-hidden="true">
+              <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+              <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+              <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
             </div>
 
-            <div class="flex items-end gap-2">
-              <button type="submit" class="inline-flex h-10 items-center justify-center rounded-md bg-app-brand-primary px-4 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
-                <%= t("workspace.filters.apply") %>
-              </button>
-              <%= link_to t("workspace.filters.reset"), workspace_path, class: "inline-flex h-10 items-center justify-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+            <turbo-frame id="appointments_grid" data-frame-loading-target="frame" class="mt-4 block">
+              <%= render "appointments_grid", result: @result %>
+            </turbo-frame>
+          </section>
+
+          <aside class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+            <h3 class="text-base font-semibold text-app-text-primary"><%= t("workspace.side_context.heading") %></h3>
+            <p class="mt-2 text-sm text-app-text-secondary"><%= t("workspace.side_context.description") %></p>
+            <div class="mt-4 space-y-2 text-xs text-app-text-tertiary">
+              <p>• <%= t("workspace.side_context.item_one") %></p>
+              <p>• <%= t("workspace.side_context.item_two") %></p>
+              <p>• <%= t("workspace.side_context.item_three") %></p>
             </div>
-          <% end %>
-
-          <div data-frame-loading-target="skeleton" class="mt-4 hidden space-y-2">
-            <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
-            <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
-            <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
-          </div>
-
-          <turbo-frame id="appointments_grid" data-frame-loading-target="frame" class="mt-4 block">
-            <%= render "appointments_grid", result: @result %>
-          </turbo-frame>
-        </section>
-
-        <section id="components" class="grid gap-4 lg:grid-cols-2">
-          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
-            <h3 class="text-base font-semibold text-app-text-primary"><%= t("workspace.components.select.heading") %></h3>
-            <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.components.select.description") %></p>
-
-            <div data-controller="combobox" class="relative mt-4">
-              <input type="hidden" data-combobox-target="hiddenInput">
-              <label for="demo-combobox" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.components.select.label") %></label>
-              <input id="demo-combobox" type="text" autocomplete="off" data-combobox-target="input" data-action="focus->combobox#open input->combobox#filter keydown->combobox#keydown click@window->combobox#closeOnOutsideClick" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" placeholder="<%= t("workspace.components.select.placeholder") %>">
-              <ul data-combobox-target="menu" class="absolute z-10 mt-1 hidden max-h-48 w-full overflow-y-auto rounded-md border border-app-border-primary bg-app-surface-primary p-1 shadow-lg">
-                <% @result[:status_options].each do |status| %>
-                  <li
-                    data-combobox-target="option"
-                    data-value="<%= status %>"
-                    data-label="<%= t("workspace.statuses.#{status}") %>"
-                    data-action="mousedown->combobox#select"
-                    class="cursor-pointer rounded px-3 py-2 text-sm text-app-text-primary transition hover:bg-app-surface-secondary"
-                  >
-                    <%= t("workspace.statuses.#{status}") %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </article>
-
-          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
-            <h3 class="text-base font-semibold text-app-text-primary"><%= t("workspace.components.loading.heading") %></h3>
-            <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.components.loading.description") %></p>
-            <div class="mt-4 space-y-2">
-              <div class="h-4 w-3/4 rounded bg-app-surface-secondary skeleton-shimmer"></div>
-              <div class="h-4 w-full rounded bg-app-surface-secondary skeleton-shimmer"></div>
-              <div class="h-4 w-5/6 rounded bg-app-surface-secondary skeleton-shimmer"></div>
-            </div>
-          </article>
+          </aside>
         </section>
       </div>
     </section>

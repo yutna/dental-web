@@ -54,6 +54,9 @@
         <% end %>
       </div>
     <% end %>
+
+    <%= render "layouts/public_corner_menu" unless signed_in? %>
+
     <%= yield %>
   </body>
 </html>
