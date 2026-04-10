@@ -21,10 +21,12 @@ This Rails app is the front-end team's BFF host. The UI contract is canonical an
 
 Backend connection settings:
 
-- `BACKEND_API_BASE_URL` (default `http://localhost:3001`)
-- `BACKEND_API_OPEN_TIMEOUT` (default `2`)
-- `BACKEND_API_READ_TIMEOUT` (default `5`)
+- `BACKEND_API_BASE_URL` (required)
+- `BACKEND_API_OPEN_TIMEOUT` (required)
+- `BACKEND_API_READ_TIMEOUT` (required)
 - `BFF_CONTRACT_DIFF_DIR` (default `tmp/contract_diffs`)
+
+Copy `.env.example` to `.env` and set values for your environment before running the app.
 
 Recommended architecture boundaries:
 
