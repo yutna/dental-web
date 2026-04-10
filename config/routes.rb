@@ -33,6 +33,10 @@ Rails.application.routes.draw do
         patch "visits/:visit_id/treatment", to: "treatment_forms#update"
         get "visits/:visit_id/medication", to: "medication_forms#show", as: :medication_form
         patch "visits/:visit_id/medication", to: "medication_forms#update"
+        get "visits/:visit_id/chart", to: "chart_forms#show", as: :chart_form
+        patch "visits/:visit_id/chart", to: "chart_forms#update"
+        get "visits/:visit_id/images", to: "image_forms#show", as: :image_form
+        patch "visits/:visit_id/images", to: "image_forms#update"
       end
     end
 
