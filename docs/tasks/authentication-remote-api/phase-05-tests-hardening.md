@@ -212,11 +212,13 @@ end
 ### 2. Update helper references `email` → `username` in other request specs
 
 **`spec/requests/workspace_spec.rb`:**
+
 ```ruby
 post "/en/session", params: { username: "clinician.test", password: "secret" }
 ```
 
 **`spec/requests/admin/clinic_services_spec.rb`:**
+
 ```ruby
 def sign_in_as(username:)
   post "/en/session", params: { username: username, password: "secret" }

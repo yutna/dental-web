@@ -50,6 +50,7 @@ spec/use_cases/security/
 ### 1. `SessionSnapshotMapper.from_remote` — rewrite for real API
 
 The real login and refresh endpoints return:
+
 ```json
 { "access_token": "...", "refresh_token": "...", "csrf_token": "..." }
 ```
@@ -201,6 +202,7 @@ end
 ```
 
 **Key changes from current state:**
+
 - `sign_in` uses `username:` (not `email:`)
 - `LOGIN_PATH` is `/auth/v1/login` (not `/api/v1/auth/login`)
 - `sign_out` calls `POST /auth/v1/logout` with auth headers; ignores 401 (best-effort)

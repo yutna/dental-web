@@ -85,6 +85,7 @@ end
 ```
 
 **Design decisions:**
+
 - `REFRESH_THRESHOLD_SECONDS = 60` means refresh fires when fewer than 60 seconds remain.
 - Returns a symbol (`:refreshed` / `:not_needed`) rather than the snapshot — the caller
   re-reads from session after refresh so there is no snapshot object passed around in
@@ -137,6 +138,7 @@ end
 ```
 
 **Ordering guard:** The `before_action` chain is:
+
 1. `set_locale`
 2. `hydrate_current_principal` — sets `Current.principal` from session
 3. `ensure_fresh_session!` — refreshes if needed, re-hydrates after rotation

@@ -35,6 +35,7 @@ No controller or model changes in this phase (done in Phase 02).
 ### 1. Login form — `app/views/auth/sessions/new.html.erb`
 
 **Changes:**
+
 - Input `id`, `name`, `type`, `autocomplete` → `username`
 - Label `for` attribute and i18n key → `username_label`
 - Retain value if error (`@username` instead of `@email`)
@@ -84,6 +85,7 @@ No controller or model changes in this phase (done in Phase 02).
 ### 2. English locale — `config/locales/en.yml` (auth.sessions section)
 
 Changes from current state:
+
 - Remove `email_label` (replaced by `username_label`)
 - Add `username_label`
 - Update `invalid_credentials` text ("email" → "username")

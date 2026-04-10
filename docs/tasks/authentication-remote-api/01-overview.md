@@ -103,7 +103,7 @@ Run after every phase commit:
 
 For the system test phase:
 
-5. `BACKEND_API_BASE_URL=https://your-backend-api bin/rspec spec/system`
+1. `BACKEND_API_BASE_URL=https://your-backend-api bin/rspec spec/system`
 
 ---
 

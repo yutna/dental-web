@@ -141,15 +141,18 @@ stateDiagram-v2
 #### `POST /auth/v1/login`
 
 **Request:**
+
 ```json
 {
   "username": "admin.s",
   "password": "123"
 }
 ```
+
 No auth headers required.
 
 **Response 201:**
+
 ```json
 {
   "access_token": "<jwt>",
@@ -159,6 +162,7 @@ No auth headers required.
 ```
 
 **Response 401:**
+
 ```json
 {
   "status": { "code": 401, "message": "Invalid username or password" },
@@ -174,12 +178,14 @@ Implementation home: `app/integrations/backend/providers/remote/session_provider
 #### `GET /auth/v1/profile`
 
 **Request headers:**
+
 ```
 Authorization: Bearer <access_token>
 x-csrf-token: <csrf_token>
 ```
 
 **Response 200 (JSON:API):**
+
 ```json
 {
   "data": {
@@ -214,6 +220,7 @@ Implementation home: `app/integrations/backend/mappers/session_snapshot_mapper.r
 #### `POST /auth/v1/refresh`
 
 **Request headers:**
+
 ```
 Authorization: Bearer <access_token>
 x-csrf-token: <csrf_token>
@@ -221,11 +228,13 @@ Content-Type: application/json
 ```
 
 **Request body:**
+
 ```json
 { "refresh_token": "<refresh_jwt>" }
 ```
 
 **Response 200:**
+
 ```json
 {
   "access_token": "<new_jwt>",
@@ -235,6 +244,7 @@ Content-Type: application/json
 ```
 
 **Response 400 (validation — empty refresh_token):**
+
 ```json
 {
   "status": { "code": 400001, "message": "Validation Failed" },
@@ -257,6 +267,7 @@ Implementation home: `app/integrations/backend/providers/remote/session_provider
 #### `POST /auth/v1/logout`
 
 **Request headers:**
+
 ```
 Authorization: Bearer <access_token>
 x-csrf-token: <csrf_token>
@@ -303,6 +314,7 @@ Implementation home: `app/integrations/backend/providers/remote/session_provider
 ```
 
 **Token TTLs (measured):**
+
 - Access token: 900 seconds (15 minutes)
 - Refresh token: 604 800 seconds (7 days)
 

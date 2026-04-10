@@ -263,6 +263,7 @@ end
 ```
 
 Also update `parse_response` to:
+
 - Return `{}` for empty body (200/204 from logout)
 - Map HTTP 400 to `Errors::ValidationError`
 - Map connection errors to `Errors::ServiceUnavailableError`
