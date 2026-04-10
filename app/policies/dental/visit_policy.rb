@@ -7,5 +7,13 @@ module Dental
     def transition?
       user.allowed?("dental:workflow:write")
     end
+
+    def check_in?
+      transition?
+    end
+
+    def sync_appointments?
+      transition?
+    end
   end
 end

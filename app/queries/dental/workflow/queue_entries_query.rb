@@ -4,7 +4,22 @@ module Dental
       STATUS_OPTIONS = %w[scheduled in_progress ready waiting_payment completed].freeze
       SOURCE_OPTIONS = %w[appointment_sync walk_in referral].freeze
       DEFAULT_ROWS_PROVIDER = lambda {
-        Workspace::AppointmentRowsQuery::SAMPLE_ROWS
+        if DentalQueueEntry.exists?
+          DentalQueueEntry.ordered_dashboard.map do |entry|
+            {
+              id: entry.visit_id,
+              patient_name: entry.patient_name,
+              mrn: entry.mrn,
+              service: entry.service,
+              dentist: entry.dentist,
+              starts_at: entry.starts_at,
+              status: entry.status,
+              source: entry.source
+            }
+          end
+        else
+          Workspace::AppointmentRowsQuery::SAMPLE_ROWS
+        end
       }
 
       def call(loading: false, search: nil, status: nil, source: nil, rows_provider: DEFAULT_ROWS_PROVIDER)

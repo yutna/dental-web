@@ -1,5 +1,7 @@
 module Dental
   class VisitsController < BaseController
+    CHECK_IN_DEFAULT_SERVICE = "General Consultation".freeze
+
     def show
       authorize([ :dental, :visit ], :show?)
 
@@ -59,6 +61,71 @@ module Dental
         current_stage: updated_snapshot[:current_stage],
         lock_version: updated_snapshot[:lock_version],
         last_updated_at: updated_snapshot[:last_event_at]&.iso8601
+      }
+    end
+
+    def check_in
+      authorize([ :dental, :visit ], :check_in?)
+
+      vn = params[:vn].to_s
+      if vn.blank?
+        raise Dental::Errors::GuardViolation.new(
+          message: "No active visit found",
+          details: {
+            guard: "active_vn_required"
+          }
+        )
+      end
+
+      visit_id = params[:visit_id].presence || "VISIT-#{SecureRandom.hex(4).upcase}"
+      starts_at = Time.current.strftime("%H:%M")
+
+      result = Dental::Workflow::RegisterQueueEntry.call(
+        visit_id: visit_id,
+        patient_name: params[:patient_name].presence || "Unknown Patient",
+        mrn: params[:mrn].presence || "UNKNOWN-MRN",
+        service: params[:service].presence || CHECK_IN_DEFAULT_SERVICE,
+        starts_at: starts_at,
+        status: "scheduled",
+        source: "walk_in",
+        actor_id: current_principal.id,
+        metadata: {
+          vn: vn,
+          queue_origin: "check_in"
+        }
+      )
+
+      Dental::Workflow::AppendTimelineEntry.call(
+        visit_id: visit_id,
+        from_stage: "registered",
+        to_stage: "checked-in",
+        actor_id: current_principal.id,
+        metadata: {
+          transition_source: "check_in"
+        }
+      )
+
+      queue_position = DentalQueueEntry.where(created_at: ..result[:entry].created_at).count
+
+      render json: {
+        visit_id: visit_id,
+        current_stage: "checked-in",
+        queue_position: queue_position,
+        created: result[:created]
+      }, status: :created
+    end
+
+    def sync_appointments
+      authorize([ :dental, :visit ], :sync_appointments?)
+
+      result = Dental::Workflow::SyncAppointmentsToQueue.call(actor_id: current_principal.id)
+
+      render json: {
+        synced: true,
+        created_registered_visits: result[:created_count],
+        skipped_duplicates: result[:skipped_count],
+        errors: result[:errors],
+        error_count: result[:error_count]
       }
     end
 

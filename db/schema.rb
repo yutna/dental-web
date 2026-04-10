@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_165000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_165700) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -106,6 +106,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_165000) do
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_procedure_items_on_code", unique: true
     t.index ["procedure_group_id"], name: "index_dental_procedure_items_on_procedure_group_id"
+  end
+
+  create_table "dental_queue_entries", force: :cascade do |t|
+    t.string "actor_id"
+    t.datetime "created_at", null: false
+    t.string "dentist"
+    t.text "metadata_json", default: "{}", null: false
+    t.string "mrn", null: false
+    t.string "patient_name", null: false
+    t.string "service", null: false
+    t.string "source", null: false
+    t.string "starts_at", null: false
+    t.string "status", null: false
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["source"], name: "index_dental_queue_entries_on_source"
+    t.index ["status"], name: "index_dental_queue_entries_on_status"
+    t.index ["visit_id"], name: "index_dental_queue_entries_on_visit_id", unique: true
   end
 
   create_table "dental_supply_categories", force: :cascade do |t|
