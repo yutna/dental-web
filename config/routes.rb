@@ -19,9 +19,19 @@ Rails.application.routes.draw do
     resource :session, only: %i[new create destroy], module: :auth
     resource :workspace, only: :show, controller: "workspace"
 
+    namespace :dental do
+      root "home#show"
+      get "visits/:id", to: "visits#show", as: :visit
+      patch "visits/:id/transition", to: "visits#transition", as: :visit_transition
+    end
+
     namespace :admin do
       root "dashboard#show"
       resources :clinic_services, except: :show
+
+      namespace :dental do
+        root "dashboard#show"
+      end
     end
   end
 
