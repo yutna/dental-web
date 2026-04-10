@@ -64,6 +64,54 @@ en:
       submit: Sign in
       title: Sign in
       username_label: Username
+  dental:
+    enums:
+      payment_status:
+        not-required: No payment required
+        paid: Paid
+        pending: Pending payment
+      requisition_status:
+        approved: Approved
+        cancelled: Cancelled
+        dispensed: Dispensed
+        pending: Pending
+        received: Received
+      stock_direction:
+        in: Stock in
+        out: Stock out
+      stock_source:
+        adjustment: Manual adjustment
+        pharmacy: Pharmacy
+        requisition: Requisition
+      usage_status:
+        deducted: Deducted
+        failed: Deduction failed
+        pending_deduct: Pending deduction
+      visit_stage:
+        cancelled: Cancelled
+        checked-in: Checked in
+        completed: Completed
+        in-treatment: In treatment
+        ready-for-treatment: Ready for treatment
+        referred-out: Referred out
+        registered: Registered
+        screening: Screening
+        waiting-payment: Waiting payment
+    errors:
+      contract_mismatch: Contract mismatch
+      duplicate_entry: Duplicate entry
+      external_integration_unavailable: External integration unavailable
+      forbidden: Forbidden
+      insufficient_stock: Insufficient stock
+      invalid_stage_transition: Invalid stage transition
+      not_found: Not found
+      state_guard_violation: State guard violation
+      unauthorized: Unauthorized
+      validation_error: Validation error
+    labels:
+      admin_dashboard_title: Dental admin dashboard
+      namespace_title: Dental workflow
+      visit_not_found: Visit not found
   home:
     authenticated:
       description: Access clinical workspace and manage your profile.

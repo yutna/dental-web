@@ -73,3 +73,15 @@ TODO markers to preserve in implementation:
 - Request specs for route-level access control and locale behavior.
 - Policy specs for each new dental policy class (baseline deny/allow matrix skeleton).
 - Contract specs for mapper/provider shape validation with fixture payloads.
+
+## Foundation execution log (T01.08)
+
+| Ticket | Commit | Result |
+|---|---|---|
+| T01.01 | `68fa19f` | error taxonomy and enum value objects added with domain specs |
+| T01.02 | `70e28e8` | dental base controller/policy skeleton added with deny-by-default policy baseline |
+| T01.03 | `f3e12cc` | dental provider interfaces and typed result contracts added with contract specs |
+| T01.04 | `8f28259` | locale-scoped dental and admin-dental routes added with routing coverage |
+| T01.05 | `e194e2a` | typed IDs, base entity, and dental use-case base added with specs |
+| T01.06 | `23e87e5` | initial dental locale dictionary added in en/th and validated by i18n health |
+| T01.07 | `fc16713` | deterministic forbidden/not-found/invalid-transition request contracts added |

@@ -63,6 +63,54 @@ th:
       submit: ลงชื่อเข้าใช้
       title: ลงชื่อเข้าใช้
       username_label: ชื่อผู้ใช้
+  dental:
+    enums:
+      payment_status:
+        not-required: ไม่ต้องชำระเงิน
+        paid: ชำระแล้ว
+        pending: รอชำระเงิน
+      requisition_status:
+        approved: อนุมัติแล้ว
+        cancelled: ยกเลิกแล้ว
+        dispensed: จ่ายแล้ว
+        pending: รอดำเนินการ
+        received: รับเข้าแล้ว
+      stock_direction:
+        in: รับเข้า
+        out: ตัดออก
+      stock_source:
+        adjustment: ปรับปรุงด้วยมือ
+        pharmacy: ห้องยา
+        requisition: เบิกจ่าย
+      usage_status:
+        deducted: ตัดสต็อกแล้ว
+        failed: ตัดสต็อกไม่สำเร็จ
+        pending_deduct: รอตัดสต็อก
+      visit_stage:
+        cancelled: ยกเลิก
+        checked-in: เช็กอินแล้ว
+        completed: เสร็จสิ้น
+        in-treatment: ระหว่างรักษา
+        ready-for-treatment: พร้อมรักษา
+        referred-out: ส่งต่อ
+        registered: ลงทะเบียนแล้ว
+        screening: คัดกรอง
+        waiting-payment: รอชำระเงิน
+    errors:
+      contract_mismatch: โครงสร้างสัญญาข้อมูลไม่ตรงกัน
+      duplicate_entry: ข้อมูลซ้ำ
+      external_integration_unavailable: ระบบเชื่อมต่อภายนอกไม่พร้อมใช้งาน
+      forbidden: ไม่ได้รับอนุญาต
+      insufficient_stock: สต็อกไม่เพียงพอ
+      invalid_stage_transition: การเปลี่ยนสถานะไม่ถูกต้อง
+      not_found: ไม่พบข้อมูล
+      state_guard_violation: ไม่ผ่านเงื่อนไขการเปลี่ยนสถานะ
+      unauthorized: ต้องลงชื่อเข้าใช้
+      validation_error: ข้อมูลไม่ถูกต้อง
+    labels:
+      admin_dashboard_title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
+      namespace_title: เวิร์กโฟลว์ทันตกรรม
+      visit_not_found: ไม่พบข้อมูลการเข้ารับบริการ
   home:
     authenticated:
       description: เข้าถึงพื้นที่ทำงานคลินิกและจัดการโปรไฟล์ของคุณ
