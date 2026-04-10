@@ -53,6 +53,11 @@ module Dental
       DEFAULT_MESSAGE = "Insufficient stock".freeze
     end
 
+    class StageUpdateConflict < BaseError
+      CODE = Dental::ErrorCode::STALE_UPDATE_CONFLICT
+      DEFAULT_MESSAGE = "Stage update conflict".freeze
+    end
+
     class ContractMismatch < BaseError
       CODE = Dental::ErrorCode::CONTRACT_MISMATCH
       DEFAULT_MESSAGE = "Contract mismatch".freeze

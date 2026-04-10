@@ -10,6 +10,7 @@ RSpec.describe Dental::ErrorCode do
         "STATE_GUARD_VIOLATION",
         "INSUFFICIENT_STOCK",
         "DUPLICATE_ENTRY",
+        "STALE_UPDATE_CONFLICT",
         "UNAUTHORIZED",
         "FORBIDDEN",
         "CONTRACT_MISMATCH",
@@ -51,6 +52,10 @@ RSpec.describe Dental::Errors do
 
   it "maps InsufficientStock to INSUFFICIENT_STOCK" do
     expect(Dental::Errors::InsufficientStock.new.code).to eq(Dental::ErrorCode::INSUFFICIENT_STOCK)
+  end
+
+  it "maps StageUpdateConflict to STALE_UPDATE_CONFLICT" do
+    expect(Dental::Errors::StageUpdateConflict.new.code).to eq(Dental::ErrorCode::STALE_UPDATE_CONFLICT)
   end
 
   it "maps ContractMismatch to CONTRACT_MISMATCH" do

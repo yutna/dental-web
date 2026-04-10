@@ -32,7 +32,8 @@ module Dental
         :forbidden
       when Dental::ErrorCode::NOT_FOUND
         :not_found
-      when Dental::ErrorCode::DUPLICATE_ENTRY
+      when Dental::ErrorCode::DUPLICATE_ENTRY,
+           Dental::ErrorCode::STALE_UPDATE_CONFLICT
         :conflict
       when Dental::ErrorCode::VALIDATION_ERROR,
            Dental::ErrorCode::INVALID_STAGE_TRANSITION,

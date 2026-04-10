@@ -34,6 +34,21 @@ RSpec.describe "Dental foundation contracts", type: :request do
     end
   end
 
+  describe "workflow show contract" do
+    it "returns current stage and lock version for existing visits" do
+      post "/en/session", params: { username: "admin.test", password: "secret" }
+
+      get "/en/dental/visits/VISIT-1"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to include(
+        "visit_id" => "VISIT-1",
+        "current_stage" => "registered",
+        "lock_version" => 0
+      )
+    end
+  end
+
   describe "invalid transition contract" do
     it "returns INVALID_STAGE_TRANSITION for unsupported transition targets" do
       post "/en/session", params: { username: "admin.test", password: "secret" }

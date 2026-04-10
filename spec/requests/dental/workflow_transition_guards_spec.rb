@@ -77,7 +77,9 @@ RSpec.describe "Dental workflow transition guards", type: :request do
     expect(response.parsed_body).to include(
       "transitioned" => true,
       "from_stage" => "ready-for-treatment",
-      "to_stage" => "in-treatment"
+      "to_stage" => "in-treatment",
+      "current_stage" => "in-treatment",
+      "lock_version" => 1
     )
 
     expect(DentalWorkflowTimelineEntry.count).to eq(before_count + 1)
@@ -86,6 +88,37 @@ RSpec.describe "Dental workflow transition guards", type: :request do
       from_stage: "ready-for-treatment",
       to_stage: "in-treatment",
       event_type: "stage_transition"
+    )
+  end
+
+  it "returns conflict when lock_version is stale" do
+    patch "/en/dental/visits/VISIT-1/transition", params: {
+      from_stage: "registered",
+      to_stage: "checked-in",
+      lock_version: 0
+    }
+
+    patch "/en/dental/visits/VISIT-1/transition", params: {
+      from_stage: "checked-in",
+      to_stage: "screening",
+      room_available: true,
+      lock_version: 0
+    }
+
+    expect(response).to have_http_status(:conflict)
+    expect(response.parsed_body).to include(
+      "error" => include(
+        "code" => Dental::ErrorCode::STALE_UPDATE_CONFLICT,
+        "message" => "This visit was updated by another user",
+        "details" => include(
+          "visit_id" => "VISIT-1",
+          "attempted_from_stage" => "checked-in",
+          "attempted_to_stage" => "screening",
+          "current_stage" => "checked-in",
+          "current_lock_version" => 1,
+          "expected_lock_version" => 0
+        )
+      )
     )
   end
 end
