@@ -1,0 +1,507 @@
+{
+  "schema_version": "1.0.0",
+  "graph_id": "dental-system-requirements-kg",
+  "feature_slug": "dental-system",
+  "generated_at": "2026-04-10",
+  "language": "en",
+  "purpose": "Machine-readable requirements reference graph for AI agents",
+  "sources": [
+    "docs/tasks/dental-system/00-specifications.md",
+    "docs/tasks/dental-system/01-overview.md",
+    "docs/tasks/dental-system/test-scenarios.md",
+    "docs/tasks/dental-system/phase-01-foundation.md",
+    "docs/tasks/dental-system/phase-02-master-data-and-admin.md",
+    "docs/tasks/dental-system/phase-03-workflow-and-queue.md",
+    "docs/tasks/dental-system/phase-04-clinical-forms-and-history.md",
+    "docs/tasks/dental-system/phase-05-supply-costing-and-billing.md",
+    "docs/tasks/dental-system/phase-06-integration-authz-and-audit.md",
+    "docs/tasks/dental-system/phase-07-printing-and-release-hardening.md"
+  ],
+  "nodes": [
+    {
+      "id": "feature:dental-system",
+      "type": "Feature",
+      "name": "Dental System",
+      "attributes": {
+        "scope": [
+          "master_data",
+          "workflow_queue",
+          "clinical_forms_history",
+          "supply_costing_stock_billing",
+          "integration",
+          "authz_audit",
+          "admin_backend"
+        ],
+        "locales": [
+          "en",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "architecture:rails-bff",
+      "type": "Architecture",
+      "name": "Rails BFF",
+      "attributes": {
+        "constraints": [
+          "policy_first_authorization",
+          "locale_scoped_routes",
+          "canonical_ui_contract_owned_by_rails",
+          "provider_specific_mapping_in_integrations"
+        ]
+      }
+    },
+
+    {
+      "id": "phase:01",
+      "type": "Phase",
+      "name": "Foundation and Contracts",
+      "attributes": { "order": 1 }
+    },
+    {
+      "id": "phase:02",
+      "type": "Phase",
+      "name": "Master Data and Admin",
+      "attributes": { "order": 2 }
+    },
+    {
+      "id": "phase:03",
+      "type": "Phase",
+      "name": "Workflow and Queue",
+      "attributes": { "order": 3 }
+    },
+    {
+      "id": "phase:04",
+      "type": "Phase",
+      "name": "Clinical Forms and History",
+      "attributes": { "order": 4 }
+    },
+    {
+      "id": "phase:05",
+      "type": "Phase",
+      "name": "Supply Costing and Billing",
+      "attributes": { "order": 5 }
+    },
+    {
+      "id": "phase:06",
+      "type": "Phase",
+      "name": "Integration Authz and Audit",
+      "attributes": { "order": 6 }
+    },
+    {
+      "id": "phase:07",
+      "type": "Phase",
+      "name": "Printing and Release Hardening",
+      "attributes": { "order": 7 }
+    },
+
+    {
+      "id": "sm:visit-workflow",
+      "type": "StateMachine",
+      "name": "Dental Visit Workflow"
+    },
+    {
+      "id": "sm:requisition",
+      "type": "StateMachine",
+      "name": "Requisition Lifecycle"
+    },
+    {
+      "id": "sm:usage-deduction",
+      "type": "StateMachine",
+      "name": "Usage Deduction Lifecycle"
+    },
+
+    { "id": "state:registered", "type": "State", "name": "registered" },
+    { "id": "state:checked-in", "type": "State", "name": "checked-in" },
+    { "id": "state:screening", "type": "State", "name": "screening" },
+    { "id": "state:ready-for-treatment", "type": "State", "name": "ready-for-treatment" },
+    { "id": "state:in-treatment", "type": "State", "name": "in-treatment" },
+    { "id": "state:waiting-payment", "type": "State", "name": "waiting-payment" },
+    { "id": "state:completed", "type": "State", "name": "completed" },
+    { "id": "state:referred-out", "type": "State", "name": "referred-out" },
+    { "id": "state:cancelled", "type": "State", "name": "cancelled" },
+    { "id": "state:pending", "type": "State", "name": "pending" },
+    { "id": "state:approved", "type": "State", "name": "approved" },
+    { "id": "state:dispensed", "type": "State", "name": "dispensed" },
+    { "id": "state:received", "type": "State", "name": "received" },
+    { "id": "state:pending_deduct", "type": "State", "name": "pending_deduct" },
+    { "id": "state:deducted", "type": "State", "name": "deducted" },
+    { "id": "state:failed", "type": "State", "name": "failed" },
+
+    {
+      "id": "transition:visit:registered->checked-in",
+      "type": "Transition",
+      "name": "check-in",
+      "attributes": { "guard": "active_vn_exists" }
+    },
+    {
+      "id": "transition:visit:checked-in->screening",
+      "type": "Transition",
+      "name": "start screening",
+      "attributes": { "guard": "room_available" }
+    },
+    {
+      "id": "transition:visit:screening->ready-for-treatment",
+      "type": "Transition",
+      "name": "screening pass",
+      "attributes": { "guard": "vitals_minimum_present" }
+    },
+    {
+      "id": "transition:visit:ready-for-treatment->in-treatment",
+      "type": "Transition",
+      "name": "start treatment",
+      "attributes": { "guard": "dentist_assigned" }
+    },
+    {
+      "id": "transition:visit:in-treatment->waiting-payment",
+      "type": "Transition",
+      "name": "send to cashier",
+      "attributes": { "guard": "chargeables_exist_and_invoice_created" }
+    },
+    {
+      "id": "transition:visit:in-treatment->completed",
+      "type": "Transition",
+      "name": "complete no payment",
+      "attributes": { "guard": "payment_status_not_required" }
+    },
+    {
+      "id": "transition:visit:waiting-payment->completed",
+      "type": "Transition",
+      "name": "payment paid auto complete",
+      "attributes": { "guard": "payment_status_paid" }
+    },
+    {
+      "id": "transition:visit:in-treatment->referred-out",
+      "type": "Transition",
+      "name": "refer out",
+      "attributes": { "guard": "referral_destination_provided" }
+    },
+    {
+      "id": "transition:visit:registered->cancelled",
+      "type": "Transition",
+      "name": "cancel from registered"
+    },
+    {
+      "id": "transition:visit:checked-in->cancelled",
+      "type": "Transition",
+      "name": "cancel from checked-in"
+    },
+
+    {
+      "id": "transition:req:pending->approved",
+      "type": "Transition",
+      "name": "approve requisition",
+      "attributes": { "guard": "approvedBy_not_requestedBy" }
+    },
+    {
+      "id": "transition:req:approved->dispensed",
+      "type": "Transition",
+      "name": "dispense requisition",
+      "attributes": { "guard": "dispense_number_exists" }
+    },
+    {
+      "id": "transition:req:dispensed->received",
+      "type": "Transition",
+      "name": "receive requisition",
+      "attributes": { "guard": "receiver_role_valid" }
+    },
+    { "id": "transition:req:pending->cancelled", "type": "Transition", "name": "cancel requisition pending" },
+    { "id": "transition:req:approved->cancelled", "type": "Transition", "name": "cancel requisition approved" },
+
+    {
+      "id": "transition:usage:pending_deduct->deducted",
+      "type": "Transition",
+      "name": "deduct success"
+    },
+    {
+      "id": "transition:usage:pending_deduct->failed",
+      "type": "Transition",
+      "name": "deduct fail"
+    },
+    {
+      "id": "transition:usage:deducted->pending_deduct",
+      "type": "Transition",
+      "name": "rollback sync"
+    },
+    {
+      "id": "transition:usage:failed->pending_deduct",
+      "type": "Transition",
+      "name": "retry sync"
+    },
+
+    { "id": "error:NOT_FOUND", "type": "ErrorCode", "name": "NOT_FOUND" },
+    { "id": "error:VALIDATION_ERROR", "type": "ErrorCode", "name": "VALIDATION_ERROR" },
+    { "id": "error:INVALID_STAGE_TRANSITION", "type": "ErrorCode", "name": "INVALID_STAGE_TRANSITION" },
+    { "id": "error:STATE_GUARD_VIOLATION", "type": "ErrorCode", "name": "STATE_GUARD_VIOLATION" },
+    { "id": "error:INSUFFICIENT_STOCK", "type": "ErrorCode", "name": "INSUFFICIENT_STOCK" },
+    { "id": "error:DUPLICATE_ENTRY", "type": "ErrorCode", "name": "DUPLICATE_ENTRY" },
+    { "id": "error:UNAUTHORIZED", "type": "ErrorCode", "name": "UNAUTHORIZED" },
+    { "id": "error:FORBIDDEN", "type": "ErrorCode", "name": "FORBIDDEN" },
+
+    { "id": "role:DENTIST", "type": "Role", "name": "DENTIST" },
+    { "id": "role:DENTAL_ASSISTANT", "type": "Role", "name": "DENTAL_ASSISTANT" },
+    { "id": "role:DENTAL_NURSE", "type": "Role", "name": "DENTAL_NURSE" },
+    { "id": "role:DENTAL_ADMIN", "type": "Role", "name": "DENTAL_ADMIN" },
+    { "id": "role:HEAD_DENTAL", "type": "Role", "name": "HEAD_DENTAL" },
+    { "id": "role:PHARMACIST", "type": "Role", "name": "PHARMACIST" },
+    { "id": "role:CASHIER", "type": "Role", "name": "CASHIER" },
+    { "id": "role:REGISTRATION", "type": "Role", "name": "REGISTRATION" },
+    { "id": "role:SYSTEM_ADMIN", "type": "Role", "name": "SYSTEM_ADMIN" },
+
+    { "id": "policy:Dental::MasterDataPolicy", "type": "Policy", "name": "Dental::MasterDataPolicy" },
+    { "id": "policy:Dental::WorkflowPolicy", "type": "Policy", "name": "Dental::WorkflowPolicy" },
+    { "id": "policy:Dental::ClinicalPolicy", "type": "Policy", "name": "Dental::ClinicalPolicy" },
+    { "id": "policy:Dental::StockPolicy", "type": "Policy", "name": "Dental::StockPolicy" },
+    { "id": "policy:Dental::RequisitionPolicy", "type": "Policy", "name": "Dental::RequisitionPolicy" },
+    { "id": "policy:Dental::PrintPolicy", "type": "Policy", "name": "Dental::PrintPolicy" },
+    { "id": "policy:Dental::AdminPolicy", "type": "Policy", "name": "Dental::AdminPolicy" },
+
+    { "id": "integration:registration->dental", "type": "IntegrationContract", "name": "Registration to Dental" },
+    { "id": "integration:appointment<->dental", "type": "IntegrationContract", "name": "Appointment bidirectional with Dental" },
+    { "id": "integration:eligibility->dental", "type": "IntegrationContract", "name": "Eligibility to Dental" },
+    { "id": "integration:dental->cashier", "type": "IntegrationContract", "name": "Dental to Cashier invoice" },
+    { "id": "integration:cashier->dental", "type": "IntegrationContract", "name": "Cashier to Dental payment sync" },
+    { "id": "integration:dental->pharmacy", "type": "IntegrationContract", "name": "Dental to Pharmacy dispatch" },
+    { "id": "integration:dental-requisition->stock", "type": "IntegrationContract", "name": "Dental requisition to stock systems" },
+    { "id": "integration:clinical-queue<->dental", "type": "IntegrationContract", "name": "Clinical queue bidirectional with Dental" },
+
+    { "id": "algo:runtime-pricing", "type": "BusinessRule", "name": "Runtime pricing resolution" },
+    { "id": "algo:copay-xor", "type": "BusinessRule", "name": "Copay xor rule" },
+    { "id": "algo:cumulative-tooth-map", "type": "BusinessRule", "name": "Cumulative tooth map" },
+    { "id": "algo:requisition-guards", "type": "BusinessRule", "name": "Requisition transition and identity guards" },
+
+    { "id": "nfr:latency", "type": "NFR", "name": "Latency targets" },
+    { "id": "nfr:concurrency", "type": "NFR", "name": "Optimistic locking and consistency" },
+    { "id": "nfr:idempotency", "type": "NFR", "name": "Idempotent stock movement by reference" },
+    { "id": "nfr:integrity", "type": "NFR", "name": "Soft delete and append-only timeline" },
+
+    { "id": "decision:DL-001", "type": "Decision", "name": "Deny-by-default permissions" },
+    { "id": "decision:DL-002", "type": "Decision", "name": "In-module maker-checker approvals" },
+    { "id": "decision:DL-003", "type": "Decision", "name": "Signed callback with idempotency key" },
+    { "id": "decision:DL-004", "type": "Decision", "name": "BFF-level row access control for SQLite" },
+    { "id": "decision:DL-005", "type": "Decision", "name": "Polling baseline at 30s" },
+    { "id": "decision:DL-006", "type": "Decision", "name": "Provisional bilingual legal templates" },
+
+    { "id": "todo:T-001", "type": "Todo", "name": "Confirm IAM source-of-truth payload" },
+    { "id": "todo:T-002", "type": "Todo", "name": "Confirm approval architecture" },
+    { "id": "todo:T-003", "type": "Todo", "name": "Confirm legal print signature metadata" },
+    { "id": "todo:T-004", "type": "Todo", "name": "Confirm external VN/HN identifier format" },
+    { "id": "todo:T-005", "type": "Todo", "name": "Confirm callback payload identifier types" },
+    { "id": "todo:T-006", "type": "Todo", "name": "Confirm stock reference ID type" },
+    { "id": "todo:T-007", "type": "Todo", "name": "Confirm approval role boundaries" },
+    { "id": "todo:T-008", "type": "Todo", "name": "Confirm denormalized sync cadence" },
+    { "id": "todo:T-009", "type": "Todo", "name": "Confirm queue refresh transport" },
+    { "id": "todo:T-010", "type": "Todo", "name": "Confirm room allocation source" },
+    { "id": "todo:T-011", "type": "Todo", "name": "Confirm image backend retention policy" },
+    { "id": "todo:T-012", "type": "Todo", "name": "Confirm DICOM viewer and MIME policy" },
+    { "id": "todo:T-013", "type": "Todo", "name": "Confirm payment callback auth standard" },
+    { "id": "todo:T-014", "type": "Todo", "name": "Confirm invoice cancellation after partial payment" },
+    { "id": "todo:T-015", "type": "Todo", "name": "Confirm JWT claim and permissions payload" },
+    { "id": "todo:T-016", "type": "Todo", "name": "Confirm RLS strategy for SQLite runtime" },
+    { "id": "todo:T-017", "type": "Todo", "name": "Confirm official print form and signature requirements" },
+    { "id": "todo:T-018", "type": "Todo", "name": "Confirm archival retention and watermark obligations" },
+
+    { "id": "scenario:SCN-001", "type": "Scenario", "name": "Create dental visit from registration intake", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-002", "type": "Scenario", "name": "Transition checked-in to screening with room assignment", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-003", "type": "Scenario", "name": "Transition ready-for-treatment to in-treatment with assigned dentist", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-004", "type": "Scenario", "name": "Enforce guarded stage transition from screening to ready-for-treatment", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-005", "type": "Scenario", "name": "Complete treatment with payable items", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-006", "type": "Scenario", "name": "Auto-complete visit when payment is fully paid", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-007", "type": "Scenario", "name": "Handle payment sync failure without corrupting workflow state", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-008", "type": "Scenario", "name": "Complete visit directly when payment is not required", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-009", "type": "Scenario", "name": "Refer out from in-treatment", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-010", "type": "Scenario", "name": "Cancel visit from registered stage", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-011", "type": "Scenario", "name": "Cancel visit from checked-in stage", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-012", "type": "Scenario", "name": "Reject invalid workflow transition", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-013", "type": "Scenario", "name": "Save dental procedure with tooth-level constraints", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-014", "type": "Scenario", "name": "Save medication usage with high-alert warning", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-015", "type": "Scenario", "name": "Mark usage deducted after successful stock deduction", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-016", "type": "Scenario", "name": "Fail stock deduction when insufficient balance", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-017", "type": "Scenario", "name": "Rollback usage when source post is voided", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-018", "type": "Scenario", "name": "Requisition approval guard blocks self-approval", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-019", "type": "Scenario", "name": "Approve requisition with different approver", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-020", "type": "Scenario", "name": "Reject dispense without dispense number", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-021", "type": "Scenario", "name": "Requisition receive records stock-in movement", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-022", "type": "Scenario", "name": "Cancel approved requisition before dispense", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-023", "type": "Scenario", "name": "Master data soft-delete guard", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-024", "type": "Scenario", "name": "Policy denies unauthorized workflow transition", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-025", "type": "Scenario", "name": "Return not found when visit ID does not exist", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-026", "type": "Scenario", "name": "Prevent concurrent stage update race condition", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-027", "type": "Scenario", "name": "Locale behavior remains URL-scoped", "attributes": { "priority": "must" } },
+    { "id": "scenario:SCN-028", "type": "Scenario", "name": "Appointment sync creates registered queue entries for today", "attributes": { "priority": "should" } },
+    { "id": "scenario:SCN-029", "type": "Scenario", "name": "Coverage expiry fallback", "attributes": { "priority": "should" } },
+    { "id": "scenario:SCN-030", "type": "Scenario", "name": "Drug allergy warning for medication order", "attributes": { "priority": "should" } },
+    { "id": "scenario:SCN-031", "type": "Scenario", "name": "Bulk coverage update with optimistic lock conflict handling", "attributes": { "priority": "could" } },
+    { "id": "scenario:SCN-032", "type": "Scenario", "name": "Implement non-dental module internal business logic", "attributes": { "priority": "wont" } }
+  ],
+  "edges": [
+    { "from": "feature:dental-system", "to": "architecture:rails-bff", "type": "constrained_by" },
+
+    { "from": "feature:dental-system", "to": "phase:01", "type": "implemented_in" },
+    { "from": "feature:dental-system", "to": "phase:02", "type": "implemented_in" },
+    { "from": "feature:dental-system", "to": "phase:03", "type": "implemented_in" },
+    { "from": "feature:dental-system", "to": "phase:04", "type": "implemented_in" },
+    { "from": "feature:dental-system", "to": "phase:05", "type": "implemented_in" },
+    { "from": "feature:dental-system", "to": "phase:06", "type": "implemented_in" },
+    { "from": "feature:dental-system", "to": "phase:07", "type": "implemented_in" },
+
+    { "from": "phase:03", "to": "sm:visit-workflow", "type": "owns_state_machine" },
+    { "from": "phase:05", "to": "sm:requisition", "type": "owns_state_machine" },
+    { "from": "phase:05", "to": "sm:usage-deduction", "type": "owns_state_machine" },
+
+    { "from": "sm:visit-workflow", "to": "state:registered", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:checked-in", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:screening", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:ready-for-treatment", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:in-treatment", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:waiting-payment", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:completed", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:referred-out", "type": "has_state" },
+    { "from": "sm:visit-workflow", "to": "state:cancelled", "type": "has_state" },
+
+    { "from": "sm:requisition", "to": "state:pending", "type": "has_state" },
+    { "from": "sm:requisition", "to": "state:approved", "type": "has_state" },
+    { "from": "sm:requisition", "to": "state:dispensed", "type": "has_state" },
+    { "from": "sm:requisition", "to": "state:received", "type": "has_state" },
+    { "from": "sm:requisition", "to": "state:cancelled", "type": "has_state" },
+
+    { "from": "sm:usage-deduction", "to": "state:pending_deduct", "type": "has_state" },
+    { "from": "sm:usage-deduction", "to": "state:deducted", "type": "has_state" },
+    { "from": "sm:usage-deduction", "to": "state:failed", "type": "has_state" },
+
+    { "from": "sm:visit-workflow", "to": "transition:visit:registered->checked-in", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:checked-in->screening", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:screening->ready-for-treatment", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:ready-for-treatment->in-treatment", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:in-treatment->waiting-payment", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:in-treatment->completed", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:waiting-payment->completed", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:in-treatment->referred-out", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:registered->cancelled", "type": "has_transition" },
+    { "from": "sm:visit-workflow", "to": "transition:visit:checked-in->cancelled", "type": "has_transition" },
+
+    { "from": "sm:requisition", "to": "transition:req:pending->approved", "type": "has_transition" },
+    { "from": "sm:requisition", "to": "transition:req:approved->dispensed", "type": "has_transition" },
+    { "from": "sm:requisition", "to": "transition:req:dispensed->received", "type": "has_transition" },
+    { "from": "sm:requisition", "to": "transition:req:pending->cancelled", "type": "has_transition" },
+    { "from": "sm:requisition", "to": "transition:req:approved->cancelled", "type": "has_transition" },
+
+    { "from": "sm:usage-deduction", "to": "transition:usage:pending_deduct->deducted", "type": "has_transition" },
+    { "from": "sm:usage-deduction", "to": "transition:usage:pending_deduct->failed", "type": "has_transition" },
+    { "from": "sm:usage-deduction", "to": "transition:usage:deducted->pending_deduct", "type": "has_transition" },
+    { "from": "sm:usage-deduction", "to": "transition:usage:failed->pending_deduct", "type": "has_transition" },
+
+    { "from": "feature:dental-system", "to": "error:NOT_FOUND", "type": "uses_error_code" },
+    { "from": "feature:dental-system", "to": "error:VALIDATION_ERROR", "type": "uses_error_code" },
+    { "from": "feature:dental-system", "to": "error:INVALID_STAGE_TRANSITION", "type": "uses_error_code" },
+    { "from": "feature:dental-system", "to": "error:STATE_GUARD_VIOLATION", "type": "uses_error_code" },
+    { "from": "feature:dental-system", "to": "error:INSUFFICIENT_STOCK", "type": "uses_error_code" },
+    { "from": "feature:dental-system", "to": "error:DUPLICATE_ENTRY", "type": "uses_error_code" },
+    { "from": "feature:dental-system", "to": "error:UNAUTHORIZED", "type": "uses_error_code" },
+    { "from": "feature:dental-system", "to": "error:FORBIDDEN", "type": "uses_error_code" },
+
+    { "from": "feature:dental-system", "to": "policy:Dental::MasterDataPolicy", "type": "enforced_by" },
+    { "from": "feature:dental-system", "to": "policy:Dental::WorkflowPolicy", "type": "enforced_by" },
+    { "from": "feature:dental-system", "to": "policy:Dental::ClinicalPolicy", "type": "enforced_by" },
+    { "from": "feature:dental-system", "to": "policy:Dental::StockPolicy", "type": "enforced_by" },
+    { "from": "feature:dental-system", "to": "policy:Dental::RequisitionPolicy", "type": "enforced_by" },
+    { "from": "feature:dental-system", "to": "policy:Dental::PrintPolicy", "type": "enforced_by" },
+    { "from": "feature:dental-system", "to": "policy:Dental::AdminPolicy", "type": "enforced_by" },
+
+    { "from": "feature:dental-system", "to": "integration:registration->dental", "type": "integrates_with" },
+    { "from": "feature:dental-system", "to": "integration:appointment<->dental", "type": "integrates_with" },
+    { "from": "feature:dental-system", "to": "integration:eligibility->dental", "type": "integrates_with" },
+    { "from": "feature:dental-system", "to": "integration:dental->cashier", "type": "integrates_with" },
+    { "from": "feature:dental-system", "to": "integration:cashier->dental", "type": "integrates_with" },
+    { "from": "feature:dental-system", "to": "integration:dental->pharmacy", "type": "integrates_with" },
+    { "from": "feature:dental-system", "to": "integration:dental-requisition->stock", "type": "integrates_with" },
+    { "from": "feature:dental-system", "to": "integration:clinical-queue<->dental", "type": "integrates_with" },
+
+    { "from": "feature:dental-system", "to": "algo:runtime-pricing", "type": "governed_by" },
+    { "from": "feature:dental-system", "to": "algo:copay-xor", "type": "governed_by" },
+    { "from": "feature:dental-system", "to": "algo:cumulative-tooth-map", "type": "governed_by" },
+    { "from": "feature:dental-system", "to": "algo:requisition-guards", "type": "governed_by" },
+
+    { "from": "feature:dental-system", "to": "nfr:latency", "type": "requires" },
+    { "from": "feature:dental-system", "to": "nfr:concurrency", "type": "requires" },
+    { "from": "feature:dental-system", "to": "nfr:idempotency", "type": "requires" },
+    { "from": "feature:dental-system", "to": "nfr:integrity", "type": "requires" },
+
+    { "from": "feature:dental-system", "to": "decision:DL-001", "type": "governed_by_decision" },
+    { "from": "feature:dental-system", "to": "decision:DL-002", "type": "governed_by_decision" },
+    { "from": "feature:dental-system", "to": "decision:DL-003", "type": "governed_by_decision" },
+    { "from": "feature:dental-system", "to": "decision:DL-004", "type": "governed_by_decision" },
+    { "from": "feature:dental-system", "to": "decision:DL-005", "type": "governed_by_decision" },
+    { "from": "feature:dental-system", "to": "decision:DL-006", "type": "governed_by_decision" },
+
+    { "from": "todo:T-001", "to": "decision:DL-001", "type": "blocked_by_decision" },
+    { "from": "todo:T-002", "to": "decision:DL-002", "type": "blocked_by_decision" },
+    { "from": "todo:T-003", "to": "decision:DL-006", "type": "blocked_by_decision" },
+    { "from": "todo:T-004", "to": "decision:DL-004", "type": "blocked_by_decision" },
+    { "from": "todo:T-005", "to": "decision:DL-003", "type": "blocked_by_decision" },
+    { "from": "todo:T-006", "to": "decision:DL-003", "type": "blocked_by_decision" },
+    { "from": "todo:T-007", "to": "decision:DL-002", "type": "blocked_by_decision" },
+    { "from": "todo:T-008", "to": "decision:DL-002", "type": "blocked_by_decision" },
+    { "from": "todo:T-009", "to": "decision:DL-005", "type": "blocked_by_decision" },
+    { "from": "todo:T-010", "to": "decision:DL-005", "type": "blocked_by_decision" },
+    { "from": "todo:T-011", "to": "decision:DL-006", "type": "blocked_by_decision" },
+    { "from": "todo:T-012", "to": "decision:DL-006", "type": "blocked_by_decision" },
+    { "from": "todo:T-013", "to": "decision:DL-003", "type": "blocked_by_decision" },
+    { "from": "todo:T-014", "to": "decision:DL-003", "type": "blocked_by_decision" },
+    { "from": "todo:T-015", "to": "decision:DL-001", "type": "blocked_by_decision" },
+    { "from": "todo:T-016", "to": "decision:DL-004", "type": "blocked_by_decision" },
+    { "from": "todo:T-017", "to": "decision:DL-006", "type": "blocked_by_decision" },
+    { "from": "todo:T-018", "to": "decision:DL-006", "type": "blocked_by_decision" },
+
+    { "from": "scenario:SCN-001", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-002", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-003", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-004", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-005", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-006", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-007", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-008", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-009", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-010", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-011", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-012", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-013", "to": "phase:04", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-014", "to": "phase:04", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-015", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-016", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-017", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-018", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-019", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-020", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-021", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-022", "to": "phase:05", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-023", "to": "phase:02", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-024", "to": "phase:06", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-025", "to": "phase:01", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-026", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-027", "to": "phase:01", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-028", "to": "phase:03", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-029", "to": "phase:02", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-030", "to": "phase:04", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-031", "to": "phase:02", "type": "implemented_in_phase" },
+    { "from": "scenario:SCN-032", "to": "feature:dental-system", "type": "out_of_scope_for" }
+  ],
+  "indexes": {
+    "scenario_ids_by_priority": {
+      "must": [
+        "SCN-001", "SCN-002", "SCN-003", "SCN-004", "SCN-005", "SCN-006", "SCN-007", "SCN-008",
+        "SCN-009", "SCN-010", "SCN-011", "SCN-012", "SCN-013", "SCN-014", "SCN-015", "SCN-016",
+        "SCN-017", "SCN-018", "SCN-019", "SCN-020", "SCN-021", "SCN-022", "SCN-023", "SCN-024",
+        "SCN-025", "SCN-026", "SCN-027"
+      ],
+      "should": ["SCN-028", "SCN-029", "SCN-030"],
+      "could": ["SCN-031"],
+      "wont": ["SCN-032"]
+    },
+    "todo_ids": [
+      "T-001", "T-002", "T-003", "T-004", "T-005", "T-006", "T-007", "T-008", "T-009",
+      "T-010", "T-011", "T-012", "T-013", "T-014", "T-015", "T-016", "T-017", "T-018"
+    ],
+    "decision_ids": ["DL-001", "DL-002", "DL-003", "DL-004", "DL-005", "DL-006"]
+  }
+}
