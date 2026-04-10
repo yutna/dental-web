@@ -1,0 +1,56 @@
+<% content_for :title, t("admin.dental.audit_events.title") %>
+
+<main class="mx-auto w-full max-w-6xl space-y-6 px-6 py-10">
+  <header class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("admin.dental.audit_events.heading") %></h1>
+      <p class="mt-1 text-sm text-app-text-secondary"><%= t("admin.dental.audit_events.description") %></p>
+    </div>
+    <%= link_to t("admin.dental.audit_events.back_to_dashboard"), admin_dental_root_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+  </header>
+
+  <section class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+    <%= form_with url: admin_dental_audit_events_path, method: :get, local: true, class: "grid gap-3 sm:grid-cols-3" do |f| %>
+      <%= f.text_field :actor_id, value: @filters[:actor_id], placeholder: t("admin.dental.audit_events.filters.actor_id"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :event_action, value: @filters[:event_action], placeholder: t("admin.dental.audit_events.filters.action"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :resource_type, value: @filters[:resource_type], placeholder: t("admin.dental.audit_events.filters.resource_type"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :from, value: @filters[:from], placeholder: t("admin.dental.audit_events.filters.from"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <%= f.text_field :to, value: @filters[:to], placeholder: t("admin.dental.audit_events.filters.to"), class: "rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+      <div class="flex items-center gap-2">
+        <%= f.number_field :limit, value: @filters[:limit] || 100, min: 1, max: 500, class: "w-24 rounded-md border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary" %>
+        <%= f.submit t("admin.dental.audit_events.filters.apply"), class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="overflow-hidden rounded-xl border border-app-border-primary bg-app-surface-primary shadow-sm">
+    <table class="min-w-full divide-y divide-app-border-primary text-sm">
+      <thead class="bg-app-surface-secondary text-app-text-secondary">
+        <tr>
+          <th class="px-4 py-2 text-left"><%= t("admin.dental.audit_events.table.time") %></th>
+          <th class="px-4 py-2 text-left"><%= t("admin.dental.audit_events.table.actor") %></th>
+          <th class="px-4 py-2 text-left"><%= t("admin.dental.audit_events.table.action") %></th>
+          <th class="px-4 py-2 text-left"><%= t("admin.dental.audit_events.table.resource") %></th>
+          <th class="px-4 py-2 text-left"><%= t("admin.dental.audit_events.table.metadata") %></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-app-border-primary text-app-text-primary">
+        <% if @audit_events.any? %>
+          <% @audit_events.each do |event| %>
+            <tr>
+              <td class="px-4 py-2"><%= l(event.created_at, format: :long) %></td>
+              <td class="px-4 py-2"><%= event.actor_id %></td>
+              <td class="px-4 py-2"><%= event.action %></td>
+              <td class="px-4 py-2"><%= [event.resource_type, event.resource_id].compact.join("#") %></td>
+              <td class="px-4 py-2"><%= event.metadata_json %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="5" class="px-4 py-6 text-center text-app-text-secondary"><%= t("admin.dental.audit_events.table.empty") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+</main>

@@ -41,6 +41,76 @@ en:
       title: Admin dashboard
       total_services: Total services
       workspace_link: Back to workspace
+    dental:
+      audit_events:
+        back_to_dashboard: Back to dashboard
+        description: Append-only audit trail for sensitive admin operations.
+        filters:
+          action: Filter by action
+          actor_id: Filter by actor id
+          apply: Apply filters
+          from: From (ISO8601)
+          resource_type: Filter by resource type
+          to: To (ISO8601)
+        heading: Dental admin audit events
+        table:
+          action: Action
+          actor: Actor
+          empty: No audit events found for current filters.
+          metadata: Metadata
+          resource: Resource
+          time: Timestamp
+        title: Dental admin audit events
+      dashboard:
+        audit_events: Audit events
+        back_to_admin: Back to admin
+        breakdown:
+          heading: Resource breakdown
+          medication_profiles: Medication profiles
+          procedure_groups: Procedure groups
+          procedure_items: Procedure items
+          supply_items: Supply items
+        description: Governance overview for dental master data administration.
+        heading: Dental governance dashboard
+        kpis:
+          active_items: Active items
+          master_resources: Master resources
+          pending_approvals: Pending approvals
+          sync_warnings: Sync warnings
+        manage_services: Manage services
+        title: Dental admin dashboard
+      procedure_items:
+        already_inactive: Procedure item is already inactive.
+        back_to_dashboard: Back to dashboard
+        change_request_approved: Price change request approved and applied.
+        change_request_submitted: Price change request submitted for approval.
+        created: Procedure item created successfully.
+        deactivated: Procedure item deactivated successfully.
+        deactivated_referenced: Procedure item is referenced and was deactivated instead
+          of deleted.
+        description: Manage procedure item catalog with optimistic lock support.
+        edit: Edit procedure item
+        edit_description: Update procedure item %{code}.
+        form:
+          group: Procedure group
+          price_ipd: IPD price
+          price_opd: OPD price
+        heading: Procedure item catalog
+        lock_conflict: This item was updated by someone else. Reload and try again.
+        new: New procedure item
+        new_description: Create a new procedure item for treatment billing.
+        self_approval_not_allowed: You cannot approve your own price change request.
+        table:
+          actions: Actions
+          code: Code
+          empty: No procedure items found.
+          group: Group
+          name: Name
+          price_ipd: IPD
+          price_opd: OPD
+          status: Status
+        title: Procedure items
+        updated: Procedure item updated successfully.
   app:
     flash:
       dismiss: Dismiss notification

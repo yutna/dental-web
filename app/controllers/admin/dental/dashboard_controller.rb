@@ -3,7 +3,10 @@ module Admin
     class DashboardController < Admin::BaseController
       def show
         authorize([ :admin, :dashboard ], :show?)
-        render plain: "Admin dental dashboard"
+
+        result = ::Dental::Admin::DashboardQuery.call
+        @summary = result[:summary]
+        @totals = result[:totals]
       end
     end
   end

@@ -31,6 +31,20 @@ Rails.application.routes.draw do
 
       namespace :dental do
         root "dashboard#show"
+        resources :audit_events, only: :index
+
+        namespace :master_data do
+          resources :procedure_items, except: :show do
+            member do
+              post :approve_price_change
+            end
+
+            collection do
+              post :bulk_import_preview
+              post :bulk_import_apply
+            end
+          end
+        end
       end
     end
   end

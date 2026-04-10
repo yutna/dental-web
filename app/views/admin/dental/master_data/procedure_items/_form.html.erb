@@ -1,0 +1,54 @@
+<%= form_with(
+      model: procedure_item,
+      url: procedure_item.persisted? ? admin_dental_master_data_procedure_item_path(procedure_item) : admin_dental_master_data_procedure_items_path,
+      class: "space-y-4"
+    ) do |form| %>
+  <% if procedure_item.errors.any? %>
+    <div class="rounded-md border border-border-semantic-error-primary bg-bg-semantic-error-default px-4 py-3 text-sm text-text-semantic-error-primary">
+      <p class="font-semibold"><%= t("admin.clinic_services.form.error_heading") %></p>
+      <ul class="mt-1 list-inside list-disc">
+        <% procedure_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :lock_version %>
+
+  <div>
+    <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.clinic_services.form.code") %></label>
+    <%= form.text_field :code, class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.clinic_services.form.name") %></label>
+    <%= form.text_field :name, class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.procedure_items.form.group") %></label>
+    <%= form.collection_select :procedure_group_id, @procedure_groups, :id, :code, {}, class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+  </div>
+
+  <div class="grid gap-3 sm:grid-cols-2">
+    <div>
+      <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.procedure_items.form.price_opd") %></label>
+      <%= form.number_field :price_opd, step: "0.01", min: 0, class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.procedure_items.form.price_ipd") %></label>
+      <%= form.number_field :price_ipd, step: "0.01", min: 0, class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+    </div>
+  </div>
+
+  <label class="inline-flex items-center gap-2 text-sm text-app-text-secondary">
+    <%= form.check_box :active, class: "form-checkbox border-app-border-primary bg-app-surface-primary text-app-brand-primary focus:ring-app-brand-primary" %>
+    <span><%= t("admin.clinic_services.form.active") %></span>
+  </label>
+
+  <div class="flex gap-2">
+    <%= form.submit class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
+    <%= link_to t("admin.clinic_services.form.cancel"), admin_dental_master_data_procedure_items_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+  </div>
+<% end %>

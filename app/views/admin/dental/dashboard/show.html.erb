@@ -1,0 +1,56 @@
+<% content_for :title, t("admin.dental.dashboard.title") %>
+
+<main class="mx-auto w-full max-w-6xl space-y-6 px-6 py-10">
+  <header class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("admin.dental.dashboard.heading") %></h1>
+      <p class="mt-1 text-sm text-app-text-secondary"><%= t("admin.dental.dashboard.description") %></p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to t("admin.dental.dashboard.back_to_admin"), admin_root_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+      <%= link_to t("admin.dental.dashboard.audit_events"), admin_dental_audit_events_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+      <%= link_to t("admin.dental.dashboard.manage_services"), admin_clinic_services_path, class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
+    </div>
+  </header>
+
+  <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+      <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("admin.dental.dashboard.kpis.master_resources") %></p>
+      <p class="mt-2 text-2xl font-semibold text-app-text-primary"><%= @summary[:master_resources] %></p>
+    </article>
+    <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+      <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("admin.dental.dashboard.kpis.pending_approvals") %></p>
+      <p class="mt-2 text-2xl font-semibold text-app-text-primary"><%= @summary[:pending_approvals] %></p>
+    </article>
+    <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+      <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("admin.dental.dashboard.kpis.sync_warnings") %></p>
+      <p class="mt-2 text-2xl font-semibold text-text-semantic-warning-primary"><%= @summary[:sync_warnings] %></p>
+    </article>
+    <article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+      <p class="text-xs font-medium uppercase tracking-wide text-app-text-tertiary"><%= t("admin.dental.dashboard.kpis.active_items") %></p>
+      <p class="mt-2 text-2xl font-semibold text-text-semantic-success-primary"><%= @summary[:active_items] %></p>
+    </article>
+  </section>
+
+  <section class="rounded-xl border border-app-border-primary bg-app-surface-primary p-4 shadow-sm">
+    <h2 class="text-sm font-semibold text-app-text-primary"><%= t("admin.dental.dashboard.breakdown.heading") %></h2>
+    <dl class="mt-4 grid gap-3 sm:grid-cols-2">
+      <div class="flex items-center justify-between text-sm text-app-text-secondary">
+        <dt><%= t("admin.dental.dashboard.breakdown.procedure_groups") %></dt>
+        <dd><%= @totals[:procedure_groups] %></dd>
+      </div>
+      <div class="flex items-center justify-between text-sm text-app-text-secondary">
+        <dt><%= t("admin.dental.dashboard.breakdown.procedure_items") %></dt>
+        <dd><%= @totals[:procedure_items] %></dd>
+      </div>
+      <div class="flex items-center justify-between text-sm text-app-text-secondary">
+        <dt><%= t("admin.dental.dashboard.breakdown.medication_profiles") %></dt>
+        <dd><%= @totals[:medication_profiles] %></dd>
+      </div>
+      <div class="flex items-center justify-between text-sm text-app-text-secondary">
+        <dt><%= t("admin.dental.dashboard.breakdown.supply_items") %></dt>
+        <dd><%= @totals[:supply_items] %></dd>
+      </div>
+    </dl>
+  </section>
+</main>
