@@ -1,6 +1,5 @@
-valid_modes = %w[local remote dual_compare].freeze
-provider_mode = Rails.configuration.x.bff.provider_mode
+base_url = Rails.configuration.x.backend_api.base_url.to_s.strip
 
-if valid_modes.exclude?(provider_mode)
-  raise ArgumentError, "BFF_PROVIDER_MODE must be one of: #{valid_modes.join(', ')}"
+if base_url.empty?
+  raise ArgumentError, "BACKEND_API_BASE_URL is required"
 end

@@ -4,7 +4,7 @@
 
 Extend the Rails BFF domain, session, and HTTP client layers to carry the new fields
 and capabilities required by the real Meditech Auth API, **without yet connecting to the
-remote API**. All changes in this phase must keep `BFF_PROVIDER_MODE=local` working and
+remote API**. All changes in this phase must keep deterministic test seams working and
 all existing tests passing.
 
 ---
@@ -316,7 +316,7 @@ Rails.application.config.filter_parameters += [
 - The JWT Base64 decode pads the string with `"=="` to handle non-padded URLs; test
   both padded and non-padded tokens in specs.
 - `Local::SessionProvider` creates `SessionSnapshot` without `csrf_token` — this is
-  fine; after this phase, `csrf_token` defaults to `nil` which is valid for local mode.
+  fine; after this phase, `csrf_token` defaults to `nil` which is valid for test seams.
 
 ---
 

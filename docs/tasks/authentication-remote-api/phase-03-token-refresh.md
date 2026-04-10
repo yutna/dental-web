@@ -150,9 +150,8 @@ This ensures `signed_in?` is accurate before the refresh check runs.
 The `ProviderRegistry#session_provider` already returns the correct provider. No change
 needed — `provider.refresh(snapshot)` will dispatch to:
 
-- `Local::SessionProvider#refresh` (no-op rotate, no network call)
-- `Remote::SessionProvider#refresh` (real API call, added in Phase 02)
-- `DualCompare::SessionProvider#refresh` (delegates to both, added in Phase 02)
+- `Remote::SessionProvider#refresh` in runtime (real API call, added in Phase 02)
+- `Local::SessionProvider#refresh` in tests (deterministic in-process seam)
 
 ---
 
@@ -166,7 +165,7 @@ needed — `provider.refresh(snapshot)` will dispatch to:
 | API 401 on refresh (Redis session gone) | Caught as `AuthenticationError` → `RefreshFailedError` |
 | Network unreachable during refresh | `ServiceUnavailableError` → `RefreshFailedError` → session cleared |
 | Concurrent requests both trigger refresh | Both attempt refresh; second call may get 401 on second refresh if first already rotated token. Handle: treat concurrent 401 on refresh as `RefreshFailedError` → session cleared |
-| Local mode (`BFF_PROVIDER_MODE=local`) | `Local::SessionProvider#refresh` always returns a new snapshot — refresh never fails |
+| Test seam (`Local::SessionProvider`) | `Local::SessionProvider#refresh` always returns a new snapshot — refresh never fails |
 | `ensure_fresh_session!` on login/logout controller | Runs on `new` and `destroy` actions too; `signed_in?` guard prevents unnecessary work |
 
 ---

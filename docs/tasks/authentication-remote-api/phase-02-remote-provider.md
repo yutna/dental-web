@@ -3,7 +3,7 @@
 ## Goal
 
 Fix the `Remote::SessionProvider` and `SessionSnapshotMapper` to match the real
-Meditech Auth API contract. After this phase, setting `BFF_PROVIDER_MODE=remote`
+Meditech Auth API contract. After this phase, runtime BFF authentication
 should produce a functional login, a correct session snapshot, a real logout API call,
 and a working token refresh API call (the full refresh *flow* is wired in Phase 03).
 
@@ -27,7 +27,6 @@ and a working token refresh API call (the full refresh *flow* is wired in Phase 
 app/integrations/backend/
   mappers/session_snapshot_mapper.rb              — rewrite from_remote for real API shape
   providers/remote/session_provider.rb            — fix login, add logout + refresh
-  providers/dual_compare/session_provider.rb      — propagate refresh method
 
 app/controllers/
   home_controller.rb                              — add before_action :require_signed_in!
@@ -305,31 +304,12 @@ an unauthenticated user will hit on any `/:locale` visit.
 
 ---
 
-### 5. `DualCompare::SessionProvider` — add `refresh` delegation
+### 5. Local test seam — add `refresh` helper
 
 ```ruby
-# app/integrations/backend/providers/dual_compare/session_provider.rb (additions)
-
+# app/integrations/backend/providers/local/session_provider.rb (test seam helper)
 def refresh(snapshot)
-  # Delegate to local (for session shape) but also refresh remote to keep it alive
-  local_refreshed  = local_provider.respond_to?(:refresh) ? local_provider.refresh(snapshot) : snapshot
-  remote_refreshed = remote_provider.refresh(snapshot)
-  # Return local shape (canonical); log if shapes diverge
-  verify_contract!(local_snapshot: local_refreshed, remote_snapshot: remote_refreshed)
-  local_refreshed
-rescue Errors::ContractMismatchError
-  # In dual_compare mode, contract mismatch on refresh is logged but not fatal
-  Rails.logger.warn("[DualCompare] Refresh contract mismatch — using local snapshot")
-  local_refreshed
-end
-```
-
-`Local::SessionProvider` does not have a `refresh` method yet. Add a no-op:
-
-```ruby
-# app/integrations/backend/providers/local/session_provider.rb (addition)
-def refresh(snapshot)
-  # Local mode: rotate tokens with new random values
+  # Test seam: rotate tokens with new random values
   Security::SessionSnapshot.new(
     access_token:  SecureRandom.hex(24),
     refresh_token: SecureRandom.hex(24),
@@ -347,9 +327,6 @@ end
   pattern when the BFF issues no tokens of its own. Signature is enforced by the API.
 - Empty body on logout (or 401 "session already expired"): both are handled; logout is
   always best-effort and never blocks local session destruction.
-- `DualCompare` refresh mismatch is logged but not raised — a contract bug during
-  development should not lock users out. Escalate if mismatch diffs appear in
-  `tmp/contract_diffs`.
 - `Backend::Errors::ServiceUnavailableError` must propagate from provider → use_case →
   controller to display the "service unavailable" i18n message.
 

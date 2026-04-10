@@ -1,16 +1,16 @@
 # spec/system/authentication_spec.rb
 require "rails_helper"
 
-# Run with: BFF_PROVIDER_MODE=remote bin/rspec spec/system/authentication_spec.rb
+# Run with: BACKEND_API_BASE_URL=https://your-backend-api bin/rspec spec/system/authentication_spec.rb
 RSpec.describe "Authentication (E2E)", type: :system do
   before do
     driven_by :selenium, using: :headless_chrome
   end
 
-  # Skip if not in remote mode
+  # Skip when backend API endpoint is not configured for system E2E runs.
   before do
-    skip "Remote system tests require BFF_PROVIDER_MODE=remote" unless
-      Rails.configuration.x.bff.provider_mode == "remote"
+    backend_url = ENV["BACKEND_API_BASE_URL"].to_s
+    skip "System E2E requires BACKEND_API_BASE_URL" if backend_url.blank?
   end
 
   describe "sign-in flow" do

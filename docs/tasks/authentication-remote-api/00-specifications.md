@@ -330,7 +330,7 @@ Decision: **Mapper injects `workspace:read` for every successful remote authenti
 |---|---|---|
 | `auth.sessions.email_label` | `auth.sessions.username_label` | Real API uses `username` not `email` |
 | `auth.sessions.invalid_credentials` | `auth.sessions.invalid_credentials` | Update text: "email" → "username" |
-| `auth.sessions.demo_hint` | `auth.sessions.demo_hint` | Update text for remote mode context |
+| `auth.sessions.demo_hint` | `auth.sessions.demo_hint` | Update text for backend API authentication context |
 | _(new)_ | `auth.sessions.session_expired` | Refresh failed; must re-login |
 | _(new)_ | `auth.sessions.service_unavailable` | Network/5xx from auth API |
 

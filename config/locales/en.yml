@@ -62,14 +62,15 @@ en:
       title: Sign in
       username_label: Username
   home:
-    bff_baseline:
-      description: Access sign-in and workspace entry points while dashboard modules
-        are being implemented.
-      heading: Dashboard access
-      sign_in_link: Open sign-in flow
-      workspace_link: Open clinical workspace
-    description: This site supports English and Thai.
-    heading: Welcome to Dental Web
+    authenticated:
+      description: Access clinical workspace and manage your profile.
+      heading: Welcome, %{user}
+      workspace:
+        access_link: Open clinical workspace
+        description: Access patient management, appointment scheduling, and clinical
+          workflows.
+        heading: Clinical workspace
+        manage_link: Admin dashboard
     permission_denied:
       description: You do not have access to the clinical workspace yet.
       help: Request workspace:read permission from your administrator.

@@ -228,10 +228,8 @@ sign_in_as(username: "admin.test")
 sign_in_as(username: "clinician.test")
 ```
 
-Note: The local provider uses email-like strings; update fixtures to use usernames
-or keep using email-format strings — local provider accepts any non-blank string.
-Use `admin.test` (admin user) and `clinician.test` (non-admin) as canonical test
-usernames for local mode.
+Note: Use canonical test usernames (`admin.test`, `clinician.test`) with the
+test password (`secret`) for deterministic local test seams.
 
 ---
 
@@ -293,22 +291,22 @@ end
 
 ### 5. System test — `spec/system/authentication_spec.rb` (NEW)
 
-Requires `BFF_PROVIDER_MODE=remote`. Tagged `@remote` so CI can control execution.
+Requires `BACKEND_API_BASE_URL` for the remote backend endpoint.
 
 ```ruby
 # spec/system/authentication_spec.rb
 require "rails_helper"
 
-# Run with: BFF_PROVIDER_MODE=remote bin/rspec spec/system/authentication_spec.rb
+# Run with: BACKEND_API_BASE_URL=https://your-backend-api bin/rspec spec/system/authentication_spec.rb
 RSpec.describe "Authentication (E2E)", type: :system do
   before do
     driven_by :selenium, using: :headless_chrome
   end
 
-  # Skip if not in remote mode
+  # Skip when backend API endpoint is not configured
   before do
-    skip "Remote system tests require BFF_PROVIDER_MODE=remote" unless
-      Rails.configuration.x.bff.provider_mode == "remote"
+    backend_url = ENV["BACKEND_API_BASE_URL"].to_s
+    skip "System E2E requires BACKEND_API_BASE_URL" if backend_url.blank?
   end
 
   describe "sign-in flow" do
@@ -400,8 +398,8 @@ bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error
 # Full unit + request test suite
 bin/rspec --exclude-pattern "spec/system/**/*_spec.rb"
 
-# System tests (remote mode only)
-BFF_PROVIDER_MODE=remote bin/rspec spec/system/authentication_spec.rb
+# System tests (requires backend endpoint)
+BACKEND_API_BASE_URL=https://your-backend-api bin/rspec spec/system/authentication_spec.rb
 
 # Full CI gate
 bin/ci

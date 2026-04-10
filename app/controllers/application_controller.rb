@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   def require_signed_in!
     return if signed_in?
 
-    redirect_to new_session_path, alert: t("auth.sessions.login_required")
+    redirect_to new_session_path
   end
 
   def pundit_user

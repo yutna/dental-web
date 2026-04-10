@@ -68,7 +68,6 @@ app/integrations/backend/
   errors.rb                       (add ValidationError, ServiceUnavailableError)
   mappers/session_snapshot_mapper.rb  (update from_remote for real API shape)
   providers/remote/session_provider.rb  (fix login, add logout, add refresh)
-  providers/dual_compare/session_provider.rb  (propagate refresh)
 
 app/controllers/
   application_controller.rb       (add ensure_fresh_session! before_action)
@@ -104,7 +103,7 @@ Run after every phase commit:
 
 For the system test phase:
 
-5. `bin/rspec spec/system` (requires `BFF_PROVIDER_MODE=remote`)
+5. `BACKEND_API_BASE_URL=https://your-backend-api bin/rspec spec/system`
 
 ---
 
