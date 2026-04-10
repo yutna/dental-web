@@ -30,6 +30,16 @@ module Dental
         )
       end
 
+      Dental::Workflow::AppendTimelineEntry.call(
+        visit_id: params[:id],
+        from_stage: from_stage,
+        to_stage: to_stage,
+        actor_id: current_principal.id,
+        metadata: {
+          transition_source: "visits_controller"
+        }
+      )
+
       render json: {
         visit_id: params[:id],
         transitioned: true,

@@ -65,6 +65,8 @@ RSpec.describe "Dental workflow transition guards", type: :request do
   end
 
   it "allows transition when guards are satisfied" do
+    before_count = DentalWorkflowTimelineEntry.count
+
     patch "/en/dental/visits/VISIT-1/transition", params: {
       from_stage: "ready-for-treatment",
       to_stage: "in-treatment",
@@ -76,6 +78,14 @@ RSpec.describe "Dental workflow transition guards", type: :request do
       "transitioned" => true,
       "from_stage" => "ready-for-treatment",
       "to_stage" => "in-treatment"
+    )
+
+    expect(DentalWorkflowTimelineEntry.count).to eq(before_count + 1)
+    expect(DentalWorkflowTimelineEntry.order(:id).last).to have_attributes(
+      visit_id: "VISIT-1",
+      from_stage: "ready-for-treatment",
+      to_stage: "in-treatment",
+      event_type: "stage_transition"
     )
   end
 end
