@@ -257,24 +257,24 @@ Keep this block updated during execution.
 BOARD_MODE: SINGLE_FILE
 REQUIREMENTS_MUTABILITY: FROZEN
 
-CURRENT_GROUP: G02
-GROUP_STATUS: WAITING_UAT
-NEXT_TICKET: NONE
+CURRENT_GROUP: G03
+GROUP_STATUS: IN_PROGRESS
+NEXT_TICKET: T03.01
 
 LAST_COMPLETED_TICKET: T02.09
-LAST_COMMIT_SHA: 04ce49b
-LAST_CHECKS_PASSED: rubocop, rspec, i18n, bin/ci
-LAST_UPDATED_UTC: 2026-04-10T15:47:02Z
+LAST_COMMIT_SHA: e5d51c4
+LAST_CHECKS_PASSED: rubocop, rspec, i18n, bin/ci, pr-ci
+LAST_UPDATED_UTC: 2026-04-10T16:31:27Z
 
-ACTIVE_PR_URL: https://github.com/yutna/dental-web/pull/13
-ACTIVE_PR_STATUS: READY_FOR_REVIEW
-ACTIVE_CI_STATUS: GREEN
+ACTIVE_PR_URL: NONE
+ACTIVE_PR_STATUS: NONE
+ACTIVE_CI_STATUS: NONE
 CI_RETRY_COUNT: 0
 CI_RETRY_LIMIT: 5
 
 UAT_GATE_STATUS:
 - G01: APPROVED
-- G02: READY
+- G02: APPROVED
 - G03: PENDING
 - G04: PENDING
 - G05: PENDING
@@ -536,6 +536,13 @@ Current run entries:
 2026-04-10T15:47:02Z | GATE | G02 | T02.09 | OK | group set to WAITING_UAT and READY
 2026-04-10T15:47:40Z | PR_OPEN | G02 | T02.09 | OK | pr=https://github.com/yutna/dental-web/pull/13 ci=running
 2026-04-10T15:49:01Z | CI_GREEN | G02 | T02.09 | OK | pr-ci all checks successful
+2026-04-10T15:49:20Z | COMMIT | G02 | T02.09 | OK | sha=f996d7b (board ci metadata)
+2026-04-10T15:50:19Z | CI_GREEN | G02 | T02.09 | OK | pr-ci all checks successful on latest head
+2026-04-10T16:27:00Z | COMMIT | G02 | T02.08 | OK | sha=4428ea2 (audit filter regression fix)
+2026-04-10T16:28:30Z | COMMIT | G02 | T02.09 | OK | sha=e5d51c4 (system gate assertion alignment)
+2026-04-10T16:31:27Z | CI_GREEN | G02 | T02.09 | OK | pr-ci all checks successful on latest head
+2026-04-10T16:31:27Z | UAT_APPROVE | G02 | T02.09 | OK | user approved G02
+2026-04-10T16:31:27Z | RESUME | G03 | T03.01 | OK | move to next group per handoff contract
 ```
 
 ### Group Handoff Contract
