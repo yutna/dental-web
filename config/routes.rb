@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         patch "visits/:visit_id/chart", to: "chart_forms#update"
         get "visits/:visit_id/images", to: "image_forms#show", as: :image_form
         patch "visits/:visit_id/images", to: "image_forms#update"
+        get "visits/:visit_id/history", to: "history_drawers#show", as: :history_drawer
       end
     end
 

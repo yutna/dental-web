@@ -1,0 +1,38 @@
+<section class="mx-auto max-w-5xl space-y-6 p-4 sm:p-6">
+  <header class="space-y-2">
+    <h1 class="text-xl font-semibold text-slate-900"><%= t("dental.clinical.history.title", default: "Cumulative Clinical History") %></h1>
+    <p class="text-sm text-slate-600">
+      <%= t("dental.clinical.history.patient", default: "Patient") %>: <%= @history[:patient_hn].presence || t("dental.clinical.history.unknown", default: "Unknown") %>
+    </p>
+  </header>
+
+  <details class="rounded-xl border border-slate-200 bg-white p-4" open>
+    <summary class="cursor-pointer text-sm font-medium text-slate-800"><%= t("dental.clinical.history.drawer_summary", default: "Tooth map and timeline") %></summary>
+
+    <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <section class="rounded-lg border border-slate-100 p-3">
+        <h2 class="text-sm font-semibold text-slate-800"><%= t("dental.clinical.history.tooth_map", default: "Tooth Map") %></h2>
+        <ul class="mt-2 space-y-2 text-sm text-slate-700">
+          <% @history[:tooth_map].each do |row| %>
+            <li class="flex items-center justify-between rounded-md bg-slate-50 px-3 py-2">
+              <span><%= row["tooth_code"] %></span>
+              <span class="text-xs text-slate-500">C:<%= row["chart_count"] %> P:<%= row["procedure_count"] %></span>
+            </li>
+          <% end %>
+        </ul>
+      </section>
+
+      <section class="rounded-lg border border-slate-100 p-3">
+        <h2 class="text-sm font-semibold text-slate-800"><%= t("dental.clinical.history.timeline", default: "Timeline") %></h2>
+        <ul class="mt-2 space-y-2 text-sm text-slate-700">
+          <% @history[:timeline].each do |entry| %>
+            <li class="rounded-md bg-slate-50 px-3 py-2">
+              <p class="font-medium text-slate-800"><%= entry["entry_type"] %> · <%= entry["code"] %></p>
+              <p class="text-xs text-slate-500"><%= entry["occurred_at"] %></p>
+            </li>
+          <% end %>
+        </ul>
+      </section>
+    </div>
+  </details>
+</section>
