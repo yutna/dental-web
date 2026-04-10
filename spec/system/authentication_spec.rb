@@ -14,7 +14,7 @@ RSpec.describe "Authentication (E2E)", type: :system do
   end
 
   describe "sign-in flow" do
-    it "signs in with valid dev credentials and reaches home page" do
+    it "signs in with valid dev credentials and reaches workspace page" do
       visit "/en/session/new"
 
       expect(page).to have_text("Sign in to continue")
@@ -24,7 +24,7 @@ RSpec.describe "Authentication (E2E)", type: :system do
       fill_in "password", with: "123"
       click_button "Sign in"
 
-      expect(page).to have_current_path("/en")
+      expect(page).to have_current_path("/en/workspace")
       expect(page).to have_text("Signed in successfully.")
     end
 
@@ -46,7 +46,7 @@ RSpec.describe "Authentication (E2E)", type: :system do
       fill_in "username", with: "admin.s"
       fill_in "password", with: "123"
       click_button "Sign in"
-      expect(page).to have_current_path("/en")
+      expect(page).to have_current_path("/en/workspace")
 
       # Verify signed in by accessing workspace (which requires auth)
       visit "/en/workspace"

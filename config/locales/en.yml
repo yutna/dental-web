@@ -70,7 +70,6 @@ en:
         description: Access patient management, appointment scheduling, and clinical
           workflows.
         heading: Clinical workspace
-        manage_link: Admin dashboard
     permission_denied:
       description: You do not have access to the clinical workspace yet.
       help: Request workspace:read permission from your administrator.
@@ -121,7 +120,6 @@ en:
       heading: Appointment queue (data grid baseline)
     shell:
       nav:
-        admin: Admin
         overview: Overview
         queue: Queue
       navigation_label: Workspace navigation

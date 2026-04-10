@@ -16,17 +16,17 @@ RSpec.describe "Auth sessions", type: :request do
       sign_in_locally
       get "/en/session/new"
 
-      expect(response).to redirect_to("/en")
+      expect(response).to redirect_to("/en/workspace")
     end
   end
 
   # ─── POST create ──────────────────────────────────────────────────
   describe "POST /en/session" do
     context "with local provider (default in test)" do
-      it "creates session and redirects to home page" do
+      it "creates session and redirects to workspace page" do
         post "/en/session", params: { username: "clinician.test", password: "secret" }
 
-        expect(response).to redirect_to("/en")
+        expect(response).to redirect_to("/en/workspace")
         follow_redirect!
         expect(response).to have_http_status(:ok)
       end
@@ -96,7 +96,7 @@ RSpec.describe "Auth sessions", type: :request do
     it "renders home page when signed in" do
       sign_in_locally
       get "/en"
-      expect(response).to have_http_status(:ok)
+      expect(response).to redirect_to("/en/workspace")
     end
   end
 
@@ -127,6 +127,6 @@ RSpec.describe "Auth sessions", type: :request do
 
   def sign_in_locally
     post "/en/session", params: { username: "clinician.test", password: "secret" }
-    expect(response).to redirect_to("/en")
+    expect(response).to redirect_to("/en/workspace")
   end
 end

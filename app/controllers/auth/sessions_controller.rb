@@ -1,7 +1,7 @@
 module Auth
   class SessionsController < ApplicationController
     def new
-      redirect_to root_path if signed_in?
+      redirect_to workspace_path if signed_in?
     end
 
     def create
@@ -11,7 +11,7 @@ module Auth
       )
       Security::SessionStore.new(session:).persist!(snapshot:)
 
-      redirect_to root_path, notice: t("auth.sessions.signed_in")
+      redirect_to workspace_path, notice: t("auth.sessions.signed_in")
     rescue Security::SignIn::InvalidCredentialsError
       @username   = session_params[:username]
       @auth_error = t("auth.sessions.invalid_credentials")

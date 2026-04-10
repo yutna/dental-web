@@ -68,7 +68,6 @@ th:
         access_link: เปิดพื้นที่ทำงานคลินิก
         description: จัดการข้อมูลผู้ป่วย ตั้งตารางนัด และการไหลงานทางคลินิก
         heading: พื้นที่ทำงานคลินิก
-        manage_link: แดชบอร์ดผู้ดูแลระบบ
     permission_denied:
       description: คุณยังไม่มีสิทธิ์เข้าถึงพื้นที่ทำงานคลินิก
       help: กรุณาติดต่อผู้ดูแลระบบเพื่อขอสิทธิ์ workspace:read
@@ -119,7 +118,6 @@ th:
       heading: คิวนัดหมาย (พื้นฐาน data grid)
     shell:
       nav:
-        admin: ผู้ดูแลระบบ
         overview: ภาพรวม
         queue: คิวนัดหมาย
       navigation_label: เมนูนำทางพื้นที่ทำงาน

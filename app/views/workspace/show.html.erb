@@ -14,9 +14,6 @@
       <nav aria-label="<%= t("workspace.shell.navigation_label") %>" class="mt-6 space-y-2">
         <a href="#overview" class="block rounded-lg bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary"><%= t("workspace.shell.nav.overview") %></a>
         <a href="#queue" class="block rounded-lg px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.queue") %></a>
-        <% if current_principal.allowed?("admin:access") %>
-          <%= link_to t("workspace.shell.nav.admin"), admin_root_path, class: "block rounded-lg px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary" %>
-        <% end %>
       </nav>
     </aside>
 
