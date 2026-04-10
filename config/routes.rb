@@ -29,6 +29,8 @@ Rails.application.routes.draw do
       namespace :clinical do
         get "visits/:visit_id/screening", to: "screening_forms#show", as: :screening_form
         patch "visits/:visit_id/screening", to: "screening_forms#update"
+        get "visits/:visit_id/treatment", to: "treatment_forms#show", as: :treatment_form
+        patch "visits/:visit_id/treatment", to: "treatment_forms#update"
       end
     end
 
