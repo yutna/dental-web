@@ -29,6 +29,18 @@ gem "ransack"
 # Locale data and pluralization rules for Rails I18n
 gem "rails-i18n"
 
+# Stateful workflow orchestration for stage-heavy domains
+gem "state_machines-activerecord"
+# Soft-delete lifecycle helper for master/transactional records
+gem "discard"
+# Auditable version history for compliance-critical entities
+gem "paper_trail"
+# Rich cross-field validation schemas for complex business rules
+gem "dry-validation"
+# PDF generation primitives for printable clinical/legal artifacts
+gem "prawn"
+gem "prawn-table"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -68,6 +80,14 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # JSON contract/assertion helpers for API-focused specs
+  gem "json_matchers"
+  gem "rspec-json_expectations"
+
+  # External API stubbing and deterministic cassette playback
+  gem "webmock"
+  gem "vcr"
 end
 
 group :development do
