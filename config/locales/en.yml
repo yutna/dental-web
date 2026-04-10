@@ -60,10 +60,13 @@ en:
         manage_services: Manage services
         title: Dental admin dashboard
       procedure_items:
+        already_inactive: Procedure item is already inactive.
         back_to_dashboard: Back to dashboard
         created: Procedure item created successfully.
+        deactivated: Procedure item deactivated successfully.
+        deactivated_referenced: Procedure item is referenced and was deactivated instead
+          of deleted.
         description: Manage procedure item catalog with optimistic lock support.
-        destroyed: Procedure item deleted successfully.
         edit: Edit procedure item
         edit_description: Update procedure item %{code}.
         form:

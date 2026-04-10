@@ -60,10 +60,12 @@ th:
         manage_services: จัดการบริการ
         title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
       procedure_items:
+        already_inactive: รายการหัตถการนี้ถูกปิดใช้งานอยู่แล้ว
         back_to_dashboard: กลับแดชบอร์ด
         created: สร้างรายการหัตถการสำเร็จ
+        deactivated: ปิดใช้งานรายการหัตถการสำเร็จ
+        deactivated_referenced: รายการหัตถการนี้มีการอ้างอิง ระบบจึงปิดใช้งานแทนการลบ
         description: จัดการรายการหัตถการพร้อมรองรับ optimistic lock
-        destroyed: ลบรายการหัตถการสำเร็จ
         edit: แก้ไขรายการหัตถการ
         edit_description: อัปเดตรายการหัตถการ %{code}
         form:

@@ -56,4 +56,26 @@ RSpec.describe "Admin dental procedure items", type: :request do
 
     expect(response).to redirect_to("/en")
   end
+
+  it "deactivates referenced items instead of hard delete" do
+    sign_in_as(username: "admin.test")
+    item = create(:dental_procedure_item, procedure_group: group, active: true)
+    create(:dental_procedure_item_coverage, procedure_item: item)
+
+    delete "/en/admin/dental/master_data/procedure_items/#{item.id}"
+
+    expect(response).to redirect_to("/en/admin/dental/master_data/procedure_items")
+    expect(item.reload.active).to be(false)
+    expect(DentalProcedureItem.exists?(item.id)).to be(true)
+  end
+
+  it "deactivates non-referenced active items" do
+    sign_in_as(username: "admin.test")
+    item = create(:dental_procedure_item, procedure_group: group, active: true)
+
+    delete "/en/admin/dental/master_data/procedure_items/#{item.id}"
+
+    expect(response).to redirect_to("/en/admin/dental/master_data/procedure_items")
+    expect(item.reload.active).to be(false)
+  end
 end

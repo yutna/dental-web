@@ -52,10 +52,18 @@ module Admin
 
         def destroy
           authorize([ :admin, :dental, :master_data, @procedure_item ])
-          @procedure_item.destroy!
+          message = if @procedure_item.coverages.exists?
+            @procedure_item.update!(active: false)
+            t("admin.dental.procedure_items.deactivated_referenced")
+          elsif @procedure_item.active?
+            @procedure_item.update!(active: false)
+            t("admin.dental.procedure_items.deactivated")
+          else
+            t("admin.dental.procedure_items.already_inactive")
+          end
 
           redirect_to admin_dental_master_data_procedure_items_path,
-                      notice: t("admin.dental.procedure_items.destroyed")
+                      notice: message
         end
 
         private
