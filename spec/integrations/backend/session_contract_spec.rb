@@ -5,7 +5,7 @@ require "tmpdir"
 RSpec.describe "Backend session contract" do
   describe Backend::Providers::Local::SessionProvider do
     it "returns canonical principal fields for admin sign-in" do
-      snapshot = described_class.new.sign_in(email: "admin@example.com", password: "secret")
+      snapshot = described_class.new.sign_in(username: "admin@example.com", password: "secret")
       expected_principal = json_fixture("contracts/session/local_admin_principal.json")
 
       expect(snapshot).to be_a(Security::SessionSnapshot)
@@ -59,7 +59,7 @@ RSpec.describe "Backend session contract" do
         provider = described_class.new(local_provider:, remote_provider:, reporter:)
 
         expect do
-          provider.sign_in(email: "admin@example.com", password: "secret")
+        provider.sign_in(username: "admin@example.com", password: "secret")
         end.to raise_error(Backend::Errors::ContractMismatchError, /report:/)
 
         report_paths = Dir.glob(File.join(directory, "*.json"))

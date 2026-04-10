@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Workspace", type: :request do
   it "renders the profile menu trigger for signed in users" do
-    post "/en/session", params: { email: "clinician@example.com", password: "secret" }
+    post "/en/session", params: { username: "clinician.test", password: "secret" }
 
     get "/en/workspace"
 

@@ -46,20 +46,21 @@ en:
   auth:
     sessions:
       contract_mismatch: 'Contract mismatch: %{message}'
-      demo_hint: Any non-empty credentials can sign in while provider mode is set
-        to local.
-      description: Authentication is handled by the Rails BFF layer and can switch
-        between local and remote providers.
-      email_label: Email
+      demo_hint: Use your clinic system username and password to sign in.
+      description: Sign in to access the clinical workspace.
       heading: Sign in to continue
-      invalid_credentials: Invalid email or password.
+      invalid_credentials: Invalid username or password.
       login_required: Please sign in before accessing the clinical workspace.
       not_authorized: You are not authorized to access this section.
       password_label: Password
+      service_unavailable: Authentication service is temporarily unavailable. Please
+        try again shortly.
+      session_expired: Your session has expired. Please sign in again.
       signed_in: Signed in successfully.
       signed_out: Signed out successfully.
       submit: Sign in
       title: Sign in
+      username_label: Username
   home:
     bff_baseline:
       description: Access sign-in and workspace entry points while dashboard modules
