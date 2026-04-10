@@ -1,0 +1,11 @@
+{
+  "access_token": "access-token",
+  "refresh_token": "refresh-token",
+  "principal": {
+    "id": "remote-1",
+    "email": "dentist@example.com",
+    "display_name": "Dentist",
+    "roles": ["clinician"],
+    "permissions": ["workspace:read"]
+  }
+}

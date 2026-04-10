@@ -20,6 +20,8 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 | Gem vulnerability scan | `bin/bundler-audit` |
 | Importmap package audit | `bin/importmap audit` |
 | I18n key health check | `bundle exec i18n-tasks health` |
+| Copilot customization asset validation | `ruby script/ci/validate_copilot_assets.rb` |
+| Contract guardian CI lane (manual run) | `bash script/ci/contract_guardian` |
 | Full test suite | `bin/rspec --exclude-pattern "spec/system/**/*_spec.rb"` |
 | Single test file | `bin/rspec spec/models/example_spec.rb` |
 | Single test at a specific line | `bin/rspec spec/models/example_spec.rb:42` |
@@ -52,6 +54,14 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 - **Authorization is policy-first via Pundit.** Gate admin routes with `admin:access` and workspace routes with `workspace:read`; do not check raw roles in controllers.
 - **Advanced UI component contracts are centralized.** Keep baseline behavior and acceptance criteria in `config/ui_component_specs.yml` and keep UI work aligned with those contracts.
 - **Feature prompts to AI should include contract + policy context.** Include bounded context, canonical request/response shape, policy requirement, mapper expectations, i18n keys, and accessibility checks.
+- **Use path-specific instruction files for focused guidance.** Keep domain-specific conventions in `.github/instructions/*.instructions.md` with `applyTo` globs instead of expanding global instructions.
+- **Custom agents are first-class for large tasks.** Prefer `.github/agents/*.agent.md` profiles (`bff-implementer`, `contract-guardian`, `release-hardening`) when delegating specialized work.
+- **Skills define repeatable workflows.** Reuse `.github/skills/*/SKILL.md` for feature-slice execution and release-readiness checks instead of re-deriving the process in each prompt.
+- **Hooks enforce execution safety.** `.github/hooks/safety-guardrails.json` denies destructive shell commands through `script/copilot_hooks/pre_tool_use_guard.rb`.
+- **Prompt files are available for IDE workflows.** Reusable templates live in `.github/prompts/*.prompt.md` and should be used for large requirements-to-implementation prompts.
+- **Copilot assets are CI-validated.** Keep frontmatter and hook schemas valid; `ruby script/ci/validate_copilot_assets.rb` runs in local and GitHub CI.
+- **Defect feedback loop is enforced for bug-labeled PRs.** If PR labels include bug/defect/regression, update at least one guardrail artifact (`.github/instructions`, `.github/skills`, `.github/prompts`, `.github/copilot-instructions.md`, `AGENTS.md`, or `README.md`).
+- **Contract mismatch evidence is artifact-backed.** `dual_compare` writes JSON reports to `tmp/contract_diffs`, and CI uploads them for triage when present.
 - **Seeds are expected to be idempotent.** CI explicitly replants seeds in the test environment.
 - **Locale is URL-scoped and required for user-facing pages.** Use `/en` and `/th`; unprefixed root redirects to `/en`, and links should preserve `params[:locale]` via `default_url_options`.
 - **I18n maintenance uses `i18n-tasks`.** Keep locale files (`config/locales/en.yml`, `config/locales/th.yml`) normalized and free of missing keys with `bundle exec i18n-tasks health`.

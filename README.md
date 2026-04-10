@@ -25,6 +25,7 @@ Backend connection settings:
 - `BACKEND_API_BASE_URL` (default `http://localhost:3001`)
 - `BACKEND_API_OPEN_TIMEOUT` (default `2`)
 - `BACKEND_API_READ_TIMEOUT` (default `5`)
+- `BFF_CONTRACT_DIFF_DIR` (default `tmp/contract_diffs`)
 
 Recommended architecture boundaries:
 
@@ -56,6 +57,31 @@ Detailed component contracts live in `config/ui_component_specs.yml`.
 - Local/remote contract parity specs: `spec/integrations/backend/session_contract_spec.rb`
 - Auth orchestration specs: `spec/use_cases/security/sign_in_spec.rb`
 - Policy and request-level access control specs in `spec/policies` and `spec/requests`
+- Contract mismatch reports (when `dual_compare` detects drift): JSON artifacts under `tmp/contract_diffs`
+
+## Copilot enterprise workflow
+
+- Repository-wide instructions: `.github/copilot-instructions.md`
+- Path-specific instructions: `.github/instructions/*.instructions.md`
+- Custom agents (CLI + cloud agent): `.github/agents/*.agent.md`
+- Project skills: `.github/skills/*/SKILL.md`
+- Guardrail hooks: `.github/hooks/safety-guardrails.json` (uses `script/copilot_hooks/pre_tool_use_guard.rb`)
+- Prompt templates for IDE surfaces: `.github/prompts/*.prompt.md`
+- PR gate template: `.github/pull_request_template.md`
+- QA defect loop issue template: `.github/ISSUE_TEMPLATE/qa-defect-feedback.yml`
+
+Recommended usage:
+
+```bash
+# In Copilot CLI
+/skills list
+/agent
+/mcp show
+
+# In local CI checks
+ruby script/ci/validate_copilot_assets.rb
+bash script/ci/contract_guardian
+```
 
 ## Verification
 

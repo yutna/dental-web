@@ -4,10 +4,12 @@ module Backend
       class SessionProvider
         def initialize(
           local_provider: Local::SessionProvider.new,
-          remote_provider: Remote::SessionProvider.new
+          remote_provider: Remote::SessionProvider.new,
+          reporter: ContractMismatchReporter.new
         )
           @local_provider = local_provider
           @remote_provider = remote_provider
+          @reporter = reporter
         end
 
         def sign_in(email:, password:)
@@ -25,12 +27,13 @@ module Backend
 
         private
 
-        attr_reader :local_provider, :remote_provider
+        attr_reader :local_provider, :remote_provider, :reporter
 
         def verify_contract!(local_snapshot:, remote_snapshot:)
           return if same_contract?(local_snapshot:, remote_snapshot:)
 
-          raise Errors::ContractMismatchError, "Canonical session contract differs between local and remote providers"
+          report_path = write_mismatch_report(local_snapshot:, remote_snapshot:)
+          raise Errors::ContractMismatchError, "Canonical session contract differs between local and remote providers (report: #{report_path})"
         end
 
         def same_contract?(local_snapshot:, remote_snapshot:)
@@ -40,6 +43,12 @@ module Backend
           local_principal.email == remote_principal.email &&
             local_principal.roles == remote_principal.roles &&
             local_principal.permissions == remote_principal.permissions
+        end
+
+        def write_mismatch_report(local_snapshot:, remote_snapshot:)
+          reporter.write(local_snapshot:, remote_snapshot:)
+        rescue SystemCallError, IOError => e
+          "unavailable (#{e.class}: #{e.message})"
         end
       end
     end

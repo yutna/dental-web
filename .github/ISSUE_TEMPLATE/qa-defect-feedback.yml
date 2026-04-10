@@ -1,0 +1,63 @@
+name: QA defect feedback
+description: Report a QA defect and define the Copilot guardrail update that prevents recurrence.
+title: "[QA Defect] "
+labels: ["bug", "qa-defect"]
+body:
+  - type: textarea
+    id: defect-summary
+    attributes:
+      label: Defect summary
+      description: What failed from QA, and in which workflow/screen?
+      placeholder: "Sign-out raised an exception after successful sign-in."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Reproduction steps
+      description: Provide deterministic steps for reproduction.
+      placeholder: |
+        1. Sign in as clinician@example.com
+        2. Click sign out
+        3. Observe server error page
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-vs-actual
+    attributes:
+      label: Expected vs actual behavior
+      placeholder: |
+        Expected: user is redirected to /en with success flash.
+        Actual: app crashes with missing keyword error.
+    validations:
+      required: true
+
+  - type: textarea
+    id: regression-coverage
+    attributes:
+      label: Regression test plan
+      description: Which spec(s) will be added or updated?
+      placeholder: "spec/requests/auth_sessions_spec.rb - adds sign-out after sign-in regression scenario."
+    validations:
+      required: true
+
+  - type: textarea
+    id: guardrail-update
+    attributes:
+      label: Required guardrail update
+      description: Which instruction/skill/checklist/prompt file will be updated to prevent this bug class?
+      placeholder: ".github/instructions/testing-quality.instructions.md - add explicit sign-out regression requirement."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: completion-checklist
+    attributes:
+      label: Completion checklist
+      options:
+        - label: I will include a regression test in the fix PR.
+          required: true
+        - label: I will update at least one Copilot guardrail artifact in the fix PR.
+          required: true
