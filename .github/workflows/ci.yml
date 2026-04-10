@@ -65,6 +65,9 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
+      - name: Validate Copilot customization assets
+        run: ruby script/ci/validate_copilot_assets.rb
+
   test:
     runs-on: ubuntu-latest
 
@@ -92,6 +95,14 @@ jobs:
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare && bin/rspec --exclude-pattern "spec/system/**/*_spec.rb"
+
+      - name: Upload contract mismatch reports
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: contract-mismatch-reports
+          path: ${{ github.workspace }}/tmp/contract_diffs
+          if-no-files-found: ignore
 
   system-test:
     runs-on: ubuntu-latest
@@ -128,3 +139,60 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
+  contract_guardian_scope:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    outputs:
+      contract_guardian: ${{ steps.filter.outputs.contract_guardian }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Detect contract-sensitive changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            contract_guardian:
+              - "app/use_cases/**"
+              - "app/integrations/**"
+              - "app/policies/**"
+              - "config/routes.rb"
+
+  contract_guardian:
+    if: github.event_name == 'pull_request' && needs.contract_guardian_scope.outputs.contract_guardian == 'true'
+    needs: contract_guardian_scope
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run contract guardian lane
+        run: bash script/ci/contract_guardian
+
+  defect_feedback_loop:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Validate defect feedback loop
+        env:
+          PR_LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: ruby script/ci/validate_defect_feedback_loop.rb

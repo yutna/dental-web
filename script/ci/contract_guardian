@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Running contract guardian lane..."
+
+bin/rubocop app/use_cases app/integrations app/policies config/routes.rb
+bin/rails db:test:prepare
+bin/rspec \
+  spec/integrations/backend \
+  spec/policies \
+  spec/requests/auth_sessions_spec.rb \
+  spec/use_cases/security/sign_in_spec.rb

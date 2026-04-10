@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "./script/copilot_hooks/pre_tool_use_guard.rb",
+        "powershell": "ruby ./script/copilot_hooks/pre_tool_use_guard.rb",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

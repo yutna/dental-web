@@ -1,0 +1,11 @@
+{
+  "accessToken": "access-token",
+  "refreshToken": "refresh-token",
+  "user": {
+    "id": "remote-1",
+    "email": "dentist@example.com",
+    "displayName": "Dentist",
+    "roles": ["clinician"]
+  },
+  "permissions": ["workspace:read"]
+}

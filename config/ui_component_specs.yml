@@ -1,0 +1,45 @@
+defaults:
+  accessibility:
+    keyboard_navigation: true
+    visible_focus_ring: true
+    reduced_motion_support: true
+    contrast_target: "WCAG AA"
+  loading:
+    use_skeleton_for_ms_over: 300
+    avoid_full_page_spinner: true
+
+components:
+  data_grid:
+    baseline_features:
+      - "server-side filter support"
+      - "sortable columns (planned next slice)"
+      - "sticky header-ready structure"
+      - "empty state message"
+      - "responsive horizontal scrolling"
+    contract:
+      required_fields:
+        - "id"
+        - "patient_name"
+        - "mrn"
+        - "service"
+        - "dentist"
+        - "starts_at"
+        - "status"
+  searchable_select:
+    baseline_features:
+      - "type-to-filter options"
+      - "keyboard escape to close"
+      - "click outside to dismiss"
+      - "hidden value field for form submission compatibility"
+    planned_enhancements:
+      - "arrow key active option navigation"
+      - "multi-select tag mode"
+      - "async option loading"
+  loading_indicator:
+    baseline_features:
+      - "shimmer skeleton blocks"
+      - "Turbo frame request hooks"
+      - "layout stability (no content jump)"
+    planned_enhancements:
+      - "inline optimistic row updates"
+      - "operation-specific progress messaging"

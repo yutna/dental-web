@@ -3,6 +3,8 @@
 CI.run do
   step "Setup", "bin/setup --skip-server"
 
+  step "Copilot: Asset validation", "ruby script/ci/validate_copilot_assets.rb"
+
   step "Style: Ruby", "bin/rubocop"
 
   step "Security: Gem audit", "bin/bundler-audit"

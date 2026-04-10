@@ -1,0 +1,7 @@
+{
+  "id": "local-258d8dc916db",
+  "email": "admin@example.com",
+  "display_name": "Admin",
+  "roles": ["admin"],
+  "permissions": ["admin:access", "workspace:read"]
+}
