@@ -229,6 +229,186 @@ Stop-gate request template:
 - Please click-test this group checklist
 - Reply format: APPROVE Gxx or REJECT Gxx with findings
 
+## Single-File Progress and Resume Control
+
+This section is the operational source of truth for implementation progress.
+If requirements are fixed for this release track, AI can resume from this file alone.
+
+Update rules:
+
+1. Update this section immediately after each successful ticket commit.
+2. Never mark a ticket done unless checks for that ticket passed.
+3. Only one value is allowed for Next Ticket.
+4. When a group is complete, set group status to WAITING_UAT.
+5. Move to next group only after explicit APPROVE G0X.
+
+### Runtime State Block
+
+Keep this block updated during execution.
+
+```text
+BOARD_MODE: SINGLE_FILE
+REQUIREMENTS_MUTABILITY: FROZEN
+
+CURRENT_GROUP: G01
+GROUP_STATUS: IN_PROGRESS
+NEXT_TICKET: T01.01
+
+LAST_COMPLETED_TICKET: NONE
+LAST_COMMIT_SHA: NONE
+LAST_CHECKS_PASSED: INIT
+LAST_UPDATED_UTC: 2026-04-10T14:08:34Z
+
+UAT_GATE_STATUS:
+- G01: PENDING
+- G02: PENDING
+- G03: PENDING
+- G04: PENDING
+- G05: PENDING
+- G06: PENDING
+- G07: PENDING
+```
+
+### Ticket Completion Ledger
+
+Mark each ticket with one status only:
+
+- TODO
+- IN_PROGRESS
+- DONE
+- BLOCKED
+
+Use this template:
+
+```text
+G01
+- T01.01: TODO
+- T01.02: TODO
+- T01.03: TODO
+- T01.04: TODO
+- T01.05: TODO
+- T01.06: TODO
+- T01.07: TODO
+- T01.08: TODO
+
+G02
+- T02.01: TODO
+- T02.02: TODO
+- T02.03: TODO
+- T02.04: TODO
+- T02.05: TODO
+- T02.06: TODO
+- T02.07: TODO
+- T02.08: TODO
+- T02.09: TODO
+
+G03
+- T03.01: TODO
+- T03.02: TODO
+- T03.03: TODO
+- T03.04: TODO
+- T03.05: TODO
+- T03.06: TODO
+- T03.07: TODO
+- T03.08: TODO
+- T03.09: TODO
+- T03.10: TODO
+
+G04
+- T04.01: TODO
+- T04.02: TODO
+- T04.03: TODO
+- T04.04: TODO
+- T04.05: TODO
+- T04.06: TODO
+- T04.07: TODO
+- T04.08: TODO
+
+G05
+- T05.01: TODO
+- T05.02: TODO
+- T05.03: TODO
+- T05.04: TODO
+- T05.05: TODO
+- T05.06: TODO
+- T05.07: TODO
+- T05.08: TODO
+- T05.09: TODO
+- T05.10: TODO
+
+G06
+- T06.01: TODO
+- T06.02: TODO
+- T06.03: TODO
+- T06.04: TODO
+- T06.05: TODO
+- T06.06: TODO
+
+G07
+- T07.01: TODO
+- T07.02: TODO
+- T07.03: TODO
+- T07.04: TODO
+- T07.05: TODO
+- T07.06: TODO
+```
+
+### Resume Protocol (No Extra Attachments)
+
+When work restarts after interruption, AI must do this order:
+
+1. Read Runtime State Block.
+2. Read Ticket Completion Ledger.
+3. Validate Next Ticket matches first non-DONE item in current group.
+4. Resume exactly from Next Ticket.
+5. After commit, update Runtime State Block and Ticket Completion Ledger.
+
+If mismatch is found:
+
+- Set GROUP_STATUS to BLOCKED.
+- Write a one-line blocker note in the Recovery Log.
+- Do not continue until mismatch is resolved.
+
+### Recovery Log
+
+Append one line per significant event:
+
+```text
+YYYY-MM-DDTHH:MM:SSZ | EVENT | GROUP | TICKET | RESULT | NOTE
+```
+
+Examples:
+
+```text
+2026-04-10T11:00:00Z | START | G01 | T01.01 | OK | begin implementation
+2026-04-10T11:25:00Z | CHECKS | G01 | T01.01 | OK | rubocop and rspec passed
+2026-04-10T11:30:00Z | COMMIT | G01 | T01.01 | OK | sha=abc1234
+2026-04-10T11:35:00Z | RESUME | G01 | T01.02 | OK | restored after interruption
+```
+
+### Group Handoff Contract
+
+At group boundary:
+
+1. Set GROUP_STATUS to WAITING_UAT.
+2. Set NEXT_TICKET to NONE.
+3. Set UAT_GATE_STATUS for that group to READY.
+4. Stop execution and wait for APPROVE or REJECT.
+
+On APPROVE G0X:
+
+1. Set current group UAT_GATE_STATUS to APPROVED.
+2. Move CURRENT_GROUP to next group.
+3. Set GROUP_STATUS to IN_PROGRESS.
+4. Set NEXT_TICKET to first ticket of next group.
+
+On REJECT G0X:
+
+1. Set current group UAT_GATE_STATUS to REJECTED.
+2. Set GROUP_STATUS to IN_PROGRESS.
+3. Set NEXT_TICKET to defect-fix ticket in same group.
+4. Resume in the same group only.
+
 ## Human UAT Stop-Gate Checklists
 
 ### Gate 1 after G01
