@@ -41,6 +41,24 @@ en:
       title: Admin dashboard
       total_services: Total services
       workspace_link: Back to workspace
+    dental:
+      dashboard:
+        back_to_admin: Back to admin
+        breakdown:
+          heading: Resource breakdown
+          medication_profiles: Medication profiles
+          procedure_groups: Procedure groups
+          procedure_items: Procedure items
+          supply_items: Supply items
+        description: Governance overview for dental master data administration.
+        heading: Dental governance dashboard
+        kpis:
+          active_items: Active items
+          master_resources: Master resources
+          pending_approvals: Pending approvals
+          sync_warnings: Sync warnings
+        manage_services: Manage services
+        title: Dental admin dashboard
   app:
     flash:
       dismiss: Dismiss notification

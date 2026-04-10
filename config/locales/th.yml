@@ -41,6 +41,24 @@ th:
       title: แดชบอร์ดผู้ดูแลระบบ
       total_services: จำนวนบริการทั้งหมด
       workspace_link: กลับพื้นที่ทำงาน
+    dental:
+      dashboard:
+        back_to_admin: กลับหน้าแอดมิน
+        breakdown:
+          heading: สรุปรายการทรัพยากร
+          medication_profiles: โปรไฟล์ยา
+          procedure_groups: กลุ่มหัตถการ
+          procedure_items: รายการหัตถการ
+          supply_items: รายการวัสดุ
+        description: ภาพรวมการกำกับดูแลข้อมูลหลักสำหรับระบบทันตกรรม
+        heading: แดชบอร์ดกำกับดูแลทันตกรรม
+        kpis:
+          active_items: รายการที่เปิดใช้งาน
+          master_resources: ทรัพยากรข้อมูลหลัก
+          pending_approvals: รายการรออนุมัติ
+          sync_warnings: การแจ้งเตือนการซิงก์
+        manage_services: จัดการบริการ
+        title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
   app:
     flash:
       dismiss: ปิดการแจ้งเตือน
