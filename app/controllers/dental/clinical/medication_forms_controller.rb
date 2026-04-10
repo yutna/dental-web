@@ -24,13 +24,21 @@ module Dental
       private
 
       def medication_params
-        params.permit(:patient_hn, :confirm_high_alert, medications: [ :medication_code, :quantity, :note ])
+        params.permit(
+          :patient_hn,
+          :confirm_high_alert,
+          :allergy_override_reason,
+          medications: [ :medication_code, :quantity, :note ],
+          allergies: [ :medication_code, :reaction ]
+        )
       end
 
       def medication_payload
         {
           "confirm_high_alert" => medication_params[:confirm_high_alert],
-          "medications" => Array(medication_params[:medications]).map { |line| line.respond_to?(:to_h) ? line.to_h : line }
+          "allergy_override_reason" => medication_params[:allergy_override_reason],
+          "medications" => Array(medication_params[:medications]).map { |line| line.respond_to?(:to_h) ? line.to_h : line },
+          "allergies" => Array(medication_params[:allergies]).map { |line| line.respond_to?(:to_h) ? line.to_h : line }
         }
       end
     end

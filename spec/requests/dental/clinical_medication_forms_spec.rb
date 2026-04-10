@@ -93,10 +93,72 @@ RSpec.describe "Dental clinical medication forms", type: :request do
     )
   end
 
+  it "blocks save when medication conflicts with allergy and no override reason" do
+    patch "/en/dental/clinical/visits/VISIT-MED-4/medication", params: {
+      patient_hn: "HN-MED-4",
+      medications: [
+        {
+          medication_code: "AMOX-500",
+          quantity: 1
+        }
+      ],
+      allergies: [
+        {
+          medication_code: "AMOX-500",
+          reaction: "severe rash"
+        }
+      ]
+    }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.parsed_body).to include(
+      "error" => include(
+        "code" => Dental::ErrorCode::VALIDATION_ERROR,
+        "details" => include(
+          "form_type" => "medication",
+          "requires_override" => true,
+          "allergy_conflicts" => include(
+            include(
+              "medication_code" => "AMOX-500",
+              "reaction" => "severe rash"
+            )
+          )
+        )
+      )
+    )
+  end
+
+  it "allows admin override with explicit reason" do
+    patch "/en/dental/clinical/visits/VISIT-MED-5/medication", params: {
+      patient_hn: "HN-MED-5",
+      allergy_override_reason: "consulted supervising dentist",
+      medications: [
+        {
+          medication_code: "CLN-100",
+          quantity: 1
+        }
+      ],
+      allergies: [
+        {
+          medication_code: "CLN-100",
+          reaction: "hives"
+        }
+      ]
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.parsed_body).to include(
+      "visit_id" => "VISIT-MED-5",
+      "payload" => include(
+        "allergy_override_reason" => "consulted supervising dentist"
+      )
+    )
+  end
+
   it "loads latest medication payload for visit" do
     DentalClinicalPost.create!(
-      visit_id: "VISIT-MED-4",
-      patient_hn: "HN-MED-4",
+      visit_id: "VISIT-MED-6",
+      patient_hn: "HN-MED-6",
       form_type: "medication",
       stage: "in-treatment",
       posted_by_id: "user-1",
@@ -109,15 +171,17 @@ RSpec.describe "Dental clinical medication forms", type: :request do
             note: "before sleep"
           }
         ],
-        confirm_high_alert: false
+        confirm_high_alert: false,
+        allergies: [],
+        allergy_override_reason: ""
       }.to_json
     )
 
-    get "/en/dental/clinical/visits/VISIT-MED-4/medication"
+    get "/en/dental/clinical/visits/VISIT-MED-6/medication"
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
-      "visit_id" => "VISIT-MED-4",
+      "visit_id" => "VISIT-MED-6",
       "form_type" => "medication",
       "exists" => true,
       "payload" => include(
