@@ -11,11 +11,11 @@ module Auth
       redirect_to workspace_path, notice: t("auth.sessions.signed_in")
     rescue Security::SignIn::InvalidCredentialsError
       @email = session_params[:email]
-      flash.now[:alert] = t("auth.sessions.invalid_credentials")
+      @auth_error = t("auth.sessions.invalid_credentials")
       render :new, status: :unprocessable_content
     rescue Backend::Errors::ContractMismatchError => e
       @email = session_params[:email]
-      flash.now[:alert] = t("auth.sessions.contract_mismatch", message: e.message)
+      @auth_error = t("auth.sessions.contract_mismatch", message: e.message)
       render :new, status: :unprocessable_content
     end
 

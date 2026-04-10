@@ -56,6 +56,9 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_not_authorized
-    redirect_to root_path, alert: t("auth.sessions.not_authorized")
+    redirect_params = {}
+    redirect_params[:reason] = "workspace_denied" if controller_name == "workspace"
+
+    redirect_to root_path(redirect_params), alert: t("auth.sessions.not_authorized")
   end
 end

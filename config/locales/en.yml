@@ -62,48 +62,24 @@ en:
       title: Sign in
   home:
     bff_baseline:
-      description: Start from a local full implementation in Rails BFF, then switch
-        adapters to the real backend API without rewriting the UI contract.
-      heading: BFF implementation baseline
+      description: Access sign-in and workspace entry points while dashboard modules
+        are being implemented.
+      heading: Dashboard access
       sign_in_link: Open sign-in flow
       workspace_link: Open clinical workspace
     description: This site supports English and Thai.
     heading: Welcome to Dental Web
-    language_switcher_label: Language switcher
-    languages:
-      english: English
-      thai: Thai
-    plugin_demo:
-      aspect_ratio:
-        caption: Legacy aspect-w / aspect-h utilities create a fixed 16:9 frame.
-        title: Aspect ratio plugin
-      description: These cards exercise official plugins directly on this page.
-      forms:
-        name_label: Appointment name
-        name_placeholder: John Doe
-        notify_label: Notify me by email
-        service_label: Service
-        services:
-          cleaning: Dental cleaning
-          whitening: Teeth whitening
-        submit: Preview booking
-        title: Forms plugin
-      heading: Official Tailwind plugin examples
-      typography:
-        lead: This block uses the prose classes from @tailwindcss/typography.
-        link_label: Read Typography plugin docs
-        point_one: Headings, lists, and links are automatically styled.
-        point_two: You can still combine prose with normal utility classes.
-        title: Typography plugin
-    tailwind_demo:
-      badge: Tailwind CSS active
-      chips:
-        gradients: Gradient background
-        responsive: Responsive spacing
-        rounded: Rounded components
-      description: If you can see the gradient card, rounded pills, and spacing, Tailwind
-        utilities are working.
-      heading: Tailwind sample components
+    permission_denied:
+      description: You do not have access to the clinical workspace yet.
+      help: Request workspace:read permission from your administrator.
+      title: Workspace permission denied
+    title: Dental Web
+  public_menu:
+    language:
+      english: EN
+      label: Language
+      thai: TH
+    open: Display options
     theme:
       label: Theme
       modes:
@@ -111,20 +87,8 @@ en:
         light: Light
         system: System
       resolved_label: 'Active theme:'
-      system_hint: System follows your device preference.
-    title: Dental Web
+      saved: Theme preference saved.
   workspace:
-    components:
-      loading:
-        description: Use skeleton shimmer for waits longer than 300ms while preserving
-          layout.
-        heading: Loading pattern
-      select:
-        description: Searchable combobox baseline for richer, keyboard-friendly select
-          behavior.
-        heading: Advanced select baseline
-        label: Service status lookup
-        placeholder: Type to filter statuses
     description: A 2026-ready dental app shell with server-led BFF orchestration and
       data-dense UI patterns.
     filters:
@@ -135,6 +99,20 @@ en:
       search_placeholder: Search by patient, HN, service, or dentist
       status_label: Status
     heading: Clinical Workspace
+    profile:
+      language:
+        english: EN
+        label: Language
+        thai: TH
+      open_menu: Profile menu
+      theme:
+        label: Theme
+        modes:
+          dark: Dark
+          light: Light
+          system: System
+        resolved_label: 'Active theme:'
+        saved: Theme preference saved.
     queue:
       description: Server-side filtering keeps the canonical payload stable regardless
         of provider mode.
@@ -142,12 +120,17 @@ en:
     shell:
       nav:
         admin: Admin
-        components: Components
         overview: Overview
         queue: Queue
       navigation_label: Workspace navigation
       sign_out: Sign out
       subtitle: BFF-first operational shell
+    side_context:
+      description: This panel is reserved for upcoming shifts and announcements.
+      heading: Side context
+      item_one: Shift handoff digest
+      item_three: Staff notices
+      item_two: Pending confirmation queue
     statuses:
       completed: Completed
       in_progress: In progress
@@ -161,9 +144,13 @@ en:
     table:
       appointment_id: Appointment
       dentist: Dentist
-      empty: No appointments found for your current filters.
+      empty_description: Try broadening your search or reset the status filter.
+      empty_title: No appointments found for current filters.
+      error_description: Please retry. If the issue continues, contact support.
+      error_title: Unable to refresh appointment queue right now.
       mrn: HN
       patient: Patient
+      retry: Retry
       service: Service
       start_time: Start
       status: Status
