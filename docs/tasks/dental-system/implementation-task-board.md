@@ -257,10 +257,76 @@ NEXT_TICKET: T01.01
 LAST_COMPLETED_TICKET: NONE
 LAST_COMMIT_SHA: NONE
 LAST_CHECKS_PASSED: INIT
-LAST_UPDATED_UTC: 2026-04-10T14:08:34Z
+LAST_UPDATED_UTC: 2026-04-10T14:12:54Z
+
+ACTIVE_PR_URL: NONE
+ACTIVE_PR_STATUS: NONE
+ACTIVE_CI_STATUS: NONE
+CI_RETRY_COUNT: 0
+CI_RETRY_LIMIT: 5
 
 UAT_GATE_STATUS:
 - G01: PENDING
+- G02: PENDING
+- G03: PENDING
+- G04: PENDING
+- G05: PENDING
+- G06: PENDING
+- G07: PENDING
+```
+
+### G01 Runtime Snapshots (Ready-to-Copy Examples)
+
+Use one snapshot at a time by copying values into the Runtime State Block.
+
+Snapshot A: start G01 now
+
+```text
+CURRENT_GROUP: G01
+GROUP_STATUS: IN_PROGRESS
+NEXT_TICKET: T01.01
+LAST_COMPLETED_TICKET: NONE
+LAST_COMMIT_SHA: NONE
+LAST_CHECKS_PASSED: INIT
+ACTIVE_PR_URL: NONE
+ACTIVE_PR_STATUS: NONE
+ACTIVE_CI_STATUS: NONE
+CI_RETRY_COUNT: 0
+CI_RETRY_LIMIT: 5
+```
+
+Snapshot B: all G01 tickets done, PR opened, waiting CI
+
+```text
+CURRENT_GROUP: G01
+GROUP_STATUS: IN_PROGRESS
+NEXT_TICKET: NONE
+LAST_COMPLETED_TICKET: T01.08
+LAST_COMMIT_SHA: <replace-with-real-sha>
+LAST_CHECKS_PASSED: rubocop, rspec, bin/ci
+ACTIVE_PR_URL: <replace-with-pr-url>
+ACTIVE_PR_STATUS: OPEN
+ACTIVE_CI_STATUS: RUNNING
+CI_RETRY_COUNT: 0
+CI_RETRY_LIMIT: 5
+```
+
+Snapshot C: G01 CI green and ready for human UAT
+
+```text
+CURRENT_GROUP: G01
+GROUP_STATUS: WAITING_UAT
+NEXT_TICKET: NONE
+LAST_COMPLETED_TICKET: T01.08
+LAST_COMMIT_SHA: <replace-with-real-sha>
+LAST_CHECKS_PASSED: rubocop, rspec, bin/ci, pr-ci
+ACTIVE_PR_URL: <replace-with-pr-url>
+ACTIVE_PR_STATUS: READY_FOR_REVIEW
+ACTIVE_CI_STATUS: GREEN
+CI_RETRY_COUNT: <replace-with-final-count>
+CI_RETRY_LIMIT: 5
+UAT_GATE_STATUS:
+- G01: READY
 - G02: PENDING
 - G03: PENDING
 - G04: PENDING
@@ -408,6 +474,49 @@ On REJECT G0X:
 2. Set GROUP_STATUS to IN_PROGRESS.
 3. Set NEXT_TICKET to defect-fix ticket in same group.
 4. Resume in the same group only.
+
+## PR and CI Gate Policy (One Group = One PR)
+
+Execution policy:
+
+1. Exactly one PR per group.
+2. PR scope must include only tickets from active group.
+3. AI may fix CI failures only if fixes remain inside active group scope.
+4. AI must not auto-merge. Human approval is mandatory.
+
+PR lifecycle per group:
+
+1. Complete all tickets in active group with per-ticket checks.
+2. Open one PR for that group and set ACTIVE_PR_STATUS to OPEN.
+3. Wait for CI, set ACTIVE_CI_STATUS to RUNNING.
+4. If CI fails, fix failures and push updates to same PR.
+5. Increase CI_RETRY_COUNT on each failed CI cycle.
+6. If CI_RETRY_COUNT exceeds CI_RETRY_LIMIT, set GROUP_STATUS to BLOCKED and stop.
+7. When CI is fully green, set ACTIVE_CI_STATUS to GREEN.
+8. Set GROUP_STATUS to WAITING_UAT and stop for human click-test.
+
+Required status updates in Runtime State Block:
+
+- ACTIVE_PR_URL: PR link for current group
+- ACTIVE_PR_STATUS: NONE, OPEN, READY_FOR_REVIEW, BLOCKED
+- ACTIVE_CI_STATUS: NONE, RUNNING, FAILED, GREEN
+- CI_RETRY_COUNT: integer count for current group PR
+- CI_RETRY_LIMIT: max retry cycles before forced stop
+
+Forced stop conditions:
+
+1. CI retry limit reached.
+2. Out-of-scope changes are required to fix CI.
+3. Required secrets/permissions for CI or PR operations are missing.
+
+Human handoff format after CI green:
+
+1. Group: G0X
+2. PR: link
+3. CI: GREEN
+4. Tickets completed: list
+5. UAT checklist: group checklist
+6. Awaiting decision: APPROVE G0X or REJECT G0X
 
 ## Human UAT Stop-Gate Checklists
 
