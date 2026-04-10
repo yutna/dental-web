@@ -32,6 +32,30 @@ FactoryBot.define do
     sequence(:code) { |n| "SUP-#{n}" }
     sequence(:name) { |n| "Supply #{n}" }
     unit { "piece" }
+    unit_price { 12.0 }
+    active { true }
+  end
+
+  factory :dental_procedure_item_coverage do
+    association :procedure_item, factory: :dental_procedure_item
+    eligibility_code { "UCS" }
+    effective_from { Date.new(2026, 1, 1) }
+    effective_to { Date.new(2026, 12, 31) }
+    price_opd { 80.0 }
+    price_ipd { 90.0 }
+    copay_amount { nil }
+    copay_percent { nil }
+    active { true }
+  end
+
+  factory :dental_supply_item_coverage do
+    association :supply_item, factory: :dental_supply_item
+    eligibility_code { "UCS" }
+    effective_from { Date.new(2026, 1, 1) }
+    effective_to { Date.new(2026, 12, 31) }
+    unit_price { 9.5 }
+    copay_amount { nil }
+    copay_percent { nil }
     active { true }
   end
 end

@@ -4,6 +4,11 @@ class DentalProcedureItem < ApplicationRecord
   belongs_to :procedure_group,
              class_name: "DentalProcedureGroup",
              inverse_of: :procedure_items
+  has_many :coverages,
+           class_name: "DentalProcedureItemCoverage",
+           foreign_key: :procedure_item_id,
+           inverse_of: :procedure_item,
+           dependent: :restrict_with_error
 
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true

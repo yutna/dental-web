@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_152500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_153000) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -49,6 +49,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_152500) do
     t.index ["code"], name: "index_dental_procedure_groups_on_code", unique: true
   end
 
+  create_table "dental_procedure_item_coverages", force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.decimal "copay_amount", precision: 10, scale: 2
+    t.decimal "copay_percent", precision: 5, scale: 2
+    t.datetime "created_at", null: false
+    t.date "effective_from", null: false
+    t.date "effective_to"
+    t.string "eligibility_code", null: false
+    t.integer "lock_version", default: 0, null: false
+    t.decimal "price_ipd", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "price_opd", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer "procedure_item_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["procedure_item_id", "eligibility_code", "effective_from"], name: "index_dental_proc_item_coverages_on_item_eligibility_from"
+    t.index ["procedure_item_id"], name: "index_dental_procedure_item_coverages_on_procedure_item_id"
+  end
+
   create_table "dental_procedure_items", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -71,6 +88,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_152500) do
     t.index ["code"], name: "index_dental_supply_categories_on_code", unique: true
   end
 
+  create_table "dental_supply_item_coverages", force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.decimal "copay_amount", precision: 10, scale: 2
+    t.decimal "copay_percent", precision: 5, scale: 2
+    t.datetime "created_at", null: false
+    t.date "effective_from", null: false
+    t.date "effective_to"
+    t.string "eligibility_code", null: false
+    t.integer "lock_version", default: 0, null: false
+    t.integer "supply_item_id", null: false
+    t.decimal "unit_price", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supply_item_id", "eligibility_code", "effective_from"], name: "index_dental_supply_item_coverages_on_item_eligibility_from"
+    t.index ["supply_item_id"], name: "index_dental_supply_item_coverages_on_supply_item_id"
+  end
+
   create_table "dental_supply_items", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -78,6 +111,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_152500) do
     t.string "name", null: false
     t.integer "supply_category_id", null: false
     t.string "unit", null: false
+    t.decimal "unit_price", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_supply_items_on_code", unique: true
     t.index ["supply_category_id"], name: "index_dental_supply_items_on_supply_category_id"
@@ -123,6 +157,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_152500) do
     t.index ["code"], name: "index_dental_tooth_surface_references_on_code", unique: true
   end
 
+  add_foreign_key "dental_procedure_item_coverages", "dental_procedure_items", column: "procedure_item_id"
   add_foreign_key "dental_procedure_items", "dental_procedure_groups", column: "procedure_group_id"
+  add_foreign_key "dental_supply_item_coverages", "dental_supply_items", column: "supply_item_id"
   add_foreign_key "dental_supply_items", "dental_supply_categories", column: "supply_category_id"
 end
