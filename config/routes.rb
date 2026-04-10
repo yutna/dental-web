@@ -25,6 +25,11 @@ Rails.application.routes.draw do
       patch "visits/:id/transition", to: "visits#transition", as: :visit_transition
       post "visits/check_in", to: "visits#check_in", as: :visit_check_in
       post "visits/sync_appointments", to: "visits#sync_appointments", as: :visit_sync_appointments
+
+      namespace :clinical do
+        get "visits/:visit_id/screening", to: "screening_forms#show", as: :screening_form
+        patch "visits/:visit_id/screening", to: "screening_forms#update"
+      end
     end
 
     namespace :admin do
