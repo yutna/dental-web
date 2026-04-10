@@ -42,6 +42,8 @@ en:
       total_services: Total services
       workspace_link: Back to workspace
   app:
+    flash:
+      dismiss: Dismiss notification
     name: Dental Web
   auth:
     sessions:

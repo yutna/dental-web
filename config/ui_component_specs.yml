@@ -7,6 +7,31 @@ defaults:
   loading:
     use_skeleton_for_ms_over: 300
     avoid_full_page_spinner: true
+  layering:
+    z_index_scale:
+      base: 0
+      sticky_header: 20
+      toast: 30
+      floating_menu: 40
+      drawer_backdrop: 50
+      drawer: 60
+      modal_backdrop: 70
+      modal: 80
+      critical: 90
+    utility_classes:
+      - "z-app-base"
+      - "z-app-sticky"
+      - "z-app-toast"
+      - "z-app-floating"
+      - "z-app-drawer-backdrop"
+      - "z-app-drawer"
+      - "z-app-modal-backdrop"
+      - "z-app-modal"
+      - "z-app-critical"
+    rules:
+      - "Use semantic z-index utility classes instead of numeric z-* classes for new overlays."
+      - "Floating menus must stay above toast notifications."
+      - "Drawers and modals must always include separate backdrop and panel layers."
 
 components:
   data_grid:

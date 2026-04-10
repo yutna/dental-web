@@ -42,6 +42,8 @@ th:
       total_services: จำนวนบริการทั้งหมด
       workspace_link: กลับพื้นที่ทำงาน
   app:
+    flash:
+      dismiss: ปิดการแจ้งเตือน
     name: เดนทัล เว็บ
   auth:
     sessions:
