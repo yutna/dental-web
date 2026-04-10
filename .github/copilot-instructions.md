@@ -54,6 +54,7 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 - **Authorization is policy-first via Pundit.** Gate admin routes with `admin:access` and workspace routes with `workspace:read`; do not check raw roles in controllers.
 - **Advanced UI component contracts are centralized.** Keep baseline behavior and acceptance criteria in `config/ui_component_specs.yml` and keep UI work aligned with those contracts.
 - **Rails UI composition should be componentized.** For reusable UI surfaces (toast/modal/drawer/menus), prefer extracted partials and helper/presenter mapping instead of long inline ERB blocks in layouts.
+- **Keep ERB declarative.** Put presentation mapping/derivation logic in helpers or presenters, not inline branching-heavy view templates.
 - **Overlay stacking must follow semantic layers.** Use `z-app-*` utilities from `app/assets/tailwind/application.css` rather than ad-hoc numeric z-index values.
 - **Feature prompts to AI should include contract + policy context.** Include bounded context, canonical request/response shape, policy requirement, mapper expectations, i18n keys, and accessibility checks.
 - **Use path-specific instruction files for focused guidance.** Keep domain-specific conventions in `.github/instructions/*.instructions.md` with `applyTo` globs instead of expanding global instructions.
