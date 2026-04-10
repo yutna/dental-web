@@ -266,9 +266,9 @@ LAST_COMMIT_SHA: 04ce49b
 LAST_CHECKS_PASSED: rubocop, rspec, i18n, bin/ci
 LAST_UPDATED_UTC: 2026-04-10T15:47:02Z
 
-ACTIVE_PR_URL: NONE
-ACTIVE_PR_STATUS: NONE
-ACTIVE_CI_STATUS: NONE
+ACTIVE_PR_URL: https://github.com/yutna/dental-web/pull/13
+ACTIVE_PR_STATUS: READY_FOR_REVIEW
+ACTIVE_CI_STATUS: GREEN
 CI_RETRY_COUNT: 0
 CI_RETRY_LIMIT: 5
 
@@ -534,6 +534,8 @@ Current run entries:
 2026-04-10T15:46:45Z | CHECKS | G02 | T02.09 | OK | rubocop, group rspec non-system, dental system specs, and bin/ci passed
 2026-04-10T15:46:58Z | COMMIT | G02 | T02.09 | OK | sha=04ce49b
 2026-04-10T15:47:02Z | GATE | G02 | T02.09 | OK | group set to WAITING_UAT and READY
+2026-04-10T15:47:40Z | PR_OPEN | G02 | T02.09 | OK | pr=https://github.com/yutna/dental-web/pull/13 ci=running
+2026-04-10T15:49:01Z | CI_GREEN | G02 | T02.09 | OK | pr-ci all checks successful
 ```
 
 ### Group Handoff Contract
