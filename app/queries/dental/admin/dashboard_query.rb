@@ -20,7 +20,7 @@ module Dental
           summary: {
             master_resources: counts.values.sum,
             active_items: active_count,
-            pending_approvals: 0,
+            pending_approvals: DentalMasterDataChangeRequest.pending.count,
             sync_warnings: 0
           }
         }

@@ -8,6 +8,7 @@
     </div>
     <div class="flex gap-2">
       <%= link_to t("admin.dental.dashboard.back_to_admin"), admin_root_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+      <%= link_to t("admin.dental.dashboard.audit_events"), admin_dental_audit_events_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
       <%= link_to t("admin.dental.dashboard.manage_services"), admin_clinic_services_path, class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
     </div>
   </header>

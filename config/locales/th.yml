@@ -42,7 +42,27 @@ th:
       total_services: จำนวนบริการทั้งหมด
       workspace_link: กลับพื้นที่ทำงาน
     dental:
+      audit_events:
+        back_to_dashboard: กลับแดชบอร์ด
+        description: บันทึกเหตุการณ์แบบ append-only สำหรับงานผู้ดูแลระบบที่มีความอ่อนไหว
+        filters:
+          action: กรองตาม action
+          actor_id: กรองตามรหัสผู้ใช้งาน
+          apply: ใช้ตัวกรอง
+          from: ตั้งแต่ (ISO8601)
+          resource_type: กรองตามชนิดทรัพยากร
+          to: ถึง (ISO8601)
+        heading: บันทึกเหตุการณ์ผู้ดูแลระบบทันตกรรม
+        table:
+          action: การกระทำ
+          actor: ผู้กระทำ
+          empty: ไม่พบบันทึกเหตุการณ์ตามตัวกรองปัจจุบัน
+          metadata: ข้อมูลประกอบ
+          resource: ทรัพยากร
+          time: เวลา
+        title: บันทึกเหตุการณ์ผู้ดูแลระบบทันตกรรม
       dashboard:
+        audit_events: บันทึกเหตุการณ์ตรวจสอบ
         back_to_admin: กลับหน้าแอดมิน
         breakdown:
           heading: สรุปรายการทรัพยากร

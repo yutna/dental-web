@@ -20,6 +20,7 @@ module Admin
           authorize([ :admin, :dental, :master_data, @procedure_item ])
 
           if @procedure_item.save
+            record_audit_event("procedure_item.created", @procedure_item)
             redirect_to admin_dental_master_data_procedure_items_path,
                         notice: t("admin.dental.procedure_items.created")
           else
@@ -37,11 +38,12 @@ module Admin
           authorize([ :admin, :dental, :master_data, @procedure_item ])
 
           if maker_checker_required?
-            ::Admin::Dental::MasterData::SubmitPriceChangeRequest.call(
+            change_request = ::Admin::Dental::MasterData::SubmitPriceChangeRequest.call(
               item: @procedure_item,
               requested_by_id: current_principal.id,
               attributes: procedure_item_params.slice(:price_opd, :price_ipd)
             )
+            record_audit_event("procedure_item.price_change_requested", @procedure_item, change_request_id: change_request.id)
 
             redirect_to admin_dental_master_data_procedure_items_path,
                         notice: t("admin.dental.procedure_items.change_request_submitted")
@@ -49,6 +51,7 @@ module Admin
           end
 
           if @procedure_item.update(procedure_item_params)
+            record_audit_event("procedure_item.updated", @procedure_item)
             redirect_to admin_dental_master_data_procedure_items_path,
                         notice: t("admin.dental.procedure_items.updated")
           else
@@ -73,6 +76,7 @@ module Admin
           end
 
           @procedure_item.update!(request.payload.slice("price_opd", "price_ipd"))
+          record_audit_event("procedure_item.price_change_approved", @procedure_item, change_request_id: request.id)
 
           redirect_to admin_dental_master_data_procedure_items_path,
                       notice: t("admin.dental.procedure_items.change_request_approved")
@@ -82,9 +86,11 @@ module Admin
           authorize([ :admin, :dental, :master_data, @procedure_item ])
           message = if @procedure_item.coverages.exists?
             @procedure_item.update!(active: false)
+            record_audit_event("procedure_item.deactivated_referenced", @procedure_item)
             t("admin.dental.procedure_items.deactivated_referenced")
           elsif @procedure_item.active?
             @procedure_item.update!(active: false)
+            record_audit_event("procedure_item.deactivated", @procedure_item)
             t("admin.dental.procedure_items.deactivated")
           else
             t("admin.dental.procedure_items.already_inactive")
@@ -101,6 +107,7 @@ module Admin
             rows: bulk_import_rows,
             overwrite: false
           )
+          record_audit_event("procedure_item.bulk_import_preview", DentalProcedureItem, rows: bulk_import_rows.size)
 
           render json: result
         end
@@ -112,6 +119,7 @@ module Admin
             rows: bulk_import_rows,
             overwrite: params[:overwrite] == "true"
           )
+          record_audit_event("procedure_item.bulk_import_apply", DentalProcedureItem, rows: bulk_import_rows.size, overwrite: params[:overwrite] == "true")
 
           render json: result
         end
@@ -146,6 +154,15 @@ module Admin
           attrs = procedure_item_params
           attrs[:price_opd].to_s != @procedure_item.price_opd.to_s ||
             attrs[:price_ipd].to_s != @procedure_item.price_ipd.to_s
+        end
+
+        def record_audit_event(action, resource, metadata = {})
+          ::Admin::Dental::AuditLogger.call(
+            actor_id: current_principal.id,
+            action: action,
+            resource: resource,
+            metadata: metadata
+          )
         end
 
         def bulk_import_rows

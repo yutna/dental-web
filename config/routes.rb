@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
       namespace :dental do
         root "dashboard#show"
+        resources :audit_events, only: :index
 
         namespace :master_data do
           resources :procedure_items, except: :show do

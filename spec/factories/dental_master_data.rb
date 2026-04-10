@@ -58,4 +58,13 @@ FactoryBot.define do
     copay_percent { nil }
     active { true }
   end
+
+  factory :dental_admin_audit_event do
+    actor_id { "local-admin" }
+    action { "procedure_item.updated" }
+    resource_type { "DentalProcedureItem" }
+    resource_id { 1 }
+    metadata_json { { key: "value" }.to_json }
+    created_at { Time.current }
+  end
 end

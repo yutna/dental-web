@@ -42,7 +42,27 @@ en:
       total_services: Total services
       workspace_link: Back to workspace
     dental:
+      audit_events:
+        back_to_dashboard: Back to dashboard
+        description: Append-only audit trail for sensitive admin operations.
+        filters:
+          action: Filter by action
+          actor_id: Filter by actor id
+          apply: Apply filters
+          from: From (ISO8601)
+          resource_type: Filter by resource type
+          to: To (ISO8601)
+        heading: Dental admin audit events
+        table:
+          action: Action
+          actor: Actor
+          empty: No audit events found for current filters.
+          metadata: Metadata
+          resource: Resource
+          time: Timestamp
+        title: Dental admin audit events
       dashboard:
+        audit_events: Audit events
         back_to_admin: Back to admin
         breakdown:
           heading: Resource breakdown
