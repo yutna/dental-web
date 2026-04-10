@@ -1,0 +1,37 @@
+<% return if entries.blank? %>
+
+<section
+  class="flash-toast-viewport z-app-toast fixed right-3 top-24 w-[calc(100%-1.5rem)] max-w-104 sm:right-4 sm:top-24"
+  data-controller="flash-toast"
+  data-action="keydown.esc@window->flash-toast#dismissLatest"
+  data-flash-toast-default-duration-value="4500"
+  data-flash-toast-max-visible-value="3"
+  data-flash-toast-swipe-threshold-value="72"
+  aria-live="polite"
+  aria-label="<%= t("app.flash.notifications_label") %>"
+>
+  <ol class="space-y-2" role="list">
+    <% entries.each do |entry| %>
+      <li
+        class="flash-toast group pointer-events-auto overflow-hidden rounded-xl border <%= entry[:border_class] %> <%= entry[:bg_class] %> <%= entry[:text_class] %> shadow-lg"
+        data-flash-toast-target="toast"
+        data-timeout="<%= entry[:timeout] %>"
+        data-action="mouseenter->flash-toast#pause mouseleave->flash-toast#resume focusin->flash-toast#pause focusout->flash-toast#resume touchstart->flash-toast#touchStart touchmove->flash-toast#touchMove touchend->flash-toast#touchEnd touchcancel->flash-toast#touchCancel"
+        role="<%= entry[:role] %>"
+      >
+        <div class="flex items-start gap-3 px-4 py-3">
+          <p class="min-w-0 flex-1 text-sm font-medium"><%= entry[:message] %></p>
+          <button
+            type="button"
+            class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-current/25 bg-transparent text-base leading-none transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-brand-primary"
+            data-action="flash-toast#dismiss"
+            aria-label="<%= t("app.flash.dismiss") %>"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="flash-toast-progress" data-flash-toast-target="progress"></div>
+      </li>
+    <% end %>
+  </ol>
+</section>

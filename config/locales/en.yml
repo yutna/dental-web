@@ -44,6 +44,7 @@ en:
   app:
     flash:
       dismiss: Dismiss notification
+      notifications_label: Notifications
     name: Dental Web
   auth:
     sessions:

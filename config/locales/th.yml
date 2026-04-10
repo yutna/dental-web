@@ -44,6 +44,7 @@ th:
   app:
     flash:
       dismiss: ปิดการแจ้งเตือน
+      notifications_label: การแจ้งเตือน
     name: เดนทัล เว็บ
   auth:
     sessions:
