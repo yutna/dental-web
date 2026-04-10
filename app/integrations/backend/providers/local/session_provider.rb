@@ -56,7 +56,12 @@ module Backend
         def build_principal(username)
           roles       = username.include?("admin") ? [ "admin" ] : [ "clinician" ]
           permissions = [ "workspace:read" ]
-          permissions << "admin:access" if roles.include?("admin")
+          if roles.include?("admin")
+            permissions << "admin:access"
+            permissions << "dental:read"
+            permissions << "dental:workflow:read"
+            permissions << "dental:workflow:write"
+          end
 
           Security::Principal.new(
             id:           "local-#{Digest::SHA256.hexdigest(username).first(12)}",

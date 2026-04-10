@@ -1,15 +1,11 @@
 module Dental
   class BaseController < ApplicationController
     before_action :require_signed_in!
-    before_action :authorize_dental_namespace!
 
     rescue_from Dental::Errors::BaseError, with: :render_dental_error
+    rescue_from Pundit::NotAuthorizedError, with: :render_forbidden
 
     private
-
-    def authorize_dental_namespace!
-      authorize([ :dental, :base ], :access?)
-    end
 
     def render_dental_error(error)
       render(
@@ -22,6 +18,10 @@ module Dental
         },
         status: http_status_for(error.code)
       )
+    end
+
+    def render_forbidden
+      render_dental_error(Dental::Errors::Forbidden.new)
     end
 
     def http_status_for(code)

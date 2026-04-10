@@ -33,6 +33,16 @@ module Dental
       DEFAULT_MESSAGE = "Invalid stage transition".freeze
     end
 
+    class NotFound < BaseError
+      CODE = Dental::ErrorCode::NOT_FOUND
+      DEFAULT_MESSAGE = "Not found".freeze
+    end
+
+    class Forbidden < BaseError
+      CODE = Dental::ErrorCode::FORBIDDEN
+      DEFAULT_MESSAGE = "Forbidden".freeze
+    end
+
     class GuardViolation < BaseError
       CODE = Dental::ErrorCode::STATE_GUARD_VIOLATION
       DEFAULT_MESSAGE = "State guard violation".freeze
