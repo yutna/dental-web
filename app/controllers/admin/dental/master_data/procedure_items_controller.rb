@@ -66,6 +66,28 @@ module Admin
                       notice: message
         end
 
+        def bulk_import_preview
+          authorize([ :admin, :dental, :master_data, DentalProcedureItem ])
+
+          result = ::Admin::Dental::MasterData::ProcedureItemBulkImport.call(
+            rows: bulk_import_rows,
+            overwrite: false
+          )
+
+          render json: result
+        end
+
+        def bulk_import_apply
+          authorize([ :admin, :dental, :master_data, DentalProcedureItem ])
+
+          result = ::Admin::Dental::MasterData::ProcedureItemBulkImport.call(
+            rows: bulk_import_rows,
+            overwrite: params[:overwrite] == "true"
+          )
+
+          render json: result
+        end
+
         private
 
         def set_procedure_item
@@ -85,6 +107,20 @@ module Admin
             :price_ipd,
             :active,
             :lock_version
+          ])
+        end
+
+        def bulk_import_rows
+          params.expect(rows: [
+            [
+              :procedure_group_id,
+              :code,
+              :name,
+              :price_opd,
+              :price_ipd,
+              :active,
+              :lock_version
+            ]
           ])
         end
       end

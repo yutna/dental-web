@@ -26,6 +26,14 @@ module Admin
           admin_access?
         end
 
+        def bulk_import_preview?
+          admin_access?
+        end
+
+        def bulk_import_apply?
+          admin_access?
+        end
+
         class Scope < ApplicationPolicy::Scope
           def resolve
             return scope.none unless user.allowed?("admin:access")

@@ -33,7 +33,12 @@ Rails.application.routes.draw do
         root "dashboard#show"
 
         namespace :master_data do
-          resources :procedure_items, except: :show
+          resources :procedure_items, except: :show do
+            collection do
+              post :bulk_import_preview
+              post :bulk_import_apply
+            end
+          end
         end
       end
     end
