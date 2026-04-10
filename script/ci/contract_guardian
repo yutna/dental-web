@@ -4,8 +4,8 @@ set -euo pipefail
 echo "Running contract guardian lane..."
 
 bin/rubocop app/use_cases app/integrations app/policies config/routes.rb
-bin/rails db:test:prepare
-bin/rspec \
+env RAILS_ENV=test bin/rails db:test:prepare
+env RAILS_ENV=test bin/rspec \
   spec/integrations/backend \
   spec/policies \
   spec/requests/auth_sessions_spec.rb \
