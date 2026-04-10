@@ -257,14 +257,14 @@ Keep this block updated during execution.
 BOARD_MODE: SINGLE_FILE
 REQUIREMENTS_MUTABILITY: FROZEN
 
-CURRENT_GROUP: G01
+CURRENT_GROUP: G02
 GROUP_STATUS: IN_PROGRESS
-NEXT_TICKET: T01.01
+NEXT_TICKET: T02.01
 
-LAST_COMPLETED_TICKET: NONE
-LAST_COMMIT_SHA: NONE
-LAST_CHECKS_PASSED: INIT
-LAST_UPDATED_UTC: 2026-04-10T14:12:54Z
+LAST_COMPLETED_TICKET: T01.08
+LAST_COMMIT_SHA: d2728d4
+LAST_CHECKS_PASSED: rubocop, rspec, bin/ci, pr-ci
+LAST_UPDATED_UTC: 2026-04-10T15:17:07Z
 
 ACTIVE_PR_URL: NONE
 ACTIVE_PR_STATUS: NONE
@@ -273,7 +273,7 @@ CI_RETRY_COUNT: 0
 CI_RETRY_LIMIT: 5
 
 UAT_GATE_STATUS:
-- G01: PENDING
+- G01: APPROVED
 - G02: PENDING
 - G03: PENDING
 - G04: PENDING
@@ -355,14 +355,14 @@ Use this template:
 
 ```text
 G01
-- T01.01: TODO
-- T01.02: TODO
-- T01.03: TODO
-- T01.04: TODO
-- T01.05: TODO
-- T01.06: TODO
-- T01.07: TODO
-- T01.08: TODO
+- T01.01: DONE
+- T01.02: DONE
+- T01.03: DONE
+- T01.04: DONE
+- T01.05: DONE
+- T01.06: DONE
+- T01.07: DONE
+- T01.08: DONE
 
 G02
 - T02.01: TODO
@@ -457,6 +457,47 @@ Examples:
 2026-04-10T11:25:00Z | CHECKS | G01 | T01.01 | OK | rubocop and rspec passed
 2026-04-10T11:30:00Z | COMMIT | G01 | T01.01 | OK | sha=abc1234
 2026-04-10T11:35:00Z | RESUME | G01 | T01.02 | OK | restored after interruption
+```
+
+Current run entries:
+
+```text
+2026-04-10T14:25:00Z | START | G01 | T01.01 | OK | begin implementation
+2026-04-10T14:47:00Z | CHECKS | G01 | T01.01 | OK | rubocop and rspec passed
+2026-04-10T14:48:00Z | COMMIT | G01 | T01.01 | OK | sha=68fa19f
+2026-04-10T14:49:16Z | RESUME | G01 | T01.02 | OK | runtime block updated
+2026-04-10T14:49:30Z | START | G01 | T01.02 | OK | begin implementation
+2026-04-10T14:51:20Z | CHECKS | G01 | T01.02 | OK | rubocop and rspec passed
+2026-04-10T14:52:00Z | COMMIT | G01 | T01.02 | OK | sha=70e28e8
+2026-04-10T14:52:28Z | RESUME | G01 | T01.03 | OK | runtime block updated
+2026-04-10T14:52:40Z | START | G01 | T01.03 | OK | begin implementation
+2026-04-10T14:54:20Z | CHECKS | G01 | T01.03 | OK | rubocop and rspec passed
+2026-04-10T14:54:45Z | COMMIT | G01 | T01.03 | OK | sha=f3e12cc
+2026-04-10T14:54:52Z | RESUME | G01 | T01.04 | OK | runtime block updated
+2026-04-10T14:55:00Z | START | G01 | T01.04 | OK | begin implementation
+2026-04-10T14:56:10Z | CHECKS | G01 | T01.04 | OK | rubocop and rspec passed
+2026-04-10T14:56:20Z | COMMIT | G01 | T01.04 | OK | sha=8f28259
+2026-04-10T14:56:22Z | RESUME | G01 | T01.05 | OK | runtime block updated
+2026-04-10T14:56:30Z | START | G01 | T01.05 | OK | begin implementation
+2026-04-10T14:57:15Z | CHECKS | G01 | T01.05 | OK | rubocop and rspec passed
+2026-04-10T14:57:20Z | COMMIT | G01 | T01.05 | OK | sha=e194e2a
+2026-04-10T14:57:25Z | RESUME | G01 | T01.06 | OK | runtime block updated
+2026-04-10T14:57:35Z | START | G01 | T01.06 | OK | begin implementation
+2026-04-10T14:58:50Z | CHECKS | G01 | T01.06 | OK | rubocop and rspec passed, i18n health green
+2026-04-10T14:59:00Z | COMMIT | G01 | T01.06 | OK | sha=23e87e5
+2026-04-10T14:59:03Z | RESUME | G01 | T01.07 | OK | runtime block updated
+2026-04-10T14:59:12Z | START | G01 | T01.07 | OK | begin implementation
+2026-04-10T15:00:50Z | CHECKS | G01 | T01.07 | OK | rubocop and rspec passed
+2026-04-10T15:00:55Z | COMMIT | G01 | T01.07 | OK | sha=fc16713
+2026-04-10T15:00:57Z | RESUME | G01 | T01.08 | OK | runtime block updated
+2026-04-10T15:01:05Z | START | G01 | T01.08 | OK | begin implementation
+2026-04-10T15:02:55Z | CHECKS | G01 | T01.08 | OK | rubocop, rspec, system spec, and bin/ci passed
+2026-04-10T15:03:10Z | COMMIT | G01 | T01.08 | OK | sha=d2728d4
+2026-04-10T15:03:16Z | GATE | G01 | T01.08 | OK | group set to WAITING_UAT and READY
+2026-04-10T15:07:34Z | PR_OPEN | G01 | T01.08 | OK | pr=https://github.com/yutna/dental-web/pull/12 ci=running
+2026-04-10T15:09:00Z | CI_GREEN | G01 | T01.08 | OK | pr-ci all checks successful
+2026-04-10T15:17:07Z | UAT_APPROVE | G01 | T01.08 | OK | user approved G01
+2026-04-10T15:17:07Z | RESUME | G02 | T02.01 | OK | move to next group per handoff contract
 ```
 
 ### Group Handoff Contract
