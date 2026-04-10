@@ -13,15 +13,27 @@ module Dental
     def transition
       authorize([ :dental, :visit ], :transition?)
 
+      from_stage = params[:from_stage].presence || "registered"
       to_stage = params[:to_stage].to_s
-      allowed_targets = Dental::Enums::VisitStage.values - [ "registered" ]
-      unless allowed_targets.include?(to_stage)
+
+      allowed_transitions = Dental::Workflow::VisitStateMachine.allowed_transitions(from_stage)
+      unless Dental::Workflow::VisitStateMachine.valid_transition?(from_stage: from_stage, to_stage: to_stage)
         raise Dental::Errors::InvalidTransition.new(
-          details: { visit_id: params[:id], to_stage: to_stage }
+          details: {
+            visit_id: params[:id],
+            from_stage: from_stage,
+            to_stage: to_stage,
+            allowed_transitions: allowed_transitions
+          }
         )
       end
 
-      render json: { visit_id: params[:id], transitioned: true, to_stage: to_stage }
+      render json: {
+        visit_id: params[:id],
+        transitioned: true,
+        from_stage: from_stage,
+        to_stage: to_stage
+      }
     end
   end
 end
