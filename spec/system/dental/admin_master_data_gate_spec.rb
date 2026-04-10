@@ -29,6 +29,7 @@ RSpec.describe "Dental admin master-data gate", type: :system do
 
     visit "/en/admin/dental/audit_events"
     expect(page).to have_text("Dental admin audit events")
-    expect(page).to have_text("No audit events found for current filters")
+    expect(page).to have_text("procedure_item.created")
+    expect(page).to have_text("DentalProcedureItem")
   end
 end
