@@ -258,13 +258,13 @@ BOARD_MODE: SINGLE_FILE
 REQUIREMENTS_MUTABILITY: FROZEN
 
 CURRENT_GROUP: G02
-GROUP_STATUS: IN_PROGRESS
-NEXT_TICKET: T02.01
+GROUP_STATUS: WAITING_UAT
+NEXT_TICKET: NONE
 
-LAST_COMPLETED_TICKET: T01.08
-LAST_COMMIT_SHA: d2728d4
-LAST_CHECKS_PASSED: rubocop, rspec, bin/ci, pr-ci
-LAST_UPDATED_UTC: 2026-04-10T15:17:07Z
+LAST_COMPLETED_TICKET: T02.09
+LAST_COMMIT_SHA: 04ce49b
+LAST_CHECKS_PASSED: rubocop, rspec, i18n, bin/ci
+LAST_UPDATED_UTC: 2026-04-10T15:47:02Z
 
 ACTIVE_PR_URL: NONE
 ACTIVE_PR_STATUS: NONE
@@ -274,7 +274,7 @@ CI_RETRY_LIMIT: 5
 
 UAT_GATE_STATUS:
 - G01: APPROVED
-- G02: PENDING
+- G02: READY
 - G03: PENDING
 - G04: PENDING
 - G05: PENDING
@@ -365,15 +365,15 @@ G01
 - T01.08: DONE
 
 G02
-- T02.01: TODO
-- T02.02: TODO
-- T02.03: TODO
-- T02.04: TODO
-- T02.05: TODO
-- T02.06: TODO
-- T02.07: TODO
-- T02.08: TODO
-- T02.09: TODO
+- T02.01: DONE
+- T02.02: DONE
+- T02.03: DONE
+- T02.04: DONE
+- T02.05: DONE
+- T02.06: DONE
+- T02.07: DONE
+- T02.08: DONE
+- T02.09: DONE
 
 G03
 - T03.01: TODO
@@ -498,6 +498,42 @@ Current run entries:
 2026-04-10T15:09:00Z | CI_GREEN | G01 | T01.08 | OK | pr-ci all checks successful
 2026-04-10T15:17:07Z | UAT_APPROVE | G01 | T01.08 | OK | user approved G01
 2026-04-10T15:17:07Z | RESUME | G02 | T02.01 | OK | move to next group per handoff contract
+2026-04-10T15:24:30Z | START | G02 | T02.01 | OK | begin implementation
+2026-04-10T15:26:00Z | CHECKS | G02 | T02.01 | OK | rubocop and targeted model specs passed
+2026-04-10T15:26:06Z | COMMIT | G02 | T02.01 | OK | sha=fe527ee
+2026-04-10T15:26:06Z | RESUME | G02 | T02.02 | OK | runtime block updated
+2026-04-10T15:29:10Z | START | G02 | T02.02 | OK | begin implementation
+2026-04-10T15:28:20Z | CHECKS | G02 | T02.02 | OK | rubocop and targeted coverage tests passed
+2026-04-10T15:28:30Z | COMMIT | G02 | T02.02 | OK | sha=df345e0
+2026-04-10T15:28:42Z | RESUME | G02 | T02.03 | OK | runtime block updated
+2026-04-10T15:29:00Z | START | G02 | T02.03 | OK | begin implementation
+2026-04-10T15:30:20Z | CHECKS | G02 | T02.03 | OK | rubocop, targeted tests, and i18n health passed
+2026-04-10T15:30:25Z | COMMIT | G02 | T02.03 | OK | sha=c319651
+2026-04-10T15:30:27Z | RESUME | G02 | T02.04 | OK | runtime block updated
+2026-04-10T15:31:00Z | START | G02 | T02.04 | OK | begin implementation
+2026-04-10T15:34:20Z | CHECKS | G02 | T02.04 | OK | rubocop, targeted request specs, and i18n health passed
+2026-04-10T15:34:23Z | COMMIT | G02 | T02.04 | OK | sha=47d7800
+2026-04-10T15:34:25Z | RESUME | G02 | T02.05 | OK | runtime block updated
+2026-04-10T15:35:00Z | START | G02 | T02.05 | OK | begin implementation
+2026-04-10T15:35:30Z | CHECKS | G02 | T02.05 | OK | rubocop, targeted request specs, and i18n health passed
+2026-04-10T15:35:35Z | COMMIT | G02 | T02.05 | OK | sha=9aa555a
+2026-04-10T15:35:37Z | RESUME | G02 | T02.06 | OK | runtime block updated
+2026-04-10T15:38:30Z | START | G02 | T02.06 | OK | begin implementation
+2026-04-10T15:37:15Z | CHECKS | G02 | T02.06 | OK | rubocop and targeted bulk import specs passed
+2026-04-10T15:37:22Z | COMMIT | G02 | T02.06 | OK | sha=83f2c8e
+2026-04-10T15:37:27Z | RESUME | G02 | T02.07 | OK | runtime block updated
+2026-04-10T15:38:35Z | START | G02 | T02.07 | OK | begin implementation
+2026-04-10T15:40:30Z | CHECKS | G02 | T02.07 | OK | rubocop, targeted request specs, and i18n health passed
+2026-04-10T15:40:45Z | COMMIT | G02 | T02.07 | OK | sha=f5b1c71
+2026-04-10T15:40:50Z | RESUME | G02 | T02.08 | OK | runtime block updated
+2026-04-10T15:41:00Z | START | G02 | T02.08 | OK | begin implementation
+2026-04-10T15:43:55Z | CHECKS | G02 | T02.08 | OK | rubocop, targeted specs, and i18n health passed
+2026-04-10T15:44:10Z | COMMIT | G02 | T02.08 | OK | sha=3731564
+2026-04-10T15:44:17Z | RESUME | G02 | T02.09 | OK | runtime block updated
+2026-04-10T15:44:30Z | START | G02 | T02.09 | OK | begin implementation
+2026-04-10T15:46:45Z | CHECKS | G02 | T02.09 | OK | rubocop, group rspec non-system, dental system specs, and bin/ci passed
+2026-04-10T15:46:58Z | COMMIT | G02 | T02.09 | OK | sha=04ce49b
+2026-04-10T15:47:02Z | GATE | G02 | T02.09 | OK | group set to WAITING_UAT and READY
 ```
 
 ### Group Handoff Contract
