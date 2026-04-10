@@ -31,6 +31,10 @@ Rails.application.routes.draw do
 
       namespace :dental do
         root "dashboard#show"
+
+        namespace :master_data do
+          resources :procedure_items, except: :show
+        end
       end
     end
   end

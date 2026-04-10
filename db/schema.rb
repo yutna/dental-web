@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_153000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_154500) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -70,6 +70,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_153000) do
     t.boolean "active", default: true, null: false
     t.string "code", null: false
     t.datetime "created_at", null: false
+    t.integer "lock_version", default: 0, null: false
     t.string "name", null: false
     t.decimal "price_ipd", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "price_opd", precision: 10, scale: 2, default: "0.0", null: false

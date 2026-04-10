@@ -59,6 +59,32 @@ en:
           sync_warnings: Sync warnings
         manage_services: Manage services
         title: Dental admin dashboard
+      procedure_items:
+        back_to_dashboard: Back to dashboard
+        created: Procedure item created successfully.
+        description: Manage procedure item catalog with optimistic lock support.
+        destroyed: Procedure item deleted successfully.
+        edit: Edit procedure item
+        edit_description: Update procedure item %{code}.
+        form:
+          group: Procedure group
+          price_ipd: IPD price
+          price_opd: OPD price
+        heading: Procedure item catalog
+        lock_conflict: This item was updated by someone else. Reload and try again.
+        new: New procedure item
+        new_description: Create a new procedure item for treatment billing.
+        table:
+          actions: Actions
+          code: Code
+          empty: No procedure items found.
+          group: Group
+          name: Name
+          price_ipd: IPD
+          price_opd: OPD
+          status: Status
+        title: Procedure items
+        updated: Procedure item updated successfully.
   app:
     flash:
       dismiss: Dismiss notification

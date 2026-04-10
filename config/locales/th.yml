@@ -59,6 +59,32 @@ th:
           sync_warnings: การแจ้งเตือนการซิงก์
         manage_services: จัดการบริการ
         title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
+      procedure_items:
+        back_to_dashboard: กลับแดชบอร์ด
+        created: สร้างรายการหัตถการสำเร็จ
+        description: จัดการรายการหัตถการพร้อมรองรับ optimistic lock
+        destroyed: ลบรายการหัตถการสำเร็จ
+        edit: แก้ไขรายการหัตถการ
+        edit_description: อัปเดตรายการหัตถการ %{code}
+        form:
+          group: กลุ่มหัตถการ
+          price_ipd: ราคา IPD
+          price_opd: ราคา OPD
+        heading: รายการหัตถการ
+        lock_conflict: รายการนี้ถูกแก้ไขโดยผู้ใช้อื่นแล้ว กรุณารีโหลดก่อนลองใหม่
+        new: เพิ่มรายการหัตถการ
+        new_description: สร้างรายการหัตถการใหม่สำหรับการคิดค่ารักษา
+        table:
+          actions: การทำงาน
+          code: รหัส
+          empty: ไม่พบรายการหัตถการ
+          group: กลุ่ม
+          name: ชื่อ
+          price_ipd: IPD
+          price_opd: OPD
+          status: สถานะ
+        title: รายการหัตถการ
+        updated: อัปเดตรายการหัตถการสำเร็จ
   app:
     flash:
       dismiss: ปิดการแจ้งเตือน
