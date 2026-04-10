@@ -4,5 +4,5 @@
   "email": null,
   "display_name": "Admin@example Com",
   "roles": ["admin"],
-  "permissions": ["admin:access", "workspace:read"]
+  "permissions": ["admin:access", "dental:read", "dental:workflow:read", "dental:workflow:write", "workspace:read"]
 }
