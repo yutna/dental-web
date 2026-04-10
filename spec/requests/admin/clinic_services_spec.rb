@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Admin clinic services", type: :request do
   def sign_in_as(username:)
     post "/en/session", params: { username: username, password: "secret" }
-    expect(response).to redirect_to("/en")
+    expect(response).to redirect_to("/en/workspace")
   end
 
   it "allows admin users to access admin dashboard" do
