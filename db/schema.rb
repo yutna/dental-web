@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_165700) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_170000) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -66,6 +66,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_165700) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_medication_profiles_on_code", unique: true
+  end
+
+  create_table "dental_payment_bridge_events", force: :cascade do |t|
+    t.string "actor_id"
+    t.datetime "created_at", null: false
+    t.string "from_stage", null: false
+    t.string "hook_type", null: false
+    t.text "payload_json", default: "{}", null: false
+    t.string "status", default: "pending", null: false
+    t.string "to_stage", null: false
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["hook_type"], name: "index_dental_payment_bridge_events_on_hook_type"
+    t.index ["status"], name: "index_dental_payment_bridge_events_on_status"
+    t.index ["visit_id", "created_at"], name: "index_dental_payment_events_on_visit_created"
   end
 
   create_table "dental_procedure_groups", force: :cascade do |t|

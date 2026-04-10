@@ -51,6 +51,16 @@ module Dental
         }
       )
 
+      hook_result = Dental::Workflow::PaymentBridgeHook.call(
+        visit_id: params[:id],
+        from_stage: from_stage,
+        to_stage: to_stage,
+        actor_id: current_principal.id,
+        metadata: {
+          transition_source: "visits_controller"
+        }
+      )
+
       updated_snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: params[:id])
 
       render json: {
@@ -60,7 +70,8 @@ module Dental
         to_stage: to_stage,
         current_stage: updated_snapshot[:current_stage],
         lock_version: updated_snapshot[:lock_version],
-        last_updated_at: updated_snapshot[:last_event_at]&.iso8601
+        last_updated_at: updated_snapshot[:last_event_at]&.iso8601,
+        payment_bridge_hook: hook_result[:event]&.hook_type
       }
     end
 

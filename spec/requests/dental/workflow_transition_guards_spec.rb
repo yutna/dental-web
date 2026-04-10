@@ -121,4 +121,53 @@ RSpec.describe "Dental workflow transition guards", type: :request do
       )
     )
   end
+
+  it "emits send_to_cashier bridge hook when transitioning to waiting-payment" do
+    patch "/en/dental/visits/VISIT-1/transition", params: {
+      from_stage: "in-treatment",
+      to_stage: "waiting-payment"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.parsed_body).to include("payment_bridge_hook" => "send_to_cashier")
+
+    event = DentalPaymentBridgeEvent.order(:id).last
+    expect(event).to have_attributes(
+      visit_id: "VISIT-1",
+      from_stage: "in-treatment",
+      to_stage: "waiting-payment",
+      hook_type: "send_to_cashier",
+      status: "pending"
+    )
+  end
+
+  it "emits complete_no_charge bridge hook when transitioning in-treatment to completed" do
+    patch "/en/dental/visits/VISIT-1/transition", params: {
+      from_stage: "in-treatment",
+      to_stage: "completed"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.parsed_body).to include("payment_bridge_hook" => "complete_no_charge")
+  end
+
+  it "emits refer_out bridge hook when transitioning to referred-out" do
+    patch "/en/dental/visits/VISIT-1/transition", params: {
+      from_stage: "in-treatment",
+      to_stage: "referred-out"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.parsed_body).to include("payment_bridge_hook" => "refer_out")
+  end
+
+  it "emits cancel_visit bridge hook when transitioning to cancelled" do
+    patch "/en/dental/visits/VISIT-1/transition", params: {
+      from_stage: "registered",
+      to_stage: "cancelled"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.parsed_body).to include("payment_bridge_hook" => "cancel_visit")
+  end
 end
