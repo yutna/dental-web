@@ -1,8 +1,11 @@
 @import "tailwindcss";
+
 @custom-variant dark (&:where(.dark, .dark *));
+
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
+
 @import "./tokens.generated.css";
 
 :root {
@@ -11,6 +14,53 @@
   --scrollbar-thumb: color-mix(in srgb, var(--color-app-text-tertiary) 36%, var(--color-app-surface-tertiary));
   --scrollbar-thumb-hover: color-mix(in srgb, var(--color-app-text-secondary) 52%, var(--color-app-surface-tertiary));
   --scrollbar-thumb-active: color-mix(in srgb, var(--color-app-text-secondary) 68%, var(--color-app-surface-tertiary));
+
+  /* Global layering scale (low -> high) for consistent overlay behavior. */
+  --z-app-base: 0;
+  --z-app-sticky: 20;
+  --z-app-toast: 30;
+  --z-app-floating: 40;
+  --z-app-drawer-backdrop: 50;
+  --z-app-drawer: 60;
+  --z-app-modal-backdrop: 70;
+  --z-app-modal: 80;
+  --z-app-critical: 90;
+}
+
+.z-app-base {
+  z-index: var(--z-app-base);
+}
+
+.z-app-sticky {
+  z-index: var(--z-app-sticky);
+}
+
+.z-app-toast {
+  z-index: var(--z-app-toast);
+}
+
+.z-app-floating {
+  z-index: var(--z-app-floating);
+}
+
+.z-app-drawer-backdrop {
+  z-index: var(--z-app-drawer-backdrop);
+}
+
+.z-app-drawer {
+  z-index: var(--z-app-drawer);
+}
+
+.z-app-modal-backdrop {
+  z-index: var(--z-app-modal-backdrop);
+}
+
+.z-app-modal {
+  z-index: var(--z-app-modal);
+}
+
+.z-app-critical {
+  z-index: var(--z-app-critical);
 }
 
 html {
@@ -93,9 +143,64 @@ html {
   animation: skeleton-shimmer 1.3s ease-in-out infinite;
 }
 
+.flash-toast-viewport {
+  pointer-events: none;
+}
+
+.flash-toast {
+  opacity: 0;
+  transform: translateY(-0.25rem) scale(0.98);
+  transition: transform 220ms ease, opacity 220ms ease;
+  will-change: transform, opacity;
+  touch-action: pan-y;
+}
+
+.flash-toast.is-dragging {
+  transition: none;
+}
+
+.flash-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.flash-toast.is-leaving {
+  opacity: 0;
+  transform: translateY(-0.375rem) scale(0.98);
+}
+
+@keyframes flash-toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.flash-toast-progress {
+  height: 2px;
+  width: 100%;
+  transform-origin: left center;
+  background-color: color-mix(in srgb, currentColor 36%, transparent);
+  animation-name: flash-toast-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .skeleton-shimmer {
     animation: none;
     background-image: none;
+  }
+
+  .flash-toast {
+    transition: none;
+    transform: none;
+  }
+
+  .flash-toast-progress {
+    animation: none;
   }
 }

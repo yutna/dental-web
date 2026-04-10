@@ -4,6 +4,7 @@ CI.run do
   step "Setup", "bin/setup --skip-server"
 
   step "Copilot: Asset validation", "ruby script/ci/validate_copilot_assets.rb"
+  step "Policy: Backend ENV guardrails", "ruby script/ci/validate_backend_env_guardrails.rb"
 
   step "Style: Ruby", "bin/rubocop"
 

@@ -14,18 +14,19 @@ bin/dev
 
 ## BFF foundation
 
-This Rails app is the front-end team's BFF host. The UI contract is canonical and provider-backed:
+This Rails app is the front-end team's BFF host. The UI contract is canonical and backend-API-backed.
 
-- `BFF_PROVIDER_MODE=local` (default): full local Rails implementation
-- `BFF_PROVIDER_MODE=remote`: calls real backend API
-- `BFF_PROVIDER_MODE=dual_compare`: compares local/remote contract output
+- Runtime (development/production): calls real backend APIs
+- Test suite: uses deterministic in-process providers for isolated verification
 
 Backend connection settings:
 
-- `BACKEND_API_BASE_URL` (default `http://localhost:3001`)
-- `BACKEND_API_OPEN_TIMEOUT` (default `2`)
-- `BACKEND_API_READ_TIMEOUT` (default `5`)
+- `BACKEND_API_BASE_URL` (required)
+- `BACKEND_API_OPEN_TIMEOUT` (required)
+- `BACKEND_API_READ_TIMEOUT` (required)
 - `BFF_CONTRACT_DIFF_DIR` (default `tmp/contract_diffs`)
+
+Copy `.env.example` to `.env` and set values for your environment before running the app.
 
 Recommended architecture boundaries:
 
@@ -57,7 +58,7 @@ Detailed component contracts live in `config/ui_component_specs.yml`.
 - Local/remote contract parity specs: `spec/integrations/backend/session_contract_spec.rb`
 - Auth orchestration specs: `spec/use_cases/security/sign_in_spec.rb`
 - Policy and request-level access control specs in `spec/policies` and `spec/requests`
-- Contract mismatch reports (when `dual_compare` detects drift): JSON artifacts under `tmp/contract_diffs`
+- Contract mismatch reports: JSON artifacts under `tmp/contract_diffs`
 
 ## Copilot enterprise workflow
 

@@ -14,14 +14,11 @@
       <nav aria-label="<%= t("workspace.shell.navigation_label") %>" class="mt-6 space-y-2">
         <a href="#overview" class="block rounded-lg bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary"><%= t("workspace.shell.nav.overview") %></a>
         <a href="#queue" class="block rounded-lg px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.queue") %></a>
-        <% if current_principal.allowed?("admin:access") %>
-          <%= link_to t("workspace.shell.nav.admin"), admin_root_path, class: "block rounded-lg px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary" %>
-        <% end %>
       </nav>
     </aside>
 
     <section class="flex-1">
-      <header class="sticky top-0 z-20 border-b border-app-border-primary bg-app-surface-primary/95 px-6 py-4 backdrop-blur">
+      <header class="z-app-sticky sticky top-0 border-b border-app-border-primary bg-app-surface-primary/95 px-6 py-4 backdrop-blur">
         <div class="flex items-start justify-between gap-4">
           <div>
             <h2 class="text-xl font-semibold text-app-text-primary"><%= t("workspace.heading") %></h2>
@@ -55,7 +52,7 @@
 
             <div
               id="workspace-profile-menu"
-              class="absolute right-0 z-30 mt-2 hidden w-80 rounded-2xl border border-app-border-primary bg-app-surface-primary p-4 shadow-xl"
+              class="z-app-floating absolute right-0 mt-2 hidden w-80 rounded-2xl border border-app-border-primary bg-app-surface-primary p-4 shadow-xl"
               data-profile-menu-target="menu"
               data-action="click->profile-menu#keepOpen keydown->profile-menu#onMenuKeydown"
               role="menu"

@@ -1,10 +1,11 @@
 module Security
   class Principal
-    attr_reader :id, :email, :display_name, :roles, :permissions
+    attr_reader :id, :username, :email, :display_name, :roles, :permissions
 
     def self.guest
       new(
         id: nil,
+        username: nil,
         email: nil,
         display_name: "Guest",
         roles: [],
@@ -17,20 +18,22 @@ module Security
 
       payload = payload.deep_stringify_keys
       new(
-        id: payload["id"],
-        email: payload["email"],
+        id:           payload["id"],
+        username:     payload["username"],
+        email:        payload["email"],
         display_name: payload["display_name"] || payload["displayName"] || payload["email"],
-        roles: payload["roles"],
-        permissions: payload["permissions"]
+        roles:        payload["roles"],
+        permissions:  payload["permissions"]
       )
     end
 
-    def initialize(id:, email:, display_name:, roles:, permissions:)
-      @id = id&.to_s
-      @email = email&.to_s
+    def initialize(id:, username: nil, email:, display_name:, roles:, permissions:)
+      @id           = id&.to_s
+      @username     = username&.to_s
+      @email        = email&.to_s
       @display_name = display_name&.to_s || email&.to_s
-      @roles = normalize_items(roles)
-      @permissions = normalize_items(permissions)
+      @roles        = normalize_items(roles)
+      @permissions  = normalize_items(permissions)
     end
 
     def guest?
@@ -43,11 +46,12 @@ module Security
 
     def to_h
       {
-        "id" => id,
-        "email" => email,
+        "id"           => id,
+        "username"     => username,
+        "email"        => email,
         "display_name" => display_name,
-        "roles" => roles,
-        "permissions" => permissions
+        "roles"        => roles,
+        "permissions"  => permissions
       }
     end
 

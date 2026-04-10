@@ -9,6 +9,7 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    
     <%= yield :head %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
@@ -40,20 +41,7 @@
   </head>
 
   <body class="bg-app-surface-primary text-app-text-primary transition-colors">
-    <% if notice.present? || alert.present? %>
-      <div class="fixed inset-x-0 top-3 z-50 mx-auto w-full max-w-3xl px-4">
-        <% if notice.present? %>
-          <div class="mb-2 rounded-lg border border-border-semantic-success-primary bg-bg-semantic-success-default px-4 py-3 text-sm text-text-semantic-success-primary shadow-sm">
-            <%= notice %>
-          </div>
-        <% end %>
-        <% if alert.present? %>
-          <div class="rounded-lg border border-border-semantic-error-primary bg-bg-semantic-error-default px-4 py-3 text-sm text-text-semantic-error-primary shadow-sm">
-            <%= alert %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+    <%= render "layouts/flash_toasts", entries: flash_toast_entries(flash) %>
 
     <%= render "layouts/public_corner_menu" unless signed_in? %>
 

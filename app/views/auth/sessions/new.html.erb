@@ -15,13 +15,15 @@
 
     <%= form_with url: session_path, method: :post, class: "mt-6 space-y-4" do %>
       <div>
-        <label for="email" class="block text-sm font-medium text-app-text-secondary"><%= t("auth.sessions.email_label") %></label>
-        <input id="email" name="email" type="email" required autocomplete="email" value="<%= @email %>" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+        <label for="username" class="block text-sm font-medium text-app-text-secondary"><%= t("auth.sessions.username_label") %></label>
+        <input id="username" name="username" type="text" required autocomplete="username" value="<%= @username %>"
+               class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
       </div>
 
       <div>
         <label for="password" class="block text-sm font-medium text-app-text-secondary"><%= t("auth.sessions.password_label") %></label>
-        <input id="password" name="password" type="password" required autocomplete="current-password" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+        <input id="password" name="password" type="password" required autocomplete="current-password"
+               class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
       </div>
 
       <button type="submit" class="inline-flex w-full items-center justify-center rounded-lg bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">

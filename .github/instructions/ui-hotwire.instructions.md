@@ -12,3 +12,6 @@ applyTo: "app/views/**/*.erb,app/javascript/**/*.js,app/assets/tailwind/**/*.css
 - Keep locale strings in `config/locales/en.yml` and `config/locales/th.yml`; do not inline user-facing strings in templates/controllers.
 - For complex UI controls, prefer progressive enhancement with Stimulus and server-safe fallbacks.
 - When editing global styles (for example scrollbar/theme), include cross-browser support behavior.
+- For reusable UI blocks (toast, modal shell, drawer shell, menus), extract markup into partials (or ViewComponent if introduced) instead of keeping long inline layout/template blocks.
+- Keep presentational mapping logic in helpers/presenters and keep ERB mostly declarative.
+- Use semantic layering utilities (`z-app-*`) instead of ad-hoc numeric `z-*` values so overlay stacking stays consistent project-wide.

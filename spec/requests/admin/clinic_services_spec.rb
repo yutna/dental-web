@@ -1,13 +1,13 @@
 require "rails_helper"
 
 RSpec.describe "Admin clinic services", type: :request do
-  def sign_in_as(email:)
-    post "/en/session", params: { email: email, password: "secret" }
+  def sign_in_as(username:)
+    post "/en/session", params: { username: username, password: "secret" }
     expect(response).to redirect_to("/en/workspace")
   end
 
   it "allows admin users to access admin dashboard" do
-    sign_in_as(email: "admin@example.com")
+    sign_in_as(username: "admin.test")
 
     get "/en/admin"
 
@@ -16,7 +16,7 @@ RSpec.describe "Admin clinic services", type: :request do
   end
 
   it "denies non-admin users from admin dashboard" do
-    sign_in_as(email: "clinician@example.com")
+    sign_in_as(username: "clinician.test")
 
     get "/en/admin"
 
@@ -24,7 +24,7 @@ RSpec.describe "Admin clinic services", type: :request do
   end
 
   it "creates clinic services via admin CRUD" do
-    sign_in_as(email: "admin@example.com")
+    sign_in_as(username: "admin.test")
 
     post "/en/admin/clinic_services", params: {
       clinic_service: {

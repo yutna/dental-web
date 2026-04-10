@@ -48,11 +48,14 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 - **`bin/setup` is the canonical local bootstrap.** It installs gems, prepares the database, clears logs and tmp files, and then hands off to `bin/dev` unless `--skip-server` is passed.
 - **Tests use RSpec with Rails integration and Factory Bot.** Core setup lives in `spec/rails_helper.rb` with support files under `spec/support/`; prefer the standard `spec/` directory layout and shared helpers over ad-hoc setup.
 - **System tests are separate from the default local CI path.** GitHub Actions runs them in a dedicated `system-test` job, while `bin/ci` leaves them commented out as an optional step.
-- **BFF contract is front-end owned.** Keep UI-facing payloads canonical in Rails and map all local/remote provider responses through `app/integrations/backend/mappers`.
-- **Provider switching is configuration-based.** Use `BFF_PROVIDER_MODE` (`local`, `remote`, `dual_compare`) and avoid branching feature code paths by provider inside views/controllers.
+- **BFF contract is front-end owned.** Keep UI-facing payloads canonical in Rails and map backend responses through `app/integrations/backend/mappers`.
+- **Runtime is backend-API first.** When backend APIs are available, BFF must call them directly. Use in-process local providers only for deterministic test seams, not runtime feature modes.
 - **Custom app layers are root autoload namespaces.** Classes under `app/use_cases/*`, `app/integrations/*`, and `app/queries/*` are resolved from those roots (e.g., `Security::SignIn`, `Backend::ProviderRegistry`, `Workspace::AppointmentRowsQuery`).
 - **Authorization is policy-first via Pundit.** Gate admin routes with `admin:access` and workspace routes with `workspace:read`; do not check raw roles in controllers.
 - **Advanced UI component contracts are centralized.** Keep baseline behavior and acceptance criteria in `config/ui_component_specs.yml` and keep UI work aligned with those contracts.
+- **Rails UI composition should be componentized.** For reusable UI surfaces (toast/modal/drawer/menus), prefer extracted partials and helper/presenter mapping instead of long inline ERB blocks in layouts.
+- **Keep ERB declarative.** Put presentation mapping/derivation logic in helpers or presenters, not inline branching-heavy view templates.
+- **Overlay stacking must follow semantic layers.** Use `z-app-*` utilities from `app/assets/tailwind/application.css` rather than ad-hoc numeric z-index values.
 - **Feature prompts to AI should include contract + policy context.** Include bounded context, canonical request/response shape, policy requirement, mapper expectations, i18n keys, and accessibility checks.
 - **Use path-specific instruction files for focused guidance.** Keep domain-specific conventions in `.github/instructions/*.instructions.md` with `applyTo` globs instead of expanding global instructions.
 - **Custom agents are first-class for large tasks.** Prefer `.github/agents/*.agent.md` profiles (`bff-implementer`, `contract-guardian`, `release-hardening`) when delegating specialized work.
@@ -61,7 +64,7 @@ Use the repository binstubs (`bin/...`) instead of global commands. CI, setup sc
 - **Prompt files are available for IDE workflows.** Reusable templates live in `.github/prompts/*.prompt.md` and should be used for large requirements-to-implementation prompts.
 - **Copilot assets are CI-validated.** Keep frontmatter and hook schemas valid; `ruby script/ci/validate_copilot_assets.rb` runs in local and GitHub CI.
 - **Defect feedback loop is enforced for bug-labeled PRs.** If PR labels include bug/defect/regression, update at least one guardrail artifact (`.github/instructions`, `.github/skills`, `.github/prompts`, `.github/copilot-instructions.md`, `AGENTS.md`, or `README.md`).
-- **Contract mismatch evidence is artifact-backed.** `dual_compare` writes JSON reports to `tmp/contract_diffs`, and CI uploads them for triage when present.
+- **Contract mismatch evidence is artifact-backed.** Write JSON reports to `tmp/contract_diffs` and upload them in CI for triage when present.
 - **Seeds are expected to be idempotent.** CI explicitly replants seeds in the test environment.
 - **Locale is URL-scoped and required for user-facing pages.** Use `/en` and `/th`; unprefixed root redirects to `/en`, and links should preserve `params[:locale]` via `default_url_options`.
 - **I18n maintenance uses `i18n-tasks`.** Keep locale files (`config/locales/en.yml`, `config/locales/th.yml`) normalized and free of missing keys with `bundle exec i18n-tasks health`.

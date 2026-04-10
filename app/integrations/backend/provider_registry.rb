@@ -1,24 +1,16 @@
 module Backend
   class ProviderRegistry
-    def initialize(mode: Rails.configuration.x.bff.provider_mode)
-      @mode = mode
+    def initialize(session_provider: nil)
+      @session_provider = session_provider
     end
 
     def session_provider
-      case mode
-      when "local"
-        Providers::Local::SessionProvider.new
-      when "remote"
-        Providers::Remote::SessionProvider.new
-      when "dual_compare"
-        Providers::DualCompare::SessionProvider.new
-      else
-        raise ArgumentError, "Unsupported BFF provider mode: #{mode}"
-      end
+      return @session_provider if @session_provider
+
+      # Keep tests deterministic without network dependencies.
+      return Providers::Local::SessionProvider.new if Rails.env.test?
+
+      Providers::Remote::SessionProvider.new
     end
-
-    private
-
-    attr_reader :mode
   end
 end

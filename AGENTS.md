@@ -16,6 +16,7 @@ This repository uses Rails 8.1 with a BFF-first architecture. Before making chan
 
 - Keep controllers thin; place orchestration in use cases.
 - Keep provider-specific payload mapping in integration mappers/providers only.
+- Keep view mapping/presentation logic in helpers or presenters so ERB stays declarative.
 - Keep user-facing paths locale-scoped (`/en`, `/th`) and strings in locale files.
 
 ## Copilot customization assets

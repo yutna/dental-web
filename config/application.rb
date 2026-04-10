@@ -19,11 +19,10 @@ module DentalWeb
     config.i18n.available_locales = %i[en th]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
-    config.x.bff.provider_mode = ENV.fetch("BFF_PROVIDER_MODE", "local")
     config.x.bff.contract_diff_dir = ENV.fetch("BFF_CONTRACT_DIFF_DIR", Rails.root.join("tmp/contract_diffs").to_s)
-    config.x.backend_api.base_url = ENV.fetch("BACKEND_API_BASE_URL", "http://localhost:3001")
-    config.x.backend_api.open_timeout = ENV.fetch("BACKEND_API_OPEN_TIMEOUT", 2).to_i
-    config.x.backend_api.read_timeout = ENV.fetch("BACKEND_API_READ_TIMEOUT", 5).to_i
+    config.x.backend_api.base_url = ENV["BACKEND_API_BASE_URL"]
+    config.x.backend_api.open_timeout = ENV["BACKEND_API_OPEN_TIMEOUT"]&.to_i
+    config.x.backend_api.read_timeout = ENV["BACKEND_API_READ_TIMEOUT"]&.to_i
 
     config.generators do |g|
       g.test_framework :rspec,

@@ -42,33 +42,37 @@ en:
       total_services: Total services
       workspace_link: Back to workspace
   app:
+    flash:
+      dismiss: Dismiss notification
+      notifications_label: Notifications
     name: Dental Web
   auth:
     sessions:
       contract_mismatch: 'Contract mismatch: %{message}'
-      demo_hint: Any non-empty credentials can sign in while provider mode is set
-        to local.
-      description: Authentication is handled by the Rails BFF layer and can switch
-        between local and remote providers.
-      email_label: Email
+      demo_hint: Use your clinic system username and password to sign in.
+      description: Sign in to access the clinical workspace.
       heading: Sign in to continue
-      invalid_credentials: Invalid email or password.
+      invalid_credentials: Invalid username or password.
       login_required: Please sign in before accessing the clinical workspace.
       not_authorized: You are not authorized to access this section.
       password_label: Password
+      service_unavailable: Authentication service is temporarily unavailable. Please
+        try again shortly.
+      session_expired: Your session has expired. Please sign in again.
       signed_in: Signed in successfully.
       signed_out: Signed out successfully.
       submit: Sign in
       title: Sign in
+      username_label: Username
   home:
-    bff_baseline:
-      description: Access sign-in and workspace entry points while dashboard modules
-        are being implemented.
-      heading: Dashboard access
-      sign_in_link: Open sign-in flow
-      workspace_link: Open clinical workspace
-    description: This site supports English and Thai.
-    heading: Welcome to Dental Web
+    authenticated:
+      description: Access clinical workspace and manage your profile.
+      heading: Welcome, %{user}
+      workspace:
+        access_link: Open clinical workspace
+        description: Access patient management, appointment scheduling, and clinical
+          workflows.
+        heading: Clinical workspace
     permission_denied:
       description: You do not have access to the clinical workspace yet.
       help: Request workspace:read permission from your administrator.
@@ -119,7 +123,6 @@ en:
       heading: Appointment queue (data grid baseline)
     shell:
       nav:
-        admin: Admin
         overview: Overview
         queue: Queue
       navigation_label: Workspace navigation

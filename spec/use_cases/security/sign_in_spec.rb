@@ -7,15 +7,15 @@ RSpec.describe Security::SignIn do
   context "when provider rejects credentials" do
     let(:session_provider) do
       Class.new do
-        def sign_in(email:, password:)
-            raise Backend::Errors::AuthenticationError, "Invalid backend credentials"
+        def sign_in(username:, password:)
+          raise Backend::Errors::AuthenticationError, "Invalid backend credentials"
         end
       end.new
     end
 
     it "maps error to InvalidCredentialsError" do
       expect do
-        use_case.call(email: "user@example.com", password: "invalid")
+        use_case.call(username: "user", password: "invalid")
       end.to raise_error(Security::SignIn::InvalidCredentialsError)
     end
   end
@@ -23,10 +23,11 @@ RSpec.describe Security::SignIn do
   context "when canonical permissions are missing" do
     let(:session_provider) do
       Class.new do
-        def sign_in(email:, password:)
+        def sign_in(username:, password:)
           principal = Security::Principal.new(
             id: "abc",
-            email: email,
+            username: username,
+            email: nil,
             display_name: "User",
             roles: [ "clinician" ],
             permissions: []
@@ -43,7 +44,7 @@ RSpec.describe Security::SignIn do
 
     it "raises contract mismatch error" do
       expect do
-        use_case.call(email: "user@example.com", password: "secret")
+        use_case.call(username: "user", password: "secret")
       end.to raise_error(Backend::Errors::ContractMismatchError)
     end
   end

@@ -1,6 +1,13 @@
-valid_modes = %w[local remote dual_compare].freeze
-provider_mode = Rails.configuration.x.bff.provider_mode
+unless Rails.env.test?
+  required_backend_envs = %w[
+    BACKEND_API_BASE_URL
+    BACKEND_API_OPEN_TIMEOUT
+    BACKEND_API_READ_TIMEOUT
+  ].freeze
 
-if valid_modes.exclude?(provider_mode)
-  raise ArgumentError, "BFF_PROVIDER_MODE must be one of: #{valid_modes.join(', ')}"
+  missing_envs = required_backend_envs.select { |key| ENV[key].to_s.strip.empty? }
+
+  if missing_envs.any?
+    raise ArgumentError, "Missing required environment variable(s): #{missing_envs.join(", ")}"
+  end
 end

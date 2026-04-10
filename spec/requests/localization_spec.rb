@@ -7,26 +7,28 @@ RSpec.describe "Localization", type: :request do
     expect(response).to redirect_to("/en")
   end
 
-  it "renders English content at /en" do
+  it "routes signed-in English users from /en to workspace" do
+    post "/en/session", params: { username: "clinician.test", password: "secret" }
     get "/en"
 
+    expect(response).to redirect_to("/en/workspace")
+    follow_redirect!
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Welcome to Dental Web")
-    expect(response.body).to include("Display options")
-    expect(response.body).to include("Dashboard access")
-    expect(response.body).to include("Open sign-in flow")
-    expect(response.body).to include("Open clinical workspace")
+    expect(response.body).to include("Clinical Workspace")
+    expect(response.body).to include("Appointment queue")
+    expect(response.body).not_to include("Admin dashboard")
   end
 
-  it "renders Thai content at /th" do
+  it "routes signed-in Thai users from /th to workspace" do
+    post "/th/session", params: { username: "clinician.test", password: "secret" }
     get "/th"
 
+    expect(response).to redirect_to("/th/workspace")
+    follow_redirect!
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("ยินดีต้อนรับสู่เดนทัล เว็บ")
-    expect(response.body).to include("ตัวเลือกการแสดงผล")
-    expect(response.body).to include("การเข้าถึงแดชบอร์ด")
-    expect(response.body).to include("เปิดหน้าลงชื่อเข้าใช้")
-    expect(response.body).to include("เปิดพื้นที่ทำงานคลินิก")
+    expect(response.body).to include("พื้นที่ทำงานคลินิก")
+    expect(response.body).to include("คิวนัดหมาย")
+    expect(response.body).not_to include("แดชบอร์ดผู้ดูแลระบบ")
   end
 
   it "redirects unsupported locale root to /en" do
@@ -42,6 +44,7 @@ RSpec.describe "Localization", type: :request do
   end
 
   it "renders permission-denied guidance on localized home" do
+    post "/en/session", params: { username: "clinician.test", password: "secret" }
     get "/en", params: { reason: "workspace_denied" }
 
     expect(response).to have_http_status(:ok)

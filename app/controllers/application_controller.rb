@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
   before_action :hydrate_current_principal
+  before_action :ensure_fresh_session!
 
   helper_method :current_principal, :signed_in?
 
@@ -37,6 +38,16 @@ class ApplicationController < ActionController::Base
     Current.principal = session_snapshot.principal
   end
 
+  def ensure_fresh_session!
+    return unless signed_in?
+
+    result = Security::RefreshSession.call(session:)
+    hydrate_current_principal if result == :refreshed
+  rescue Security::RefreshSession::RefreshFailedError
+    Security::SessionStore.new(session:).clear!
+    redirect_to new_session_path, alert: t("auth.sessions.session_expired")
+  end
+
   def current_principal
     Current.principal || Security::Principal.guest
   end
@@ -48,7 +59,7 @@ class ApplicationController < ActionController::Base
   def require_signed_in!
     return if signed_in?
 
-    redirect_to new_session_path, alert: t("auth.sessions.login_required")
+    redirect_to new_session_path
   end
 
   def pundit_user
