@@ -259,12 +259,12 @@ REQUIREMENTS_MUTABILITY: FROZEN
 
 CURRENT_GROUP: G04
 GROUP_STATUS: IN_PROGRESS
-NEXT_TICKET: T04.03
+NEXT_TICKET: T04.04
 
-LAST_COMPLETED_TICKET: T04.02
-LAST_COMMIT_SHA: 5ff1be0
+LAST_COMPLETED_TICKET: T04.03
+LAST_COMMIT_SHA: c479253
 LAST_CHECKS_PASSED: rubocop, rspec
-LAST_UPDATED_UTC: 2026-04-10T17:28:28Z
+LAST_UPDATED_UTC: 2026-04-10T17:26:15Z
 
 ACTIVE_PR_URL: NONE
 ACTIVE_PR_STATUS: NONE
@@ -390,7 +390,7 @@ G03
 G04
 - T04.01: DONE
 - T04.02: DONE
-- T04.03: TODO
+- T04.03: DONE
 - T04.04: TODO
 - T04.05: TODO
 - T04.06: TODO
@@ -581,9 +581,12 @@ Current run entries:
 2026-04-10T17:22:40Z | CHECKS | G04 | T04.01 | OK | rubocop and targeted model specs passed
 2026-04-10T17:22:55Z | COMMIT | G04 | T04.01 | OK | sha=6f989d2
 2026-04-10T17:23:05Z | RESUME | G04 | T04.02 | OK | runtime block updated
-2026-04-10T17:27:55Z | CHECKS | G04 | T04.02 | OK | rubocop and targeted clinical request/routing specs passed
-2026-04-10T17:28:10Z | COMMIT | G04 | T04.02 | OK | sha=5ff1be0
-2026-04-10T17:28:28Z | RESUME | G04 | T04.03 | OK | runtime block updated
+2026-04-10T17:24:40Z | CHECKS | G04 | T04.02 | OK | rubocop and targeted clinical request/routing specs passed
+2026-04-10T17:24:55Z | COMMIT | G04 | T04.02 | OK | sha=5ff1be0
+2026-04-10T17:25:02Z | RESUME | G04 | T04.03 | OK | runtime block updated
+2026-04-10T17:26:05Z | CHECKS | G04 | T04.03 | OK | rubocop and targeted treatment request/routing specs passed
+2026-04-10T17:26:10Z | COMMIT | G04 | T04.03 | OK | sha=c479253
+2026-04-10T17:26:15Z | RESUME | G04 | T04.04 | OK | runtime block updated
 ```
 
 ### Group Handoff Contract
