@@ -11,7 +11,7 @@ module Admin
       private
 
       def filter_params
-        params.permit(:actor_id, :event_action, :resource_type, :from, :to, :limit)
+        params.permit(:actor_id, :event_action, :resource_type, :event_type, :from, :to, :limit)
       end
     end
   end

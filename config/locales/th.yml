@@ -45,6 +45,7 @@ th:
         filters:
           action: กรองตาม action
           actor_id: กรองตามรหัสผู้ใช้งาน
+          all_types: ทุกประเภท
           apply: ใช้ตัวกรอง
           from: ตั้งแต่ (ISO8601)
           resource_type: กรองตามชนิดทรัพยากร
@@ -57,6 +58,7 @@ th:
           metadata: ข้อมูลประกอบ
           resource: ทรัพยากร
           time: เวลา
+          type: ประเภท
         title: บันทึกเหตุการณ์ผู้ดูแลระบบทันตกรรม
       dashboard:
         audit_events: บันทึกเหตุการณ์ตรวจสอบ

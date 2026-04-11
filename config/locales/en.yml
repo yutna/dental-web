@@ -45,6 +45,7 @@ en:
         filters:
           action: Filter by action
           actor_id: Filter by actor id
+          all_types: All types
           apply: Apply filters
           from: From (ISO8601)
           resource_type: Filter by resource type
@@ -57,6 +58,7 @@ en:
           metadata: Metadata
           resource: Resource
           time: Timestamp
+          type: Type
         title: Dental admin audit events
       dashboard:
         audit_events: Audit events
