@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_11_100000) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -281,6 +281,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
     t.integer "sort_order", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_tooth_surface_references_on_code", unique: true
+  end
+
+  create_table "dental_usage_records", force: :cascade do |t|
+    t.string "actor_id"
+    t.string "clinical_post_id"
+    t.datetime "created_at", null: false
+    t.string "deduct_error"
+    t.datetime "deducted_at"
+    t.integer "deducted_quantity", default: 0
+    t.datetime "failed_at"
+    t.string "item_code", null: false
+    t.string "item_name", null: false
+    t.string "item_type", null: false
+    t.string "movement_ref"
+    t.integer "requested_quantity", default: 1, null: false
+    t.string "status", default: "pending_deduct", null: false
+    t.string "unit", null: false
+    t.datetime "updated_at", null: false
+    t.string "usage_id", null: false
+    t.string "visit_id", null: false
+    t.string "void_reason"
+    t.datetime "voided_at"
+    t.index ["clinical_post_id"], name: "index_dental_usage_records_on_clinical_post_id"
+    t.index ["item_type", "item_code"], name: "index_dental_usage_records_on_item_type_and_item_code"
+    t.index ["status"], name: "index_dental_usage_records_on_status"
+    t.index ["usage_id"], name: "index_dental_usage_records_on_usage_id", unique: true
+    t.index ["visit_id"], name: "index_dental_usage_records_on_visit_id"
   end
 
   create_table "dental_workflow_timeline_entries", force: :cascade do |t|
