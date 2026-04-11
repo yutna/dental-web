@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_11_160000) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -105,6 +105,42 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_dental_image_type_references_on_code", unique: true
+  end
+
+  create_table "dental_invoice_line_items", force: :cascade do |t|
+    t.decimal "amount", precision: 12, scale: 2, null: false
+    t.decimal "copay_amount", precision: 12, scale: 2
+    t.decimal "copay_percent", precision: 5, scale: 2
+    t.datetime "created_at", null: false
+    t.integer "dental_invoice_id", null: false
+    t.string "item_code", null: false
+    t.string "item_name", null: false
+    t.string "item_type", null: false
+    t.string "price_source"
+    t.decimal "quantity", precision: 10, scale: 2, null: false
+    t.string "unit"
+    t.decimal "unit_price", precision: 12, scale: 2, null: false
+    t.datetime "updated_at", null: false
+    t.index ["dental_invoice_id"], name: "index_dental_invoice_line_items_on_dental_invoice_id"
+  end
+
+  create_table "dental_invoices", force: :cascade do |t|
+    t.string "actor_id"
+    t.decimal "copay_amount", precision: 12, scale: 2, default: "0.0"
+    t.datetime "created_at", null: false
+    t.string "eligibility_code"
+    t.string "external_invoice_ref"
+    t.string "invoice_id", null: false
+    t.datetime "paid_at"
+    t.string "patient_name"
+    t.string "payment_status", default: "pending", null: false
+    t.datetime "sent_at"
+    t.decimal "total_amount", precision: 12, scale: 2, default: "0.0"
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["invoice_id"], name: "index_dental_invoices_on_invoice_id", unique: true
+    t.index ["payment_status"], name: "index_dental_invoices_on_payment_status"
+    t.index ["visit_id"], name: "index_dental_invoices_on_visit_id"
   end
 
   create_table "dental_master_data_change_requests", force: :cascade do |t|
@@ -205,6 +241,62 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
     t.index ["visit_id"], name: "index_dental_queue_entries_on_visit_id", unique: true
   end
 
+  create_table "dental_requisition_line_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "dental_requisition_id", null: false
+    t.string "item_code", null: false
+    t.string "item_name", null: false
+    t.string "item_type", null: false
+    t.decimal "quantity", precision: 10, scale: 2, null: false
+    t.string "unit", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dental_requisition_id"], name: "index_dental_requisition_line_items_on_dental_requisition_id"
+    t.index ["item_type", "item_code"], name: "index_dental_requisition_line_items_on_item_type_and_item_code"
+  end
+
+  create_table "dental_requisitions", force: :cascade do |t|
+    t.datetime "approved_at"
+    t.string "approver_id"
+    t.string "cancel_reason"
+    t.datetime "cancelled_at"
+    t.string "canceller_id"
+    t.datetime "created_at", null: false
+    t.string "dispense_number"
+    t.datetime "dispensed_at"
+    t.string "dispenser_id"
+    t.datetime "received_at"
+    t.string "receiver_id"
+    t.string "requester_id", null: false
+    t.string "requisition_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.string "visit_id"
+    t.index ["requester_id"], name: "index_dental_requisitions_on_requester_id"
+    t.index ["requisition_id"], name: "index_dental_requisitions_on_requisition_id", unique: true
+    t.index ["status"], name: "index_dental_requisitions_on_status"
+    t.index ["visit_id"], name: "index_dental_requisitions_on_visit_id"
+  end
+
+  create_table "dental_stock_movements", force: :cascade do |t|
+    t.string "actor_id"
+    t.datetime "created_at", null: false
+    t.string "direction", null: false
+    t.string "item_code", null: false
+    t.string "item_type", null: false
+    t.string "movement_ref", null: false
+    t.text "note"
+    t.integer "quantity", null: false
+    t.string "reference_id"
+    t.string "reference_type"
+    t.string "source", null: false
+    t.string "unit", null: false
+    t.datetime "updated_at", null: false
+    t.index ["direction"], name: "index_dental_stock_movements_on_direction"
+    t.index ["item_type", "item_code"], name: "index_dental_stock_movements_on_item_type_and_item_code"
+    t.index ["movement_ref"], name: "index_dental_stock_movements_on_movement_ref", unique: true
+    t.index ["reference_type", "reference_id", "direction"], name: "idx_stock_movements_idempotency", unique: true
+  end
+
   create_table "dental_supply_categories", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -283,6 +375,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
     t.index ["code"], name: "index_dental_tooth_surface_references_on_code", unique: true
   end
 
+  create_table "dental_usage_records", force: :cascade do |t|
+    t.string "actor_id"
+    t.string "clinical_post_id"
+    t.datetime "created_at", null: false
+    t.string "deduct_error"
+    t.datetime "deducted_at"
+    t.integer "deducted_quantity", default: 0
+    t.datetime "failed_at"
+    t.string "item_code", null: false
+    t.string "item_name", null: false
+    t.string "item_type", null: false
+    t.string "movement_ref"
+    t.integer "requested_quantity", default: 1, null: false
+    t.string "status", default: "pending_deduct", null: false
+    t.string "unit", null: false
+    t.datetime "updated_at", null: false
+    t.string "usage_id", null: false
+    t.string "visit_id", null: false
+    t.string "void_reason"
+    t.datetime "voided_at"
+    t.index ["clinical_post_id"], name: "index_dental_usage_records_on_clinical_post_id"
+    t.index ["item_type", "item_code"], name: "index_dental_usage_records_on_item_type_and_item_code"
+    t.index ["status"], name: "index_dental_usage_records_on_status"
+    t.index ["usage_id"], name: "index_dental_usage_records_on_usage_id", unique: true
+    t.index ["visit_id"], name: "index_dental_usage_records_on_visit_id"
+  end
+
   create_table "dental_workflow_timeline_entries", force: :cascade do |t|
     t.string "actor_id"
     t.datetime "created_at", null: false
@@ -298,8 +417,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
   add_foreign_key "dental_clinical_chart_records", "dental_clinical_posts", column: "clinical_post_id"
   add_foreign_key "dental_clinical_image_records", "dental_clinical_posts", column: "clinical_post_id"
   add_foreign_key "dental_clinical_procedure_records", "dental_clinical_posts", column: "clinical_post_id"
+  add_foreign_key "dental_invoice_line_items", "dental_invoices"
   add_foreign_key "dental_procedure_item_coverages", "dental_procedure_items", column: "procedure_item_id"
   add_foreign_key "dental_procedure_items", "dental_procedure_groups", column: "procedure_group_id"
+  add_foreign_key "dental_requisition_line_items", "dental_requisitions"
   add_foreign_key "dental_supply_item_coverages", "dental_supply_items", column: "supply_item_id"
   add_foreign_key "dental_supply_items", "dental_supply_categories", column: "supply_category_id"
 end

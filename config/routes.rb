@@ -42,6 +42,11 @@ Rails.application.routes.draw do
       post "visits/check_in", to: "visits#check_in", as: :visit_check_in
       post "visits/sync_appointments", to: "visits#sync_appointments", as: :visit_sync_appointments
 
+      namespace :billing do
+        get "waiting", to: "waiting#show", as: :waiting
+        post "waiting/sync", to: "waiting#sync", as: :waiting_sync
+      end
+
       namespace :clinical do
         get "visits/:visit_id/clinical", to: "workspaces#show", as: :workspace
         get "visits/:visit_id/screening", to: "screening_forms#show", as: :screening_form

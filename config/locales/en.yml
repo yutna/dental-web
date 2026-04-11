@@ -153,6 +153,22 @@ en:
         one: "%{count} tooth selected"
         other: "%{count} teeth selected"
   dental:
+    billing:
+      waiting:
+        auto_refresh: 'Auto-refresh: 30s'
+        columns:
+          actions: Actions
+          amount: Amount
+          invoice_id: Invoice ID
+          patient: Patient
+          payment_status: Payment
+          visit: Visit
+        description: Invoices pending payment confirmation from cashier.
+        empty: No invoices waiting for payment.
+        heading: Waiting Payment Board
+        sync_now: Sync now
+        sync_requested: Payment sync has been requested.
+        title: Waiting Payment
     clinical:
       chart:
         actions:

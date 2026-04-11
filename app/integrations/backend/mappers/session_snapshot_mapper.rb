@@ -91,11 +91,20 @@ module Backend
         end
 
         def inject_bff_permissions(user_session)
-          permissions = [ "workspace:read", "dental:read", "dental:workflow:read", "dental:workflow:write" ]
+          permissions = %w[workspace:read dental:read dental:workflow:read dental:workflow:write]
           api_roles   = Array(user_session["roles"]).map(&:to_s)
 
           if api_roles.include?("admin")
-            permissions << "admin:access"
+            permissions.push(
+              "admin:access",
+              "dental:billing:read",
+              "dental:billing:sync",
+              "dental:requisition:read",
+              "dental:requisition:write",
+              "dental:requisition:approve",
+              "dental:requisition:dispense",
+              "dental:requisition:receive"
+            )
           end
 
           permissions
