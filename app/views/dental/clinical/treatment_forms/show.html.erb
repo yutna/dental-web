@@ -1,0 +1,96 @@
+<turbo-frame id="clinical_form">
+  <div class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+    <div class="mb-5 flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <h2 class="text-lg font-semibold text-app-text-primary"><%= t("dental.clinical.treatment.heading") %></h2>
+        <p class="mt-1 text-sm text-app-text-secondary"><%= t("dental.clinical.treatment.description") %></p>
+      </div>
+      <% if @snapshot[:current_stage] == "in-treatment" %>
+        <div class="flex gap-2">
+          <%= link_to t("dental.clinical.treatment.send_cashier"),
+            dental_visit_transition_path(id: @visit_id, from_stage: "in-treatment", to_stage: "waiting-payment"),
+            data: { turbo_method: :patch, turbo_confirm: t("dental.clinical.treatment.send_cashier_confirm") },
+            class: "inline-flex items-center rounded-lg border border-border-semantic-warning-primary bg-bg-semantic-warning-default px-3 py-2 text-sm font-medium text-text-semantic-warning-primary transition hover:bg-app-surface-secondary" %>
+        </div>
+      <% end %>
+    </div>
+
+    <% procedures = @result[:data].is_a?(Hash) ? (@result.dig(:data, "procedures") || @result.dig(:data, :procedures) || []) : [] %>
+
+    <%# Existing procedures table %>
+    <% if procedures.any? %>
+      <div class="overflow-x-auto rounded-xl border border-app-border-primary">
+        <table class="min-w-full divide-y divide-app-border-primary text-sm">
+          <thead class="bg-app-surface-secondary">
+            <tr>
+              <th class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary">#</th>
+              <th class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("dental.clinical.treatment.table.procedure") %></th>
+              <th class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("dental.clinical.treatment.table.tooth") %></th>
+              <th class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("dental.clinical.treatment.table.surface") %></th>
+              <th class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("dental.clinical.treatment.table.qty") %></th>
+              <th class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("dental.clinical.treatment.table.note") %></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-app-border-primary bg-app-surface-primary">
+            <% procedures.each_with_index do |proc, idx| %>
+              <tr>
+                <td class="whitespace-nowrap px-3 py-2 text-app-text-tertiary"><%= idx + 1 %></td>
+                <td class="whitespace-nowrap px-3 py-2 font-medium text-app-text-primary"><%= proc["procedure_item_code"] || proc[:procedure_item_code] %></td>
+                <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= proc["tooth_code"] || proc[:tooth_code] %></td>
+                <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= Array(proc["surface_codes"] || proc[:surface_codes]).join(", ") %></td>
+                <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= proc["quantity"] || proc[:quantity] %></td>
+                <td class="px-3 py-2 text-app-text-tertiary"><%= proc["note"] || proc[:note] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <%# Add procedure form %>
+    <div class="mt-6">
+      <h3 class="text-sm font-semibold text-app-text-primary"><%= t("dental.clinical.treatment.add_procedure") %></h3>
+      <%= form_with url: dental_clinical_treatment_form_path(visit_id: @visit_id), method: :patch, class: "mt-3 space-y-4", data: { turbo: false } do |f| %>
+        <% if @queue_entry %>
+          <%= f.hidden_field :patient_hn, value: @queue_entry.mrn %>
+        <% end %>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div>
+            <label for="proc_code" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.treatment.form.procedure_code") %></label>
+            <input type="text" name="procedures[][procedure_item_code]" id="proc_code" required
+              placeholder="PROC-001" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+          </div>
+          <div>
+            <label for="proc_tooth" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.treatment.form.tooth") %></label>
+            <input type="text" name="procedures[][tooth_code]" id="proc_tooth" required
+              placeholder="16" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+          </div>
+          <div>
+            <label for="proc_surface" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.treatment.form.surface") %></label>
+            <input type="text" name="procedures[][surface_codes][]" id="proc_surface"
+              placeholder="O,M" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+          </div>
+          <div>
+            <label for="proc_qty" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.treatment.form.quantity") %></label>
+            <input type="number" name="procedures[][quantity]" id="proc_qty" value="1" min="1"
+              class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary">
+          </div>
+          <div>
+            <label for="proc_note" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.treatment.form.note") %></label>
+            <input type="text" name="procedures[][note]" id="proc_note"
+              class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3">
+          <%= link_to t("dental.clinical.treatment.actions.back"), dental_clinical_workspace_path(visit_id: @visit_id, tab: "treatment"),
+            class: "rounded-lg border border-app-border-primary bg-app-surface-secondary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-primary" %>
+          <button type="submit" class="rounded-lg bg-app-brand-primary px-6 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
+            <%= t("dental.clinical.treatment.actions.save") %>
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</turbo-frame>

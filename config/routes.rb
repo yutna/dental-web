@@ -8,6 +8,22 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # --- API v1 (JSON-only, Bearer token auth) ---
+  namespace :api do
+    namespace :v1 do
+      resources :queues, only: %i[index create]
+
+      resources :visits, only: %i[show], param: :id do
+        member do
+          patch :transition
+        end
+        resources :clinical_posts, only: %i[index create], module: :visits
+      end
+
+      post "visits/check_in", to: "visits#check_in", as: :visit_check_in
+    end
+  end
+
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
@@ -27,6 +43,7 @@ Rails.application.routes.draw do
       post "visits/sync_appointments", to: "visits#sync_appointments", as: :visit_sync_appointments
 
       namespace :clinical do
+        get "visits/:visit_id/clinical", to: "workspaces#show", as: :workspace
         get "visits/:visit_id/screening", to: "screening_forms#show", as: :screening_form
         patch "visits/:visit_id/screening", to: "screening_forms#update"
         get "visits/:visit_id/treatment", to: "treatment_forms#show", as: :treatment_form

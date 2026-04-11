@@ -8,6 +8,41 @@ module Dental
     private
 
     def render_dental_error(error)
+      status = http_status_for(error.code)
+
+      respond_to do |format|
+        format.html do
+          flash[:alert] = error.message
+          redirect_back fallback_location: workspace_path
+        end
+        format.json do
+          render(
+            json: {
+              error: {
+                code: error.code,
+                message: error.message,
+                details: error.details
+              }
+            },
+            status: status
+          )
+        end
+      end
+    end
+
+    def render_forbidden
+      respond_to do |format|
+        format.html do
+          flash[:alert] = t("dental.errors.forbidden")
+          redirect_back fallback_location: workspace_path
+        end
+        format.json do
+          render_dental_error_json(Dental::Errors::Forbidden.new)
+        end
+      end
+    end
+
+    def render_dental_error_json(error)
       render(
         json: {
           error: {
@@ -18,10 +53,6 @@ module Dental
         },
         status: http_status_for(error.code)
       )
-    end
-
-    def render_forbidden
-      render_dental_error(Dental::Errors::Forbidden.new)
     end
 
     def http_status_for(code)

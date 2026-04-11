@@ -4,6 +4,7 @@ module Dental
       def show
         authorize([ :dental, :clinical ], :read?)
 
+        @visit_id = params[:visit_id]
         @history = Dental::Clinical::CumulativeHistoryQuery.call(visit_id: params[:visit_id])
 
         respond_to do |format|

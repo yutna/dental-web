@@ -1,0 +1,7 @@
+<%# Status badge component
+  Locals: label:, status: (string key matching STAGE_CLASSES or a custom class string) %>
+<% badge_classes = defined?(visit_stage_classes) ? visit_stage_classes(status) : "border-app-border-primary bg-app-surface-secondary text-app-text-secondary" %>
+
+<span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold <%= badge_classes %>">
+  <%= label %>
+</span>

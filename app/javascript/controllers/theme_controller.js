@@ -29,6 +29,13 @@ export default class extends Controller {
     this.applyMode(event.target.value, { persist: true })
   }
 
+  cycle() {
+    const current = this.currentMode()
+    const idx = THEME_MODES.indexOf(current)
+    const next = THEME_MODES[(idx + 1) % THEME_MODES.length]
+    this.applyMode(next, { persist: true })
+  }
+
   syncFromDocument() {
     const mode = this.currentMode()
     if (this.hasSelectTarget) {

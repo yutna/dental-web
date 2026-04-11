@@ -1,0 +1,42 @@
+<%# Slide-over (drawer) component — Use with Stimulus slide-over controller
+  Locals: title:, side: (optional "right"|"left", default "right") %>
+<% side ||= "right" %>
+
+<div data-controller="slide-over" data-action="keydown.esc@window->slide-over#closeOnEsc">
+  <%# Backdrop %>
+  <div data-slide-over-target="backdrop" class="fixed inset-0 z-app-drawer-backdrop hidden bg-black/50 transition-opacity"></div>
+
+  <%# Panel %>
+  <div data-slide-over-target="panel" class="fixed inset-0 z-app-drawer hidden overflow-hidden" data-action="click->slide-over#closeOnBackdrop">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none fixed inset-y-0 <%= side == 'left' ? 'left-0' : 'right-0' %> flex max-w-full">
+        <div
+          data-slide-content
+          class="pointer-events-auto w-screen max-w-md transform transition-transform duration-200 ease-in-out <%= side == 'left' ? '-translate-x-full' : 'translate-x-full' %>"
+        >
+          <div class="flex h-full flex-col border-<%= side == 'left' ? 'r' : 'l' %> border-app-border-primary bg-app-surface-primary shadow-xl">
+            <%# Header %>
+            <div class="flex items-center justify-between border-b border-app-border-primary px-6 py-4">
+              <h2 class="text-lg font-semibold text-app-text-primary"><%= title %></h2>
+              <button
+                type="button"
+                class="rounded-lg p-1.5 text-app-text-tertiary transition hover:bg-app-surface-secondary hover:text-app-text-primary"
+                data-action="slide-over#close"
+                aria-label="Close"
+              >
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <%# Body %>
+            <div class="flex-1 overflow-y-auto px-6 py-4">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

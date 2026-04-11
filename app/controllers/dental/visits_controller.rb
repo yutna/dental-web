@@ -9,14 +9,23 @@ module Dental
         raise Dental::Errors::NotFound.new(details: { visit_id: params[:id] })
       end
 
-      snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: params[:id])
+      @snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: params[:id])
+      @visit_id = params[:id]
+      @allowed_transitions = Dental::Workflow::VisitStateMachine.allowed_transitions(@snapshot[:current_stage])
+      @queue_entry = DentalQueueEntry.find_by(visit_id: params[:id])
+      @timeline = DentalWorkflowTimelineEntry.where(visit_id: params[:id]).order(created_at: :desc)
 
-      render json: {
-        visit_id: params[:id],
-        current_stage: snapshot[:current_stage],
-        lock_version: snapshot[:lock_version],
-        last_updated_at: snapshot[:last_event_at]&.iso8601
-      }
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: {
+            visit_id: params[:id],
+            current_stage: @snapshot[:current_stage],
+            lock_version: @snapshot[:lock_version],
+            last_updated_at: @snapshot[:last_event_at]&.iso8601
+          }
+        end
+      end
     end
 
     def transition
@@ -63,16 +72,24 @@ module Dental
 
       updated_snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: params[:id])
 
-      render json: {
-        visit_id: params[:id],
-        transitioned: true,
-        from_stage: from_stage,
-        to_stage: to_stage,
-        current_stage: updated_snapshot[:current_stage],
-        lock_version: updated_snapshot[:lock_version],
-        last_updated_at: updated_snapshot[:last_event_at]&.iso8601,
-        payment_bridge_hook: hook_result[:event]&.hook_type
-      }
+      respond_to do |format|
+        format.html do
+          flash[:notice] = t("dental.visits.transition_success", from: from_stage, to: to_stage)
+          redirect_to dental_visit_path(id: params[:id])
+        end
+        format.json do
+          render json: {
+            visit_id: params[:id],
+            transitioned: true,
+            from_stage: from_stage,
+            to_stage: to_stage,
+            current_stage: updated_snapshot[:current_stage],
+            lock_version: updated_snapshot[:lock_version],
+            last_updated_at: updated_snapshot[:last_event_at]&.iso8601,
+            payment_bridge_hook: hook_result[:event]&.hook_type
+          }
+        end
+      end
     end
 
     def check_in
@@ -118,12 +135,20 @@ module Dental
 
       queue_position = DentalQueueEntry.where(created_at: ..result[:entry].created_at).count
 
-      render json: {
-        visit_id: visit_id,
-        current_stage: "checked-in",
-        queue_position: queue_position,
-        created: result[:created]
-      }, status: :created
+      respond_to do |format|
+        format.html do
+          flash[:notice] = t("dental.visits.check_in_success", visit_id: visit_id, position: queue_position)
+          redirect_to dental_visit_path(id: visit_id)
+        end
+        format.json do
+          render json: {
+            visit_id: visit_id,
+            current_stage: "checked-in",
+            queue_position: queue_position,
+            created: result[:created]
+          }, status: :created
+        end
+      end
     end
 
     def sync_appointments
@@ -131,13 +156,21 @@ module Dental
 
       result = Dental::Workflow::SyncAppointmentsToQueue.call(actor_id: current_principal.id)
 
-      render json: {
-        synced: true,
-        created_registered_visits: result[:created_count],
-        skipped_duplicates: result[:skipped_count],
-        errors: result[:errors],
-        error_count: result[:error_count]
-      }
+      respond_to do |format|
+        format.html do
+          flash[:notice] = t("dental.visits.sync_success", count: result[:created_count])
+          redirect_to workspace_path
+        end
+        format.json do
+          render json: {
+            synced: true,
+            created_registered_visits: result[:created_count],
+            skipped_duplicates: result[:skipped_count],
+            errors: result[:errors],
+            error_count: result[:error_count]
+          }
+        end
+      end
     end
 
     private

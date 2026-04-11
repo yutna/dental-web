@@ -4,8 +4,15 @@ module Dental
       def show
         authorize([ :dental, :clinical ], :read?)
 
-        result = Dental::Clinical::MedicationFormQuery.call(visit_id: params[:visit_id])
-        render json: result
+        @visit_id = params[:visit_id]
+        @result = Dental::Clinical::MedicationFormQuery.call(visit_id: params[:visit_id])
+        @queue_entry = DentalQueueEntry.find_by(visit_id: @visit_id)
+        @snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: @visit_id)
+
+        respond_to do |format|
+          format.html
+          format.json { render json: @result }
+        end
       end
 
       def update
@@ -18,7 +25,13 @@ module Dental
           payload: medication_payload
         )
 
-        render json: result
+        respond_to do |format|
+          format.html do
+            flash[:notice] = t("dental.clinical.medication.saved")
+            redirect_to dental_clinical_medication_form_path(visit_id: params[:visit_id])
+          end
+          format.json { render json: result }
+        end
       end
 
       private
