@@ -60,6 +60,23 @@ en:
           time: Timestamp
           type: Type
         title: Dental admin audit events
+      coverages:
+        change_request_submitted: Coverage change request submitted for approval.
+        created: Coverage created successfully.
+        deactivated: Coverage deactivated successfully.
+        edit: Edit coverage
+        heading: Coverages
+        lock_conflict: This coverage was updated by someone else. Reload and try again.
+        new: New coverage
+        table:
+          actions: Actions
+          copay: Copay
+          eligibility: Eligibility
+          item: Procedure item
+          price_ipd: IPD
+          price_opd: OPD
+        title: Coverages
+        updated: Coverage updated successfully.
       dashboard:
         audit_events: Audit events
         breakdown:
@@ -77,6 +94,20 @@ en:
           sync_warnings: Sync warnings
         manage_services: Manage services
         title: Dental admin dashboard
+      medication_profiles:
+        created: Medication profile created successfully.
+        deactivated: Medication profile deactivated successfully.
+        edit: Edit medication profile
+        heading: Medication profiles
+        new: New medication profile
+        table:
+          actions: Actions
+          category: Category
+          code: Code
+          name: Name
+          status: Status
+        title: Medication profiles
+        updated: Medication profile updated successfully.
       procedure_items:
         already_inactive: Procedure item is already inactive.
         change_request_approved: Price change request approved and applied.
@@ -86,8 +117,6 @@ en:
         deactivated_referenced: Procedure item is referenced and was deactivated instead
           of deleted.
         description: Manage procedure item catalog with optimistic lock support.
-        edit: Edit procedure item
-        edit_description: Update procedure item %{code}.
         form:
           group: Procedure group
           price_ipd: IPD price
@@ -95,8 +124,9 @@ en:
         heading: Procedure item catalog
         lock_conflict: This item was updated by someone else. Reload and try again.
         new: New procedure item
-        new_description: Create a new procedure item for treatment billing.
         self_approval_not_allowed: You cannot approve your own price change request.
+        slide_over_only: Procedure items are managed from the dashboard slide-over
+          panel.
         table:
           actions: Actions
           code: Code
@@ -108,6 +138,48 @@ en:
           status: Status
         title: Procedure items
         updated: Procedure item updated successfully.
+      references:
+        created: Reference created successfully.
+        deactivated: Reference deactivated successfully.
+        edit: Edit reference
+        heading: References
+        new: New reference
+        table:
+          actions: Actions
+          code: Code
+          name: Name
+          status: Status
+        title: References
+        updated: Reference updated successfully.
+      supply_categories:
+        created: Supply category created successfully.
+        deactivated: Supply category deactivated successfully.
+        edit: Edit supply category
+        heading: Supply categories
+        new: New supply category
+        table:
+          actions: Actions
+          code: Code
+          name: Name
+          status: Status
+        title: Supply categories
+        updated: Supply category updated successfully.
+      supply_items:
+        created: Supply item created successfully.
+        deactivated: Supply item deactivated successfully.
+        edit: Edit supply item
+        heading: Supply items
+        new: New supply item
+        table:
+          actions: Actions
+          category: Category
+          code: Code
+          name: Name
+          status: Status
+          unit: Unit
+          unit_price: Unit price
+        title: Supply items
+        updated: Supply item updated successfully.
   app:
     flash:
       dismiss: Dismiss notification
@@ -493,6 +565,21 @@ en:
       start_screening: Start screening
       start_treatment: Start Tx
       sync_payment: Sync payment
+    supply:
+      requisitions:
+        heading: Requisitions
+        show:
+          requester: Requester
+          status: Status
+          table:
+            item: Item
+            qty: Qty
+            unit: Unit
+        table:
+          requester: Requester
+          requisition: Requisition
+          status: Status
+        title: Requisitions
     visits:
       actions:
         confirm_transition: Transition to %{stage}?

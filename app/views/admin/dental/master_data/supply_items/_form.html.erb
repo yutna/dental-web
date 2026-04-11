@@ -1,0 +1,39 @@
+<%= form_with model: supply_item,
+  url: supply_item.persisted? ? admin_dental_master_data_supply_item_path(supply_item) : admin_dental_master_data_supply_items_path,
+  class: "space-y-4" do |form| %>
+  <div>
+    <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.supply_items.table.category") %></label>
+    <%= form.collection_select :supply_category_id, @supply_categories, :id, :code, {}, { class: "form-select mt-1 block w-full" } %>
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.supply_items.table.code") %></label>
+    <%= form.text_field :code, class: "form-input mt-1 block w-full" %>
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.supply_items.table.name") %></label>
+    <%= form.text_field :name, class: "form-input mt-1 block w-full" %>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.supply_items.table.unit") %></label>
+      <%= form.text_field :unit, class: "form-input mt-1 block w-full" %>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-app-text-secondary"><%= t("admin.dental.supply_items.table.unit_price") %></label>
+      <%= form.number_field :unit_price, step: 0.01, min: 0, class: "form-input mt-1 block w-full" %>
+    </div>
+  </div>
+
+  <label class="inline-flex items-center gap-2 text-sm text-app-text-secondary">
+    <%= form.check_box :active %>
+    <span><%= t("admin.clinic_services.form.active") %></span>
+  </label>
+
+  <div class="flex gap-2">
+    <%= form.submit class: "inline-flex items-center rounded-md bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse" %>
+    <%= link_to t("admin.clinic_services.form.cancel"), admin_dental_master_data_supply_items_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary" %>
+  </div>
+<% end %>

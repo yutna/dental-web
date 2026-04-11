@@ -60,6 +60,23 @@ th:
           time: เวลา
           type: ประเภท
         title: บันทึกเหตุการณ์ผู้ดูแลระบบทันตกรรม
+      coverages:
+        change_request_submitted: ส่งคำขอเปลี่ยนแปลง coverage เพื่ออนุมัติแล้ว
+        created: สร้าง coverage เรียบร้อยแล้ว
+        deactivated: ปิดใช้งาน coverage เรียบร้อยแล้ว
+        edit: แก้ไข Coverage
+        heading: Coverage
+        lock_conflict: ข้อมูล coverage ถูกแก้ไขโดยผู้ใช้อื่น กรุณารีโหลดและลองใหม่
+        new: Coverage ใหม่
+        table:
+          actions: การจัดการ
+          copay: Copay
+          eligibility: สิทธิ
+          item: รายการหัตถการ
+          price_ipd: IPD
+          price_opd: OPD
+        title: Coverage
+        updated: อัปเดต coverage เรียบร้อยแล้ว
       dashboard:
         audit_events: บันทึกเหตุการณ์ตรวจสอบ
         breakdown:
@@ -77,6 +94,20 @@ th:
           sync_warnings: การแจ้งเตือนการซิงก์
         manage_services: จัดการบริการ
         title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
+      medication_profiles:
+        created: สร้างโปรไฟล์ยาเรียบร้อยแล้ว
+        deactivated: ปิดใช้งานโปรไฟล์ยาเรียบร้อยแล้ว
+        edit: แก้ไขโปรไฟล์ยา
+        heading: โปรไฟล์ยา
+        new: โปรไฟล์ยาใหม่
+        table:
+          actions: การจัดการ
+          category: หมวดหมู่
+          code: รหัส
+          name: ชื่อ
+          status: สถานะ
+        title: โปรไฟล์ยา
+        updated: อัปเดตโปรไฟล์ยาเรียบร้อยแล้ว
       procedure_items:
         already_inactive: รายการหัตถการนี้ถูกปิดใช้งานอยู่แล้ว
         change_request_approved: อนุมัติคำขอเปลี่ยนราคาและบันทึกเรียบร้อยแล้ว
@@ -85,8 +116,6 @@ th:
         deactivated: ปิดใช้งานรายการหัตถการสำเร็จ
         deactivated_referenced: รายการหัตถการนี้มีการอ้างอิง ระบบจึงปิดใช้งานแทนการลบ
         description: จัดการรายการหัตถการพร้อมรองรับ optimistic lock
-        edit: แก้ไขรายการหัตถการ
-        edit_description: อัปเดตรายการหัตถการ %{code}
         form:
           group: กลุ่มหัตถการ
           price_ipd: ราคา IPD
@@ -94,8 +123,8 @@ th:
         heading: รายการหัตถการ
         lock_conflict: รายการนี้ถูกแก้ไขโดยผู้ใช้อื่นแล้ว กรุณารีโหลดก่อนลองใหม่
         new: เพิ่มรายการหัตถการ
-        new_description: สร้างรายการหัตถการใหม่สำหรับการคิดค่ารักษา
         self_approval_not_allowed: คุณไม่สามารถอนุมัติคำขอเปลี่ยนราคาของตนเองได้
+        slide_over_only: รายการหัตถการจัดการผ่านแผงสไลด์โอเวอร์บนหน้ารายการ
         table:
           actions: การทำงาน
           code: รหัส
@@ -107,6 +136,48 @@ th:
           status: สถานะ
         title: รายการหัตถการ
         updated: อัปเดตรายการหัตถการสำเร็จ
+      references:
+        created: สร้างข้อมูลอ้างอิงเรียบร้อยแล้ว
+        deactivated: ปิดใช้งานข้อมูลอ้างอิงเรียบร้อยแล้ว
+        edit: แก้ไขข้อมูลอ้างอิง
+        heading: ข้อมูลอ้างอิง
+        new: ข้อมูลอ้างอิงใหม่
+        table:
+          actions: การจัดการ
+          code: รหัส
+          name: ชื่อ
+          status: สถานะ
+        title: ข้อมูลอ้างอิง
+        updated: อัปเดตข้อมูลอ้างอิงเรียบร้อยแล้ว
+      supply_categories:
+        created: สร้างหมวดวัสดุเรียบร้อยแล้ว
+        deactivated: ปิดใช้งานหมวดวัสดุเรียบร้อยแล้ว
+        edit: แก้ไขหมวดวัสดุ
+        heading: หมวดวัสดุ
+        new: หมวดวัสดุใหม่
+        table:
+          actions: การจัดการ
+          code: รหัส
+          name: ชื่อ
+          status: สถานะ
+        title: หมวดวัสดุ
+        updated: อัปเดตหมวดวัสดุเรียบร้อยแล้ว
+      supply_items:
+        created: สร้างรายการวัสดุเรียบร้อยแล้ว
+        deactivated: ปิดใช้งานรายการวัสดุเรียบร้อยแล้ว
+        edit: แก้ไขรายการวัสดุ
+        heading: รายการวัสดุ
+        new: รายการวัสดุใหม่
+        table:
+          actions: การจัดการ
+          category: หมวดหมู่
+          code: รหัส
+          name: ชื่อ
+          status: สถานะ
+          unit: หน่วย
+          unit_price: ราคาต่อหน่วย
+        title: รายการวัสดุ
+        updated: อัปเดตรายการวัสดุเรียบร้อยแล้ว
   app:
     flash:
       dismiss: ปิดการแจ้งเตือน
@@ -489,6 +560,21 @@ th:
       start_screening: เริ่มคัดกรอง
       start_treatment: เริ่มรักษา
       sync_payment: ซิงก์ชำระเงิน
+    supply:
+      requisitions:
+        heading: ใบเบิก
+        show:
+          requester: ผู้ขอเบิก
+          status: สถานะ
+          table:
+            item: รายการ
+            qty: จำนวน
+            unit: หน่วย
+        table:
+          requester: ผู้ขอเบิก
+          requisition: เลขที่ใบเบิก
+          status: สถานะ
+        title: ใบเบิก
     visits:
       actions:
         confirm_transition: เปลี่ยนสถานะเป็น %{stage} ?

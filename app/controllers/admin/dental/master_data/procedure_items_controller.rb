@@ -10,9 +10,9 @@ module Admin
         end
 
         def new
-          @procedure_item = DentalProcedureItem.new(active: true)
-          authorize([ :admin, :dental, :master_data, @procedure_item ])
-          load_procedure_groups
+          authorize([ :admin, :dental, :master_data, DentalProcedureItem ])
+          redirect_to admin_dental_master_data_procedure_items_path,
+                      notice: t("admin.dental.procedure_items.slide_over_only")
         end
 
         def create
@@ -24,14 +24,15 @@ module Admin
             redirect_to admin_dental_master_data_procedure_items_path,
                         notice: t("admin.dental.procedure_items.created")
           else
-            load_procedure_groups
-            render :new, status: :unprocessable_content
+            redirect_to admin_dental_master_data_procedure_items_path,
+                        alert: @procedure_item.errors.full_messages.to_sentence
           end
         end
 
         def edit
           authorize([ :admin, :dental, :master_data, @procedure_item ])
-          load_procedure_groups
+          redirect_to admin_dental_master_data_procedure_items_path,
+                      notice: t("admin.dental.procedure_items.slide_over_only")
         end
 
         def update
@@ -55,14 +56,12 @@ module Admin
             redirect_to admin_dental_master_data_procedure_items_path,
                         notice: t("admin.dental.procedure_items.updated")
           else
-            load_procedure_groups
-            render :edit, status: :unprocessable_content
+            redirect_to admin_dental_master_data_procedure_items_path,
+                        alert: @procedure_item.errors.full_messages.to_sentence
           end
         rescue ActiveRecord::StaleObjectError
           @procedure_item.reload
-          @procedure_item.errors.add(:base, t("admin.dental.procedure_items.lock_conflict"))
-          load_procedure_groups
-          render :edit, status: :conflict
+          render plain: t("admin.dental.procedure_items.lock_conflict"), status: :conflict
         end
 
         def approve_price_change
