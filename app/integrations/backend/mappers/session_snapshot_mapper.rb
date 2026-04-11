@@ -1,6 +1,60 @@
 module Backend
   module Mappers
     class SessionSnapshotMapper
+      ROLE_PERMISSIONS = {
+        "dentist" => %w[
+          dental:workflow:write
+          dental:clinical:read dental:clinical:write
+          dental:requisition:read dental:requisition:write
+          dental:print:read
+        ],
+        "dental_assistant" => %w[
+          dental:workflow:write
+          dental:clinical:read dental:clinical:write
+          dental:print:read
+        ],
+        "hygienist" => %w[
+          dental:workflow:write
+          dental:clinical:read
+          dental:print:read
+        ],
+        "registration" => %w[
+          dental:workflow:write
+          dental:print:read
+        ],
+        "cashier" => %w[
+          dental:workflow:write
+          dental:billing:read dental:billing:sync
+          dental:print:read
+        ],
+        "pharmacist" => %w[
+          dental:requisition:read dental:requisition:write
+          dental:requisition:approve dental:requisition:dispense dental:requisition:receive
+        ],
+        "admin" => %w[
+          admin:access
+          dental:workflow:write
+          dental:clinical:read dental:clinical:write
+          dental:billing:read dental:billing:sync
+          dental:requisition:read dental:requisition:write
+          dental:requisition:approve dental:requisition:dispense dental:requisition:receive
+          dental:print:read
+        ],
+        "admin_finance" => %w[
+          dental:billing:read dental:billing:sync
+        ],
+        "clinic_manager" => %w[
+          admin:access
+          dental:workflow:write
+          dental:clinical:read
+          dental:billing:read
+          dental:requisition:read dental:requisition:approve
+          dental:print:read
+        ]
+      }.freeze
+
+      BASE_PERMISSIONS = %w[workspace:read dental:read dental:workflow:read].freeze
+
       class << self
         # Build snapshot from a raw Bearer JWT (for API v1 endpoints).
         # Unlike from_remote, this doesn't expect refresh/csrf tokens —
@@ -91,23 +145,15 @@ module Backend
         end
 
         def inject_bff_permissions(user_session)
-          permissions = %w[workspace:read dental:read dental:workflow:read dental:workflow:write]
-          api_roles   = Array(user_session["roles"]).map(&:to_s)
+          api_roles = Array(user_session["roles"]).map(&:to_s).map(&:downcase)
 
-          if api_roles.include?("admin")
-            permissions.push(
-              "admin:access",
-              "dental:billing:read",
-              "dental:billing:sync",
-              "dental:requisition:read",
-              "dental:requisition:write",
-              "dental:requisition:approve",
-              "dental:requisition:dispense",
-              "dental:requisition:receive"
-            )
+          permissions = BASE_PERMISSIONS.dup
+          api_roles.each do |role|
+            role_perms = ROLE_PERMISSIONS[role]
+            permissions.concat(role_perms) if role_perms
           end
 
-          permissions
+          permissions.uniq
         end
       end
     end
