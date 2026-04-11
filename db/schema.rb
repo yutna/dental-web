@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_11_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_11_100100) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -203,6 +203,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_100000) do
     t.index ["source"], name: "index_dental_queue_entries_on_source"
     t.index ["status"], name: "index_dental_queue_entries_on_status"
     t.index ["visit_id"], name: "index_dental_queue_entries_on_visit_id", unique: true
+  end
+
+  create_table "dental_stock_movements", force: :cascade do |t|
+    t.string "actor_id"
+    t.datetime "created_at", null: false
+    t.string "direction", null: false
+    t.string "item_code", null: false
+    t.string "item_type", null: false
+    t.string "movement_ref", null: false
+    t.text "note"
+    t.integer "quantity", null: false
+    t.string "reference_id"
+    t.string "reference_type"
+    t.string "source", null: false
+    t.string "unit", null: false
+    t.datetime "updated_at", null: false
+    t.index ["direction"], name: "index_dental_stock_movements_on_direction"
+    t.index ["item_type", "item_code"], name: "index_dental_stock_movements_on_item_type_and_item_code"
+    t.index ["movement_ref"], name: "index_dental_stock_movements_on_movement_ref", unique: true
+    t.index ["reference_type", "reference_id", "direction"], name: "idx_stock_movements_idempotency", unique: true
   end
 
   create_table "dental_supply_categories", force: :cascade do |t|
