@@ -28,7 +28,8 @@ module Backend
             csrf_token:    nil,
             principal:     principal
           )
-        rescue StandardError
+        rescue StandardError => e
+          Rails.logger.warn("[SessionSnapshotMapper] from_bearer failed: #{e.class} - #{e.message}")
           Security::SessionSnapshot.guest
         end
 

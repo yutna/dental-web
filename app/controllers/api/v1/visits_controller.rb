@@ -30,21 +30,23 @@ module Api
           )
         end
 
-        Dental::Workflow::AppendTimelineEntry.call(
-          visit_id: params[:id],
-          from_stage: from_stage,
-          to_stage: to_stage,
-          actor_id: current_principal.id,
-          metadata: { transition_source: "api_v1" }
-        )
+        ActiveRecord::Base.transaction do
+          Dental::Workflow::AppendTimelineEntry.call(
+            visit_id: params[:id],
+            from_stage: from_stage,
+            to_stage: to_stage,
+            actor_id: current_principal.id,
+            metadata: { transition_source: "api_v1" }
+          )
 
-        Dental::Workflow::PaymentBridgeHook.call(
-          visit_id: params[:id],
-          from_stage: from_stage,
-          to_stage: to_stage,
-          actor_id: current_principal.id,
-          metadata: { transition_source: "api_v1" }
-        )
+          Dental::Workflow::PaymentBridgeHook.call(
+            visit_id: params[:id],
+            from_stage: from_stage,
+            to_stage: to_stage,
+            actor_id: current_principal.id,
+            metadata: { transition_source: "api_v1" }
+          )
+        end
 
         updated_snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: params[:id])
 
@@ -65,25 +67,28 @@ module Api
         visit_id = params[:visit_id].presence || "VISIT-#{SecureRandom.hex(4).upcase}"
         starts_at = Time.current.strftime("%H:%M")
 
-        result = Dental::Workflow::RegisterQueueEntry.call(
-          visit_id: visit_id,
-          patient_name: params[:patient_name].presence || "Unknown Patient",
-          mrn: params[:mrn].presence || "UNKNOWN-MRN",
-          service: params[:service].presence || "General Consultation",
-          starts_at: starts_at,
-          status: "scheduled",
-          source: "walk_in",
-          actor_id: current_principal.id,
-          metadata: { vn: params[:vn], queue_origin: "api_check_in" }
-        )
+        result = nil
+        ActiveRecord::Base.transaction do
+          result = Dental::Workflow::RegisterQueueEntry.call(
+            visit_id: visit_id,
+            patient_name: params[:patient_name].presence || "Unknown Patient",
+            mrn: params[:mrn].presence || "UNKNOWN-MRN",
+            service: params[:service].presence || "General Consultation",
+            starts_at: starts_at,
+            status: "scheduled",
+            source: "walk_in",
+            actor_id: current_principal.id,
+            metadata: { vn: params[:vn], queue_origin: "api_check_in" }
+          )
 
-        Dental::Workflow::AppendTimelineEntry.call(
-          visit_id: visit_id,
-          from_stage: "registered",
-          to_stage: "checked-in",
-          actor_id: current_principal.id,
-          metadata: { transition_source: "api_check_in" }
-        )
+          Dental::Workflow::AppendTimelineEntry.call(
+            visit_id: visit_id,
+            from_stage: "registered",
+            to_stage: "checked-in",
+            actor_id: current_principal.id,
+            metadata: { transition_source: "api_check_in" }
+          )
+        end
 
         render json: { data: VisitSerializer.serialize(result[:entry]) }, status: :created
       end

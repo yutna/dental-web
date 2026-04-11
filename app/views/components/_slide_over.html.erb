@@ -14,7 +14,7 @@
           data-slide-content
           class="pointer-events-auto w-screen max-w-md transform transition-transform duration-200 ease-in-out <%= side == 'left' ? '-translate-x-full' : 'translate-x-full' %>"
         >
-          <div class="flex h-full flex-col border-<%= side == 'left' ? 'r' : 'l' %> border-app-border-primary bg-app-surface-primary shadow-xl">
+          <div class="flex h-full flex-col <%= side == 'left' ? 'border-r' : 'border-l' %> border-app-border-primary bg-app-surface-primary shadow-xl">
             <%# Header %>
             <div class="flex items-center justify-between border-b border-app-border-primary px-6 py-4">
               <h2 class="text-lg font-semibold text-app-text-primary"><%= title %></h2>

@@ -10,9 +10,16 @@ export default class extends Controller {
   }
 
   connect() {
+    this.handleToothClick = this.selectTooth.bind(this)
     this.applyConditions()
     this.applySelected()
     this.bindToothClicks()
+  }
+
+  disconnect() {
+    this.toothElements().forEach((el) => {
+      el.removeEventListener("click", this.handleToothClick)
+    })
   }
 
   // ---- actions ----
@@ -50,7 +57,7 @@ export default class extends Controller {
 
   bindToothClicks() {
     this.toothElements().forEach((el) => {
-      el.addEventListener("click", (e) => this.selectTooth(e))
+      el.addEventListener("click", this.handleToothClick)
     })
   }
 
