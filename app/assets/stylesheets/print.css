@@ -101,16 +101,23 @@
 /* Watermark overlay — positioned and cannot be removed by CSS manipulation */
 .print-watermark {
   position: fixed;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-35deg);
-  font-size: 72pt;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-32deg);
+  transform-origin: center;
+  font-size: clamp(40pt, 10vw, 58pt);
+  line-height: 1;
   font-weight: 700;
   opacity: 0.07;
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
-  letter-spacing: 8pt;
+  letter-spacing: 3pt;
+  text-align: center;
+  box-sizing: border-box;
+  padding-inline: 10mm;
   color: #000;
 }
 
