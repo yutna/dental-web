@@ -19,7 +19,7 @@ RSpec.describe "Dental clinical chart and image forms", type: :request do
             note: "new lesion"
           }
         ]
-      }
+      }, as: :json
     end.to change(DentalClinicalChartRecord, :count).by(1)
 
     expect(response).to have_http_status(:ok)
@@ -46,7 +46,7 @@ RSpec.describe "Dental clinical chart and image forms", type: :request do
           piece_codes: []
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
@@ -79,7 +79,7 @@ RSpec.describe "Dental clinical chart and image forms", type: :request do
       }.to_json
     )
 
-    get "/en/dental/clinical/visits/VISIT-CH-3/chart"
+    get "/en/dental/clinical/visits/VISIT-CH-3/chart", as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -100,7 +100,7 @@ RSpec.describe "Dental clinical chart and image forms", type: :request do
             note: "bitewing"
           }
         ]
-      }
+      }, as: :json
     end.to change(DentalClinicalImageRecord, :count).by(1)
 
     expect(response).to have_http_status(:ok)
@@ -124,7 +124,7 @@ RSpec.describe "Dental clinical chart and image forms", type: :request do
           image_ref: ""
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
@@ -155,7 +155,7 @@ RSpec.describe "Dental clinical chart and image forms", type: :request do
       }.to_json
     )
 
-    get "/en/dental/clinical/visits/VISIT-IMG-3/images"
+    get "/en/dental/clinical/visits/VISIT-IMG-3/images", as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(

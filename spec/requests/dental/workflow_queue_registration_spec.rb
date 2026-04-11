@@ -13,7 +13,7 @@ RSpec.describe "Dental workflow queue registration", type: :request do
         mrn: "HN0008",
         vn: "VN-20260410-014",
         service: "Scaling"
-      }
+      }, as: :json
     end.to change(DentalQueueEntry, :count).by(1)
       .and change(DentalWorkflowTimelineEntry, :count).by(1)
 
@@ -33,7 +33,7 @@ RSpec.describe "Dental workflow queue registration", type: :request do
   end
 
   it "syncs appointments into registered queue entries and skips duplicates" do
-    post "/en/dental/visits/sync_appointments"
+    post "/en/dental/visits/sync_appointments", as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -43,7 +43,7 @@ RSpec.describe "Dental workflow queue registration", type: :request do
       "error_count" => 0
     )
 
-    post "/en/dental/visits/sync_appointments"
+    post "/en/dental/visits/sync_appointments", as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(

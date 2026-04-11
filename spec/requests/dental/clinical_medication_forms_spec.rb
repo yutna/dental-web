@@ -15,7 +15,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
           note: "after meal"
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -23,7 +23,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
       "patient_hn" => "HN-MED-1",
       "payload" => include(
         "medications" => include(
-          include("medication_code" => "MED-001", "quantity" => "2")
+          include("medication_code" => "MED-001", "quantity" => 2)
         )
       )
     )
@@ -46,7 +46,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
           note: "monitor closely"
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
@@ -79,7 +79,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
           note: "double-check dosage"
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -87,7 +87,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
       "payload" => include(
         "confirm_high_alert" => true,
         "medications" => include(
-          include("medication_code" => "HAB-001", "quantity" => "1")
+          include("medication_code" => "HAB-001", "quantity" => 1)
         )
       )
     )
@@ -108,7 +108,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
           reaction: "severe rash"
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
@@ -144,7 +144,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
           reaction: "hives"
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -177,7 +177,7 @@ RSpec.describe "Dental clinical medication forms", type: :request do
       }.to_json
     )
 
-    get "/en/dental/clinical/visits/VISIT-MED-6/medication"
+    get "/en/dental/clinical/visits/VISIT-MED-6/medication", as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(

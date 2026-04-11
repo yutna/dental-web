@@ -23,7 +23,7 @@ RSpec.describe "Dental clinical treatment forms", type: :request do
             quantity: 2
           }
         ]
-      }
+      }, as: :json
     end.to change(DentalClinicalProcedureRecord, :count).by(2)
 
     expect(response).to have_http_status(:ok)
@@ -53,7 +53,7 @@ RSpec.describe "Dental clinical treatment forms", type: :request do
       }.to_json
     )
 
-    get "/en/dental/clinical/visits/VISIT-TX-2/treatment"
+    get "/en/dental/clinical/visits/VISIT-TX-2/treatment", as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -81,7 +81,7 @@ RSpec.describe "Dental clinical treatment forms", type: :request do
           surface_codes: []
         }
       ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(

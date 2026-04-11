@@ -10,7 +10,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
       from_stage: "checked-in",
       to_stage: "screening",
       room_available: false
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
@@ -31,7 +31,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
       from_stage: "screening",
       to_stage: "ready-for-treatment",
       vitals: { blood_pressure: "120/80" }
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
@@ -50,7 +50,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
     patch "/en/dental/visits/VISIT-1/transition", params: {
       from_stage: "ready-for-treatment",
       to_stage: "in-treatment"
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
@@ -71,7 +71,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
       from_stage: "ready-for-treatment",
       to_stage: "in-treatment",
       dentist_id: "DEN-001"
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -96,14 +96,14 @@ RSpec.describe "Dental workflow transition guards", type: :request do
       from_stage: "registered",
       to_stage: "checked-in",
       lock_version: 0
-    }
+    }, as: :json
 
     patch "/en/dental/visits/VISIT-1/transition", params: {
       from_stage: "checked-in",
       to_stage: "screening",
       room_available: true,
       lock_version: 0
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:conflict)
     expect(response.parsed_body).to include(
@@ -126,7 +126,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
     patch "/en/dental/visits/VISIT-1/transition", params: {
       from_stage: "in-treatment",
       to_stage: "waiting-payment"
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include("payment_bridge_hook" => "send_to_cashier")
@@ -145,7 +145,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
     patch "/en/dental/visits/VISIT-1/transition", params: {
       from_stage: "in-treatment",
       to_stage: "completed"
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include("payment_bridge_hook" => "complete_no_charge")
@@ -155,7 +155,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
     patch "/en/dental/visits/VISIT-1/transition", params: {
       from_stage: "in-treatment",
       to_stage: "referred-out"
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include("payment_bridge_hook" => "refer_out")
@@ -165,7 +165,7 @@ RSpec.describe "Dental workflow transition guards", type: :request do
     patch "/en/dental/visits/VISIT-1/transition", params: {
       from_stage: "registered",
       to_stage: "cancelled"
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include("payment_bridge_hook" => "cancel_visit")

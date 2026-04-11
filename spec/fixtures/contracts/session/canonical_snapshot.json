@@ -8,6 +8,6 @@
     "email": "dentist@example.com",
     "display_name": "Dr. Dentist",
     "roles": ["clinician"],
-    "permissions": ["workspace:read"]
+    "permissions": ["dental:read", "dental:workflow:read", "dental:workflow:write", "workspace:read"]
   }
 }

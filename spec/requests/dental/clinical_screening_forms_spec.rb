@@ -14,7 +14,7 @@ RSpec.describe "Dental clinical screening forms", type: :request do
         weight: "58"
       },
       symptoms: [ "tooth pain" ]
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -47,7 +47,7 @@ RSpec.describe "Dental clinical screening forms", type: :request do
       }.to_json
     )
 
-    get "/en/dental/clinical/visits/VISIT-SCR-2/screening"
+    get "/en/dental/clinical/visits/VISIT-SCR-2/screening", as: :json
 
     expect(response).to have_http_status(:ok)
     expect(response.parsed_body).to include(
@@ -67,7 +67,7 @@ RSpec.describe "Dental clinical screening forms", type: :request do
       vitals: {
         blood_pressure: "120/80"
       }
-    }
+    }, as: :json
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body).to include(
