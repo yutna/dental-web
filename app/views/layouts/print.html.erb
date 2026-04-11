@@ -18,7 +18,12 @@
     <header class="print-hide sticky top-0 z-10 border-b border-gray-200 bg-white px-6 py-3">
       <div class="mx-auto flex max-w-5xl items-center justify-between">
         <div class="flex items-center gap-3">
-          <h1 class="text-lg font-semibold text-gray-900"><%= content_for(:print_title) || t("dental.print.preview.heading") %></h1>
+          <div>
+            <h1 class="text-lg font-semibold text-gray-900"><%= content_for(:print_title) || t("dental.print.preview.heading") %></h1>
+            <% if content_for?(:print_subtitle) %>
+              <p class="mt-1 text-xs tracking-wide text-gray-500"><%= yield :print_subtitle %></p>
+            <% end %>
+          </div>
         </div>
 
         <div class="flex items-center gap-2">
@@ -31,34 +36,36 @@
               data: { turbo_action: "replace" } %>
           <% end %>
 
-          <%# Watermark mode toggle %>
-          <div class="ml-2 flex items-center rounded-md border border-gray-200 bg-gray-50 p-0.5">
-            <% {
-              "provisional" => t("dental.print.preview.watermark.provisional"),
-              "internal" => t("dental.print.preview.watermark.internal"),
-              "final" => t("dental.print.preview.watermark.final")
-            }.each do |mode, label| %>
-              <% active = @watermark_mode == mode %>
-              <%= link_to label,
-                url_for(watermark: mode),
-                class: "rounded px-2 py-1 text-xs font-medium transition #{active ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-200'}",
-                data: { turbo_action: "replace" } %>
-            <% end %>
-          </div>
+          <% if @print_shell_state == "preview" %>
+            <%# Watermark mode toggle %>
+            <div class="ml-2 flex items-center rounded-md border border-gray-200 bg-gray-50 p-0.5">
+              <% {
+                "provisional" => t("dental.print.preview.watermark.provisional"),
+                "internal" => t("dental.print.preview.watermark.internal"),
+                "final" => t("dental.print.preview.watermark.final")
+              }.each do |mode, label| %>
+                <% active = @watermark_mode == mode %>
+                <%= link_to label,
+                  url_for(watermark: mode),
+                  class: "rounded px-2 py-1 text-xs font-medium transition #{active ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-200'}",
+                  data: { turbo_action: "replace" } %>
+              <% end %>
+            </div>
 
-          <%# Print button %>
-          <button onclick="window.print()"
-            class="ml-2 inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-            </svg>
-            <%= t("dental.print.preview.print_button") %>
-          </button>
+            <%# Print button %>
+            <button onclick="window.print()"
+              class="ml-2 inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              <%= t("dental.print.preview.print_button") %>
+            </button>
 
-          <button onclick="window.print()"
-            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
-            <%= t("dental.print.preview.export_pdf") %>
-          </button>
+            <button onclick="window.print()"
+              class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
+              <%= t("dental.print.preview.export_pdf") %>
+            </button>
+          <% end %>
 
           <%# Back to visit %>
           <%= link_to t("dental.print.preview.back_to_visit"),

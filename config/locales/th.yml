@@ -443,7 +443,7 @@ th:
           statement_1: ขอรับรองว่า
           statement_2: ได้รับการตรวจและรักษาทางทันตกรรมที่คลินิกของเรา
           visit_date: วันที่เข้ารับบริการ
-          visit_label: Visit
+          visit_label: เลขที่เข้ารับบริการ
         dental_chart:
           chart_entries: รายการบันทึกผังฟัน
           hn_label: HN
@@ -452,11 +452,14 @@ th:
           table:
             charting_code: รหัสผังฟัน
             note: หมายเหตุ
-            piece: Piece
-            root: Root
-            surface: Surface
-            tooth: Tooth
-          visit_label: Visit
+            piece: ชิ้นส่วน
+            root: รากฟัน
+            surface: ผิวฟัน
+            tooth: ซี่ฟัน
+          total_entries: จำนวนรายการทั้งหมด
+          total_teeth: จำนวนซี่ฟันที่บันทึก
+          visit_date: วันที่เข้ารับบริการ
+          visit_label: เลขที่เข้ารับบริการ
         treatment_summary:
           billing_items: รายการค่าใช้จ่าย
           billing_table:
@@ -469,13 +472,16 @@ th:
           hn_label: HN
           medications: ยาที่ได้รับ
           procedures: หัตถการ
+          service: บริการ
+          stage: สถานะ
           stamp: ตราประทับ
           table:
             code: รหัส
             qty: จำนวน
-            surface: Surface
-            tooth: Tooth
-          visit_label: Visit
+            surface: ผิวฟัน
+            tooth: ซี่ฟัน
+          visit_date: วันที่เข้ารับบริการ
+          visit_label: เลขที่เข้ารับบริการ
     queue_actions:
       check_in: เช็กอิน
       ready_treatment: พร้อมรักษา

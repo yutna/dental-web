@@ -460,6 +460,9 @@ en:
             root: Root
             surface: Surface
             tooth: Tooth
+          total_entries: Total entries
+          total_teeth: Teeth covered
+          visit_date: Visit date
           visit_label: Visit
         treatment_summary:
           billing_items: Billing items
@@ -473,12 +476,15 @@ en:
           hn_label: HN
           medications: Medications
           procedures: Procedures
+          service: Service
+          stage: Stage
           stamp: Stamp
           table:
             code: Code
             qty: Qty
             surface: Surface
             tooth: Tooth
+          visit_date: Visit date
           visit_label: Visit
     queue_actions:
       check_in: Check in

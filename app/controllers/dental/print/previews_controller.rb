@@ -10,15 +10,18 @@ module Dental
         @snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: @visit_id)
 
         unless allowed_to_print?
+          @print_shell_state = "forbidden"
           render :forbidden, status: :forbidden
           return
         end
 
         unless load_print_data
+          @print_shell_state = "not_found"
           render :not_found, status: :not_found
           return
         end
 
+        @print_shell_state = "preview"
         @watermark_mode = resolve_watermark_mode
       end
 

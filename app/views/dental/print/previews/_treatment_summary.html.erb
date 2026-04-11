@@ -1,3 +1,12 @@
+<% content_for :print_subtitle do %>
+  <%= [
+    data[:patient_name].presence,
+    data[:patient_hn].presence && "#{t("dental.print.templates.treatment_summary.hn_label")}: #{data[:patient_hn]}",
+    data[:service].presence,
+    data[:visit_date].presence && "#{t("dental.print.templates.treatment_summary.visit_date")}: #{data[:visit_date]}"
+  ].compact.join(" • ") %>
+<% end %>
+
 <section class="rounded-md border border-gray-300 bg-white p-8 shadow-sm print:border-none print:shadow-none">
   <header class="print-header">
     <h2 class="text-2xl font-bold text-gray-900">
@@ -12,6 +21,17 @@
         | <strong><%= data[:patient_name] %></strong>
       <% end %>
     </p>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium text-gray-600">
+      <% if data[:service].present? %>
+        <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1"><%= t("dental.print.templates.treatment_summary.service") %>: <%= data[:service] %></span>
+      <% end %>
+      <% if data[:visit_date].present? %>
+        <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1"><%= t("dental.print.templates.treatment_summary.visit_date") %>: <%= data[:visit_date] %></span>
+      <% end %>
+      <% if snapshot[:current_stage].present? %>
+        <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1"><%= t("dental.print.templates.treatment_summary.stage") %>: <%= t("dental.enums.visit_stage.#{snapshot[:current_stage]}", default: snapshot[:current_stage]) %></span>
+      <% end %>
+    </div>
   </header>
 
   <div class="space-y-6">
