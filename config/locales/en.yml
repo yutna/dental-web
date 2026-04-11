@@ -409,6 +409,77 @@ en:
       admin_dashboard_title: Dental admin dashboard
       namespace_title: Dental workflow
       visit_not_found: Visit not found
+    print:
+      forbidden:
+        audit_ref: 'Audit ref:'
+        back_to_visit: Back to visit
+        heading: Print Access
+        message: You are not allowed to print %{type} for visit %{visit_id}.
+        request_access: Request temporary access
+        required_permission: 'Required permission:'
+        title: Print Forbidden
+      not_found:
+        heading: Print document not found
+        message: Print type %{type} is not supported.
+        title: Print Not Found
+      preview:
+        back_to_visit: Back to visit
+        export_pdf: Export PDF
+        heading: Print Preview
+        print_button: Print
+        title: "%{type} - Visit %{id}"
+        type_heading:
+          certificate: Dental Certificate
+          dental_chart: Dental Chart
+          treatment_summary: Treatment Summary
+        visit_not_found: Visit not found for printing.
+        watermark:
+          final: Final
+          internal: Internal Use
+          provisional: Provisional
+      templates:
+        certificate:
+          authorized_dentist: Authorized dentist
+          hn_label: HN
+          issued_note: This certificate is issued upon request for official use.
+          official_stamp: Official stamp
+          service: Service
+          statement_1: This is to certify that
+          statement_2: received dental consultation and treatment at our clinic.
+          visit_date: Date of visit
+          visit_label: Visit
+        dental_chart:
+          chart_entries: Chart entries
+          hn_label: HN
+          legend_text: C = Caries, F = Filling, X = Extracted, RCT = Root Canal Treatment
+          legend_title: Legend
+          table:
+            charting_code: Charting code
+            note: Note
+            piece: Piece
+            root: Root
+            surface: Surface
+            tooth: Tooth
+          visit_label: Visit
+        treatment_summary:
+          billing_items: Billing items
+          billing_table:
+            amount: Amount
+            item: Item
+            qty: Qty
+            unit_price: Unit price
+          dentist_signature: Dentist signature
+          diagnosis: Diagnosis
+          hn_label: HN
+          medications: Medications
+          procedures: Procedures
+          stamp: Stamp
+          table:
+            code: Code
+            qty: Qty
+            surface: Surface
+            tooth: Tooth
+          visit_label: Visit
     queue_actions:
       check_in: Check in
       ready_treatment: Ready for Tx

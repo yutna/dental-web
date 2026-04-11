@@ -1,0 +1,29 @@
+<% content_for :title, t("dental.print.preview.title", type: @type.humanize, id: @visit_id) %>
+<% content_for :print_title, t("dental.print.preview.type_heading.#{@type}", default: @type.humanize) %>
+
+<% if @watermark_mode.present? && @watermark_mode != "final" %>
+  <div
+    class="print-watermark"
+    data-watermark-lock="true"
+    style="position: fixed !important; pointer-events: none !important; user-select: none !important;"
+  >
+    <%= t("dental.print.preview.watermark.#{@watermark_mode}").upcase %>
+  </div>
+<% end %>
+
+<% if @queue_entry.nil? %>
+  <div class="rounded-lg border border-amber-200 bg-amber-50 p-6 text-center">
+    <p class="text-amber-800"><%= t("dental.print.preview.visit_not_found") %></p>
+    <%= link_to t("dental.print.preview.back_to_visit"), dental_visit_path(id: @visit_id),
+      class: "mt-3 inline-block rounded-md bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700" %>
+  </div>
+<% else %>
+  <div class="print-avoid-break">
+    <%= render partial: "dental/print/previews/#{@type}", locals: {
+      data: @data,
+      queue_entry: @queue_entry,
+      snapshot: @snapshot,
+      visit_id: @visit_id
+    } %>
+  </div>
+<% end %>
