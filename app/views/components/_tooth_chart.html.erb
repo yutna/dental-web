@@ -1,0 +1,61 @@
+<%# Tooth chart SVG component — clickable dental chart with Universal Numbering (1-32 + deciduous A-T)
+  Locals:
+    selected:    Array of selected tooth IDs (e.g. ["1", "14", "A"]) — optional
+    conditions:  Hash of tooth_id => condition ("treated"|"planned"|"problematic"|"missing") — optional
+    multi_select: Allow selecting multiple teeth (default true)
+    read_only:   Disable click interaction (default false)
+    name:        Hidden input name for form submission (optional, default "selected_teeth")
+%>
+<% selected ||= [] %>
+<% conditions ||= {} %>
+<% multi_select = true if local_assigns[:multi_select].nil? %>
+<% read_only ||= false %>
+<% name ||= "selected_teeth" %>
+
+<div
+  data-controller="tooth-chart"
+  data-tooth-chart-multi-select-value="<%= multi_select %>"
+  data-tooth-chart-read-only-value="<%= read_only %>"
+  data-tooth-chart-selected-value="<%= selected.to_json %>"
+  data-tooth-chart-conditions-value="<%= conditions.to_json %>"
+  class="relative"
+>
+  <%# Hidden input to hold selection for form submission %>
+  <input type="hidden" name="<%= name %>" value="<%= selected.join(',') %>" data-tooth-chart-target="input"/>
+
+  <%# Legend %>
+  <div class="mb-3 flex flex-wrap items-center gap-4 text-xs text-app-text-tertiary">
+    <div class="flex items-center gap-1.5">
+      <span class="inline-block h-3 w-3 rounded border-2 border-current bg-current/10"></span>
+      <%= t("components.tooth_chart.legend.selected") %>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <span class="inline-block h-3 w-3 rounded border-2 border-green-500 bg-green-500/20"></span>
+      <%= t("components.tooth_chart.legend.treated") %>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <span class="inline-block h-3 w-3 rounded border-2 border-blue-500 bg-blue-500/20"></span>
+      <%= t("components.tooth_chart.legend.planned") %>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <span class="inline-block h-3 w-3 rounded border-2 border-red-500 bg-red-500/20"></span>
+      <%= t("components.tooth_chart.legend.problematic") %>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <span class="inline-block h-3 w-3 rounded border-2 border-gray-500 border-dashed bg-gray-500/20"></span>
+      <%= t("components.tooth_chart.legend.missing") %>
+    </div>
+  </div>
+
+  <%# Chart SVG — inline for Stimulus interaction %>
+  <div class="overflow-x-auto rounded-xl border border-app-border-primary bg-app-surface-primary p-4 text-app-text-primary" data-tooth-chart-target="chart">
+    <%= render file: Rails.root.join("app/assets/images/tooth_chart_base.svg") %>
+  </div>
+
+  <%# Selection summary %>
+  <div class="mt-2 min-h-[1.5rem] text-xs text-app-text-tertiary" data-tooth-chart-target="summary">
+    <% if selected.any? %>
+      <%= t("components.tooth_chart.selected_count", count: selected.size) %>: <%= selected.join(", ") %>
+    <% end %>
+  </div>
+</div>

@@ -130,6 +130,26 @@ th:
       submit: ลงชื่อเข้าใช้
       title: ลงชื่อเข้าใช้
       username_label: ชื่อผู้ใช้
+  components:
+    data_table:
+      no_data: ไม่มีข้อมูล
+    filter_bar:
+      apply: ค้นหา
+      reset: รีเซ็ต
+      search_placeholder: ค้นหา…
+    sticky_save_bar:
+      save: บันทึก
+      unsaved_changes: มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก
+    tooth_chart:
+      legend:
+        missing: สูญหาย
+        planned: วางแผน
+        problematic: มีปัญหา
+        selected: เลือกแล้ว
+        treated: รักษาแล้ว
+      selected_count:
+        one: เลือก %{count} ซี่
+        other: เลือก %{count} ซี่
   dental:
     clinical:
       chart:

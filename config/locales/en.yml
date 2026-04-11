@@ -132,6 +132,26 @@ en:
       submit: Sign in
       title: Sign in
       username_label: Username
+  components:
+    data_table:
+      no_data: No data available
+    filter_bar:
+      apply: Apply
+      reset: Reset
+      search_placeholder: Search…
+    sticky_save_bar:
+      save: Save
+      unsaved_changes: Unsaved changes
+    tooth_chart:
+      legend:
+        missing: Missing
+        planned: Planned
+        problematic: Problematic
+        selected: Selected
+        treated: Treated
+      selected_count:
+        one: "%{count} tooth selected"
+        other: "%{count} teeth selected"
   dental:
     clinical:
       chart:
