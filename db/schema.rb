@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_11_100300) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_11_160000) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -259,6 +259,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_100300) do
     t.string "approver_id"
     t.string "cancel_reason"
     t.datetime "cancelled_at"
+    t.string "canceller_id"
     t.datetime "created_at", null: false
     t.string "dispense_number"
     t.datetime "dispensed_at"

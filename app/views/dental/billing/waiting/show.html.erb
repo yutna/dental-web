@@ -29,7 +29,7 @@
             <td class="whitespace-nowrap px-4 py-3 text-sm text-app-text-primary"><%= invoice.visit_id %></td>
             <td class="whitespace-nowrap px-4 py-3 text-sm text-app-text-primary"><%= invoice.patient_name %></td>
             <td class="whitespace-nowrap px-4 py-3 text-sm font-mono text-app-text-secondary"><%= invoice.invoice_id %></td>
-            <td class="whitespace-nowrap px-4 py-3 text-right text-sm text-app-text-primary"><%= number_with_delimiter(invoice.total_amount.to_f, delimiter: ",") %></td>
+            <td class="whitespace-nowrap px-4 py-3 text-right text-sm text-app-text-primary"><%= number_with_delimiter(sprintf("%.2f", invoice.total_amount), delimiter: ",") %></td>
             <td class="whitespace-nowrap px-4 py-3 text-sm">
               <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium
                 <%= invoice.pending? ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' %>">

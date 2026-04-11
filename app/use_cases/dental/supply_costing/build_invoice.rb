@@ -18,7 +18,7 @@ module Dental
           )
 
           line_items.each do |item|
-            amount = (item[:quantity].to_f * item[:unit_price].to_f).round(2)
+            amount = (item[:quantity].to_d * item[:unit_price].to_d).round(2)
 
             invoice.line_items.create!(
               item_type: item[:item_type],

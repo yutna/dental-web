@@ -28,9 +28,9 @@ class DentalInvoice < ApplicationRecord
   end
 
   def recalculate_totals!
-    totals = line_items.reload.reduce({ amount: 0, copay: 0 }) do |acc, item|
-      acc[:amount] += item.amount.to_f
-      acc[:copay] += (item.copay_amount || 0).to_f
+    totals = line_items.reload.reduce({ amount: BigDecimal("0"), copay: BigDecimal("0") }) do |acc, item|
+      acc[:amount] += item.amount.to_d
+      acc[:copay] += (item.copay_amount || 0).to_d
       acc
     end
 

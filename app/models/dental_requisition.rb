@@ -95,6 +95,7 @@ class DentalRequisition < ApplicationRecord
     update!(
       status: "cancelled",
       cancel_reason: reason,
+      canceller_id: actor_id,
       cancelled_at: Time.current
     )
   end

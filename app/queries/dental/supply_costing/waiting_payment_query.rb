@@ -7,7 +7,7 @@ module Dental
         if status.present?
           scope = scope.where(payment_status: status)
         else
-          scope = scope.where(payment_status: %w[pending not-required])
+          scope = scope.where(payment_status: "pending")
         end
 
         scope

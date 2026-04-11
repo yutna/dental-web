@@ -16,9 +16,9 @@ module Dental
               unit: line_item.unit,
               source: "requisition",
               reference_type: "requisition",
-              reference_id: requisition.requisition_id,
+              reference_id: "#{requisition.requisition_id}:#{line_item.id}",
               actor_id: receiver_id,
-              note: "Stock-in from requisition #{requisition.requisition_id}"
+              note: "Stock-in from requisition #{requisition.requisition_id} item #{line_item.item_code}"
             )
             movements << result[:movement]
           end

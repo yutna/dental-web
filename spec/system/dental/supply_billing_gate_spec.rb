@@ -109,6 +109,7 @@ RSpec.describe "Dental supply, requisition, and billing gate", type: :system do
 
       expect(result[:requisition].reload.status).to eq("received")
       expect(result[:movements].size).to eq(requisition.line_items.count)
+      expect(result[:movements].map(&:id).uniq.size).to eq(requisition.line_items.count)
       result[:movements].each do |m|
         expect(m.direction).to eq("in")
         expect(m.source).to eq("requisition")
@@ -127,6 +128,7 @@ RSpec.describe "Dental supply, requisition, and billing gate", type: :system do
 
       expect(requisition.reload.status).to eq("cancelled")
       expect(requisition.cancel_reason).to eq("No longer needed")
+      expect(requisition.canceller_id).to eq("USER-A")
     end
   end
 

@@ -37,9 +37,11 @@ RSpec.describe Dental::SupplyCosting::ReceiveRequisition, type: :use_case do
         expect(movement.direction).to eq("in")
         expect(movement.source).to eq("requisition")
         expect(movement.reference_type).to eq("requisition")
-        expect(movement.reference_id).to eq(req.requisition_id)
+        expect(movement.reference_id).to start_with(req.requisition_id)
         expect(movement.movement_ref).to start_with("MOV-IN-")
       end
+
+      expect(result[:movements].map(&:id).uniq.size).to eq(2)
     end
 
     it "creates no movements for requisition with no line items" do
