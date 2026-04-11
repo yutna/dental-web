@@ -1,0 +1,29 @@
+<%# Stat card component
+  Locals: label:, value:, icon: (optional SVG), color: (optional: "default"|"info"|"success"|"warning"|"error"), trend: (optional) %>
+<% color ||= "default" %>
+<% icon ||= nil %>
+<% trend ||= nil %>
+<% color_classes = {
+  "default" => "text-app-text-primary",
+  "info"    => "text-text-semantic-info-primary",
+  "success" => "text-text-semantic-success-primary",
+  "warning" => "text-text-semantic-warning-primary",
+  "error"   => "text-text-semantic-error-primary"
+}.fetch(color, "text-app-text-primary") %>
+
+<article class="rounded-xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm transition hover:shadow-md">
+  <div class="flex items-start justify-between">
+    <div class="space-y-2">
+      <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= label %></p>
+      <p class="text-2xl font-bold <%= color_classes %>"><%= value %></p>
+      <% if trend %>
+        <p class="text-xs text-app-text-tertiary"><%= trend %></p>
+      <% end %>
+    </div>
+    <% if icon %>
+      <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-app-surface-secondary text-app-text-tertiary">
+        <%= icon.html_safe %>
+      </div>
+    <% end %>
+  </div>
+</article>

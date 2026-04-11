@@ -2,7 +2,6 @@
 en:
   admin:
     clinic_services:
-      back_to_admin: Back to admin
       confirm_delete: Delete this service?
       created: Service created successfully.
       description: Manage reference service data for admin-facing CRUD operations.
@@ -40,10 +39,8 @@ en:
       manage_services: Manage services
       title: Admin dashboard
       total_services: Total services
-      workspace_link: Back to workspace
     dental:
       audit_events:
-        back_to_dashboard: Back to dashboard
         description: Append-only audit trail for sensitive admin operations.
         filters:
           action: Filter by action
@@ -63,7 +60,6 @@ en:
         title: Dental admin audit events
       dashboard:
         audit_events: Audit events
-        back_to_admin: Back to admin
         breakdown:
           heading: Resource breakdown
           medication_profiles: Medication profiles
@@ -81,7 +77,6 @@ en:
         title: Dental admin dashboard
       procedure_items:
         already_inactive: Procedure item is already inactive.
-        back_to_dashboard: Back to dashboard
         change_request_approved: Price change request approved and applied.
         change_request_submitted: Price change request submitted for approval.
         created: Procedure item created successfully.
@@ -118,6 +113,9 @@ en:
     name: Dental Web
   auth:
     sessions:
+      brand_description: Streamline patient check-in, clinical charting, treatment
+        planning, and billing in one integrated workspace.
+      brand_headline: Modern dental practice management
       contract_mismatch: 'Contract mismatch: %{message}'
       demo_hint: Use your clinic system username and password to sign in.
       description: Sign in to access the clinical workspace.
@@ -134,7 +132,206 @@ en:
       submit: Sign in
       title: Sign in
       username_label: Username
+  components:
+    data_table:
+      no_data: No data available
+    filter_bar:
+      apply: Apply
+      reset: Reset
+      search_placeholder: Search…
+    sticky_save_bar:
+      save: Save
+      unsaved_changes: Unsaved changes
+    tooth_chart:
+      legend:
+        missing: Missing
+        planned: Planned
+        problematic: Problematic
+        selected: Selected
+        treated: Treated
+      selected_count:
+        one: "%{count} tooth selected"
+        other: "%{count} teeth selected"
   dental:
+    clinical:
+      chart:
+        actions:
+          back: Back
+          save: Save chart
+        add_entry: Add chart entry
+        description: Record dental charting findings per tooth.
+        detail_panel:
+          existing_records: Existing records
+          heading: Tooth detail
+          no_records: No records for this tooth yet.
+        form:
+          charting_code: Charting code
+          note: Note
+          surface: Surface
+          tooth: Tooth
+        heading: Dental Chart
+        saved: Chart form saved successfully.
+        table:
+          charting_code: Code
+          note: Note
+          surface: Surface
+          tooth: Tooth
+      history:
+        chart_count: Chart entries
+        drawer_summary: Tooth map and timeline
+        no_entries: No clinical history recorded yet.
+        patient: Patient
+        procedure_count: Procedures
+        timeline: Timeline
+        title: Cumulative Clinical History
+        tooth_code: Tooth
+        tooth_label: Tooth
+        tooth_map: Tooth Map
+        tooth_summary: Tooth summary
+        unknown: Unknown
+      images:
+        actions:
+          back: Back
+          save: Save images
+        add_image: Add image record
+        description: Record image references for this visit.
+        form:
+          file: Upload image
+          file_hint: 'Accepted formats: PNG, JPEG, WebP. Max 10MB.'
+          note: Note
+          reference: Reference
+          type: Image type
+        heading: Clinical Images
+        saved: Image form saved successfully.
+        table:
+          note: Note
+          reference: Reference
+          type: Type
+        types:
+          dicom: DICOM
+          photo: Photo
+          xray: X-Ray
+      medication:
+        actions:
+          back: Back
+          save: Save medication
+        add_medication: Add medication
+        allergy_alert:
+          heading: Known allergies
+        allergy_modal:
+          blocked_text: This order is blocked unless an authorized override is provided.
+          override_reason_label: Override reason
+          override_reason_placeholder: Provide clinical justification for override...
+          remove: Remove medication
+          request_override: Request override
+          title: Allergy conflict detected
+        allergy_warning:
+          description: This medication may conflict with known patient allergies.
+            Override requires a documented reason.
+          heading: Allergy conflict detected
+          override_label: Override reason
+        description: Prescribe medications with safety checks.
+        form:
+          medication_code: Medication code
+          note: Note
+          quantity: Quantity
+        heading: Medication Orders
+        high_alert:
+          confirm_label: I confirm this order after verification
+          description: This medication is classified as high-alert. Please double-check
+            indication and dose before confirming.
+          heading: High-alert medication
+        high_alert_modal:
+          cancel: Cancel
+          category_label: Category
+          category_value: High-alert
+          confirm: Confirm and continue
+          item_label: Item
+          patient_label: Patient
+          title: High-alert medication
+          warning_text: Confirm this order after double-checking indication and dose.
+        saved: Medication form saved successfully.
+        table:
+          medication_code: Medication
+          note: Note
+          quantity: Quantity
+      screening:
+        actions:
+          back: Back
+          save: Save screening
+          save_and_continue: Save and continue
+          save_draft: Save draft
+        allergy:
+          heading: Allergy notes
+          placeholder: Record known allergies (medications, latex, etc.)...
+        description: Record vital signs, chief complaint, and preliminary findings.
+        findings:
+          heading: Preliminary findings
+          placeholder: Record preliminary clinical findings...
+        heading: Screening Form
+        saved: Screening form saved successfully.
+        symptoms:
+          chief_complaint: Chief complaint
+          heading: Chief complaint
+          placeholder: Describe the patient's chief complaint...
+        vitals:
+          blood_pressure: Blood pressure
+          heading: Vital signs
+          height: Height
+          pulse: Pulse
+          temperature: Temperature
+          weight: Weight
+      tabs:
+        chart: Chart
+        history: History
+        images: Images
+        medication: Medication
+        screening: Screening
+        treatment: Treatment
+      treatment:
+        actions:
+          back: Back
+          save: Save treatment
+          void: Void
+        add_procedure: Add procedure
+        complete_no_charge: Complete (no charge)
+        complete_no_charge_confirm: Complete this visit without charge?
+        description: Build procedure plan with tooth/surface mapping.
+        form:
+          note: Note
+          procedure_code: Procedure code
+          quantity: Quantity
+          surface: Surface
+          tooth: Tooth
+        heading: Treatment Plan
+        notes_heading: Notes
+        notes_placeholder: Additional treatment notes...
+        refer_out: Refer out
+        refer_out_confirm: Refer this patient to another provider?
+        row_count_label: procedures
+        saved: Treatment form saved successfully.
+        search_procedure: Search procedure item
+        search_procedure_placeholder: Type to search procedure code or name...
+        send_cashier: Send to cashier
+        send_cashier_confirm: Send this visit to cashier for payment?
+        table:
+          actions: Actions
+          coverage: Coverage
+          note: Note
+          price: Price
+          procedure: Procedure
+          qty: Qty
+          surface: Surface
+          tooth: Tooth
+      workspace:
+        back_to_visit: Back to visit
+        dentist_label: Dentist
+        lock_version_label: Version
+        service_label: Service
+        stage_label: Stage
+        tabs_label: Clinical form tabs
+        title: Clinical — %{id}
+        visit_id_label: Visit ID
     enums:
       payment_status:
         not-required: No payment required
@@ -178,24 +375,94 @@ en:
       state_guard_violation: State guard violation
       unauthorized: Unauthorized
       validation_error: Validation error
+    home:
+      back_to_home: Back to home
+      cards:
+        admin:
+          description: Manage master data, procedure catalogs, and audit events.
+          title: Admin Console
+        workspace:
+          description: Access patient queue, appointments, and clinical workflows.
+          title: Clinical Workspace
+      description: Access clinical workspace, admin tools, and patient management.
+      heading: Dental Workflow Center
+      nav_label: Dental navigation
     labels:
       admin_dashboard_title: Dental admin dashboard
       namespace_title: Dental workflow
       visit_not_found: Visit not found
+    queue_actions:
+      check_in: Check in
+      ready_treatment: Ready for Tx
+      send_cashier: Send cashier
+      start_screening: Start screening
+      start_treatment: Start Tx
+      sync_payment: Sync payment
+    visits:
+      actions:
+        confirm_transition: Transition to %{stage}?
+        description: Available transitions for this visit.
+        heading: Stage actions
+        transition_to: "%{stage}"
+      back_to_queue: Back to queue
+      check_in_success: 'Check-in successful. Visit %{visit_id}, queue position #%{position}'
+      clinical:
+        description: Open the clinical workspace to fill forms for this visit.
+        heading: Clinical forms
+        open_forms: Open clinical forms
+      heading: Visit %{id}
+      sync_success: Synced %{count} appointments to queue
+      timeline:
+        count:
+          one: "%{count} event"
+          other: "%{count} events"
+        empty: No timeline entries yet.
+        heading: Timeline
+      title: Visit %{id}
+      transition_success: 'Transition completed: %{from} → %{to}'
   home:
     authenticated:
+      admin:
+        description: Configure clinic services, procedure catalogs, and review audit
+          logs.
+        heading: Administration
+      dental:
+        description: Visit management, clinical charting, and treatment workflow tools.
+        heading: Dental Module
       description: Access clinical workspace and manage your profile.
       heading: Welcome, %{user}
+      quick_access: Quick access
       workspace:
-        access_link: Open clinical workspace
         description: Access patient management, appointment scheduling, and clinical
           workflows.
-        heading: Clinical workspace
+        heading: Clinical Workspace
     permission_denied:
       description: You do not have access to the clinical workspace yet.
       help: Request workspace:read permission from your administrator.
       title: Workspace permission denied
     title: Dental Web
+  layouts:
+    sidebar:
+      nav:
+        admin_dashboard: Admin Dashboard
+        audit_log: Audit Log
+        clinic_services: Clinic Services
+        clinical: Clinical Forms
+        dashboard: Dashboard
+        dental: Dental
+        dental_admin: Dental Admin
+        procedure_items: Procedure Items
+        workspace: Workspace
+      nav_label: Main navigation
+      sections:
+        administration: Administration
+        clinical: Clinical
+      subtitle: Dental Workflow
+    topbar:
+      breadcrumb_label: Breadcrumb
+      sign_out: Sign out
+      toggle_sidebar: Toggle sidebar
+      toggle_theme: Toggle theme
   public_menu:
     language:
       english: EN
@@ -211,68 +478,36 @@ en:
       resolved_label: 'Active theme:'
       saved: Theme preference saved.
   workspace:
-    description: A 2026-ready dental app shell with server-led BFF orchestration and
-      data-dense UI patterns.
     filters:
-      all_statuses: All statuses
       all_sources: All sources
+      all_statuses: All statuses
       apply: Apply
       reset: Reset
       search_label: Search queue
       search_placeholder: Search by patient, HN, service, or dentist
-      source_label: Source
-      status_label: Status
     heading: Clinical Workspace
-    profile:
-      language:
-        english: EN
-        label: Language
-        thai: TH
-      open_menu: Profile menu
-      theme:
-        label: Theme
-        modes:
-          dark: Dark
-          light: Light
-          system: System
-        resolved_label: 'Active theme:'
-        saved: Theme preference saved.
     queue:
-      description: Server-side filtering keeps the canonical payload stable regardless
-        of provider mode.
-      create_check_in: Create Check-in
-      heading: Appointment queue (data grid baseline)
+      create_check_in: Walk-in Check-in
+      description: Real-time patient queue with automated status tracking and polling.
+      heading: Appointment Queue
       sync_appointments: Sync Appointments
-    shell:
-      nav:
-        overview: Overview
-        queue: Queue
-      navigation_label: Workspace navigation
-      sign_out: Sign out
-      subtitle: BFF-first operational shell
-    side_context:
-      description: This panel is reserved for upcoming shifts and announcements.
-      heading: Side context
-      item_one: Shift handoff digest
-      item_three: Staff notices
-      item_two: Pending confirmation queue
+    sources:
+      appointment_sync: Appointment sync
+      referral: Referral
+      walk_in: Walk-in
     statuses:
       completed: Completed
       in_progress: In progress
       ready: Ready
       scheduled: Scheduled
       waiting_payment: Waiting payment
-    sources:
-      appointment_sync: Appointment sync
-      referral: Referral
-      walk_in: Walk-in
     summary:
-      completed: Completed
       in_progress: In progress
       ready: Ready
       total: Total visits
       waiting_payment: Waiting payment
     table:
+      actions_col: Actions
       appointment_id: Appointment
       dentist: Dentist
       empty_description: Try broadening your search or reset the status filter.
@@ -284,6 +519,9 @@ en:
       patient: Patient
       retry: Retry
       service: Service
+      showing_count:
+        one: Showing %{count} appointment
+        other: Showing %{count} appointments
       source: Source
       start_time: Start
       status: Status

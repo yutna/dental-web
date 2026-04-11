@@ -257,16 +257,16 @@ Keep this block updated during execution.
 BOARD_MODE: SINGLE_FILE
 REQUIREMENTS_MUTABILITY: FROZEN
 
-CURRENT_GROUP: G03
+CURRENT_GROUP: G04
 GROUP_STATUS: WAITING_UAT
 NEXT_TICKET: NONE
 
-LAST_COMPLETED_TICKET: T03.10
-LAST_COMMIT_SHA: e54b915
+LAST_COMPLETED_TICKET: T04.08
+LAST_COMMIT_SHA: 42f6755
 LAST_CHECKS_PASSED: rubocop, rspec, bin/ci
-LAST_UPDATED_UTC: 2026-04-10T17:03:01Z
+LAST_UPDATED_UTC: 2026-04-10T17:41:34Z
 
-ACTIVE_PR_URL: https://github.com/yutna/dental-web/pull/14
+ACTIVE_PR_URL: https://github.com/yutna/dental-web/pull/15
 ACTIVE_PR_STATUS: OPEN
 ACTIVE_CI_STATUS: RUNNING
 CI_RETRY_COUNT: 0
@@ -275,8 +275,8 @@ CI_RETRY_LIMIT: 5
 UAT_GATE_STATUS:
 - G01: APPROVED
 - G02: APPROVED
-- G03: READY
-- G04: PENDING
+- G03: APPROVED
+- G04: READY
 - G05: PENDING
 - G06: PENDING
 - G07: PENDING
@@ -388,14 +388,14 @@ G03
 - T03.10: DONE
 
 G04
-- T04.01: TODO
-- T04.02: TODO
-- T04.03: TODO
-- T04.04: TODO
-- T04.05: TODO
-- T04.06: TODO
-- T04.07: TODO
-- T04.08: TODO
+- T04.01: DONE
+- T04.02: DONE
+- T04.03: DONE
+- T04.04: DONE
+- T04.05: DONE
+- T04.06: DONE
+- T04.07: DONE
+- T04.08: DONE
 
 G05
 - T05.01: TODO
@@ -576,6 +576,33 @@ Current run entries:
 2026-04-10T17:01:35Z | CHECKS | G03 | T03.10 | OK | bin/ci passed
 2026-04-10T17:01:38Z | HOLD | G03 | T03.10 | OK | group set to WAITING_UAT and gate READY
 2026-04-10T17:03:01Z | PR_OPEN | G03 | T03.10 | OK | pr=https://github.com/yutna/dental-web/pull/14 ci=running
+2026-04-10T17:19:12Z | UAT_APPROVE | G03 | T03.10 | OK | user approved G03
+2026-04-10T17:19:12Z | RESUME | G04 | T04.01 | OK | move to next group per handoff contract
+2026-04-10T17:22:40Z | CHECKS | G04 | T04.01 | OK | rubocop and targeted model specs passed
+2026-04-10T17:22:55Z | COMMIT | G04 | T04.01 | OK | sha=6f989d2
+2026-04-10T17:23:05Z | RESUME | G04 | T04.02 | OK | runtime block updated
+2026-04-10T17:24:40Z | CHECKS | G04 | T04.02 | OK | rubocop and targeted clinical request/routing specs passed
+2026-04-10T17:24:55Z | COMMIT | G04 | T04.02 | OK | sha=5ff1be0
+2026-04-10T17:25:02Z | RESUME | G04 | T04.03 | OK | runtime block updated
+2026-04-10T17:26:05Z | CHECKS | G04 | T04.03 | OK | rubocop and targeted treatment request/routing specs passed
+2026-04-10T17:26:10Z | COMMIT | G04 | T04.03 | OK | sha=c479253
+2026-04-10T17:26:15Z | RESUME | G04 | T04.04 | OK | runtime block updated
+2026-04-10T17:29:04Z | CHECKS | G04 | T04.04 | OK | rubocop and targeted medication request/routing specs passed
+2026-04-10T17:29:19Z | COMMIT | G04 | T04.04 | OK | sha=0d1e65c
+2026-04-10T17:29:19Z | RESUME | G04 | T04.05 | OK | runtime block updated
+2026-04-10T17:32:05Z | CHECKS | G04 | T04.05 | OK | rubocop and targeted medication allergy specs passed
+2026-04-10T17:32:05Z | COMMIT | G04 | T04.05 | OK | sha=1e153c5
+2026-04-10T17:32:05Z | RESUME | G04 | T04.06 | OK | runtime block updated
+2026-04-10T17:34:33Z | CHECKS | G04 | T04.06 | OK | rubocop and targeted chart/image request specs passed
+2026-04-10T17:34:33Z | COMMIT | G04 | T04.06 | OK | sha=d83b2b7
+2026-04-10T17:34:33Z | RESUME | G04 | T04.07 | OK | runtime block updated
+2026-04-10T17:37:22Z | CHECKS | G04 | T04.07 | OK | rubocop and targeted history/chart/image request specs passed
+2026-04-10T17:37:22Z | COMMIT | G04 | T04.07 | OK | sha=d6477c2
+2026-04-10T17:37:22Z | RESUME | G04 | T04.08 | OK | runtime block updated
+2026-04-10T17:39:27Z | CHECKS | G04 | T04.08 | OK | rspec non-system, clinical system spec, and bin/ci passed
+2026-04-10T17:39:27Z | COMMIT | G04 | T04.08 | OK | sha=42f6755
+2026-04-10T17:39:27Z | GATE | G04 | T04.08 | OK | group set to WAITING_UAT and READY
+2026-04-10T17:41:34Z | PR_OPEN | G04 | T04.08 | OK | pr=https://github.com/yutna/dental-web/pull/15 ci=running
 ```
 
 ### Group Handoff Contract

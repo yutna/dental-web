@@ -1,0 +1,17 @@
+<%# Page header component
+  Locals: title:, description: (optional), actions: (optional block via yield) %>
+<% description ||= nil %>
+
+<div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+  <div class="min-w-0">
+    <h1 class="text-2xl font-bold tracking-tight text-app-text-primary"><%= title %></h1>
+    <% if description %>
+      <p class="mt-1 text-sm text-app-text-secondary"><%= description %></p>
+    <% end %>
+  </div>
+  <% if block_given? %>
+    <div class="flex shrink-0 flex-wrap items-center gap-2">
+      <%= yield %>
+    </div>
+  <% end %>
+</div>

@@ -15,7 +15,7 @@ RSpec.describe "Localization", type: :request do
     follow_redirect!
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Clinical Workspace")
-    expect(response.body).to include("Appointment queue")
+    expect(response.body).to include("Appointment Queue")
     expect(response.body).not_to include("Admin dashboard")
   end
 

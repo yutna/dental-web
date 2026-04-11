@@ -1,4 +1,4 @@
-<div class="overflow-x-auto rounded-xl border border-app-border-primary">
+<div class="overflow-x-auto" data-controller="data-table">
   <% if result[:error].present? %>
     <div class="border-b border-border-semantic-error-primary bg-bg-semantic-error-default px-4 py-3" role="alert">
       <p class="text-sm font-semibold text-text-semantic-error-primary"><%= t("workspace.table.error_title") %></p>
@@ -14,45 +14,89 @@
   <table class="min-w-full divide-y divide-app-border-primary text-sm">
     <thead class="bg-app-surface-secondary">
       <tr>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.appointment_id") %></th>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.patient") %></th>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.mrn") %></th>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.service") %></th>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.dentist") %></th>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.start_time") %></th>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.source") %></th>
-        <th scope="col" class="whitespace-nowrap px-3 py-2 text-left font-semibold text-app-text-secondary"><%= t("workspace.table.status") %></th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary">
+          <button type="button" class="group inline-flex items-center gap-1" data-action="data-table#sort" data-data-table-key-param="appointment_id" data-data-table-dir-param="asc">
+            <%= t("workspace.table.appointment_id") %>
+            <svg class="h-3.5 w-3.5 text-app-text-tertiary/50 group-hover:text-app-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"/></svg>
+          </button>
+        </th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary">
+          <button type="button" class="group inline-flex items-center gap-1" data-action="data-table#sort" data-data-table-key-param="patient" data-data-table-dir-param="asc">
+            <%= t("workspace.table.patient") %>
+            <svg class="h-3.5 w-3.5 text-app-text-tertiary/50 group-hover:text-app-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"/></svg>
+          </button>
+        </th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("workspace.table.mrn") %></th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("workspace.table.service") %></th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("workspace.table.dentist") %></th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary">
+          <button type="button" class="group inline-flex items-center gap-1" data-action="data-table#sort" data-data-table-key-param="start_time" data-data-table-dir-param="asc">
+            <%= t("workspace.table.start_time") %>
+            <svg class="h-3.5 w-3.5 text-app-text-tertiary/50 group-hover:text-app-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"/></svg>
+          </button>
+        </th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("workspace.table.source") %></th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("workspace.table.status") %></th>
+        <th scope="col" class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("workspace.table.actions_col") %></th>
       </tr>
     </thead>
     <tbody class="divide-y divide-app-border-primary bg-app-surface-primary">
       <% if result[:rows].empty? %>
         <tr>
-          <td colspan="8" class="px-4 py-8">
-            <div class="mx-auto max-w-xl text-center">
-              <p class="text-sm font-semibold text-app-text-primary"><%= t("workspace.table.empty_title") %></p>
-              <p class="mt-1 text-sm text-app-text-tertiary"><%= t("workspace.table.empty_description") %></p>
-              <div class="mt-3 flex flex-wrap items-center justify-center gap-2">
-                <%= link_to t("workspace.queue.create_check_in"), dental_root_path, class: "inline-flex items-center rounded-md bg-app-brand-primary px-3 py-2 text-xs font-semibold text-app-brand-inverse transition hover:bg-app-brand-active" %>
-                <%= link_to t("workspace.queue.sync_appointments"), workspace_path(search: result.dig(:filters, :search), status: result.dig(:filters, :status), source: result.dig(:filters, :source)), class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-xs font-semibold text-app-text-primary transition hover:bg-app-surface-primary", data: { turbo_frame: "appointments_grid" } %>
-                <%= link_to t("workspace.filters.reset"), workspace_path, class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-xs font-semibold text-app-text-primary transition hover:bg-app-surface-primary" %>
+          <td colspan="9" class="px-4 py-10">
+            <%= render "components/empty_state",
+              title: t("workspace.table.empty_title"),
+              description: t("workspace.table.empty_description") do %>
+              <div class="flex flex-wrap items-center justify-center gap-2">
+                <%= link_to t("workspace.queue.create_check_in"), dental_root_path, class: "inline-flex items-center rounded-lg bg-app-brand-primary px-3 py-2 text-xs font-semibold text-app-brand-inverse transition hover:bg-app-brand-active" %>
+                <%= link_to t("workspace.queue.sync_appointments"), workspace_path(search: result.dig(:filters, :search), status: result.dig(:filters, :status), source: result.dig(:filters, :source)), class: "inline-flex items-center rounded-lg border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-xs font-semibold text-app-text-primary transition hover:bg-app-surface-primary", data: { turbo_frame: "appointments_grid" } %>
+                <%= link_to t("workspace.filters.reset"), workspace_path, class: "inline-flex items-center rounded-lg border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-xs font-semibold text-app-text-primary transition hover:bg-app-surface-primary" %>
               </div>
-            </div>
+            <% end %>
           </td>
         </tr>
       <% else %>
         <% result[:rows].each do |row| %>
-          <tr class="transition hover:bg-app-surface-secondary">
-            <td class="whitespace-nowrap px-3 py-2 font-medium text-app-text-primary"><%= row[:id] %></td>
-            <td class="whitespace-nowrap px-3 py-2 text-app-text-primary"><%= row[:patient_name] %></td>
-            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:mrn] %></td>
-            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:service] %></td>
-            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:dentist] %></td>
-            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= row[:starts_at] %></td>
-            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= t("workspace.sources.#{row[:source]}") %></td>
-            <td class="whitespace-nowrap px-3 py-2 text-app-text-secondary"><%= t("workspace.statuses.#{row[:status]}") %></td>
+          <tr class="transition hover:bg-app-surface-secondary" data-data-table-target="row">
+            <td class="whitespace-nowrap px-4 py-3 font-medium text-app-text-primary">
+              <%= link_to row[:id], dental_visit_path(id: row[:id]), class: "text-app-brand-primary underline decoration-app-brand-primary/30 transition hover:decoration-app-brand-primary", data: { turbo_frame: "_top", turbo_prefetch: false } %>
+            </td>
+            <td class="whitespace-nowrap px-4 py-3 font-medium text-app-text-primary"><%= row[:patient_name] %></td>
+            <td class="whitespace-nowrap px-4 py-3 tabular-nums text-app-text-secondary"><%= row[:mrn] %></td>
+            <td class="whitespace-nowrap px-4 py-3 text-app-text-secondary"><%= row[:service] %></td>
+            <td class="whitespace-nowrap px-4 py-3 text-app-text-secondary"><%= row[:dentist] %></td>
+            <td class="whitespace-nowrap px-4 py-3 tabular-nums text-app-text-secondary"><%= row[:starts_at] %></td>
+            <td class="whitespace-nowrap px-4 py-3">
+              <span class="inline-flex items-center rounded-md bg-app-surface-secondary px-2 py-0.5 text-xs font-medium text-app-text-secondary"><%= t("workspace.sources.#{row[:source]}") %></span>
+            </td>
+            <td class="whitespace-nowrap px-4 py-3">
+              <span class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold <%= visit_stage_classes(row[:status]) %>">
+                <%= t("workspace.statuses.#{row[:status]}") %>
+              </span>
+            </td>
+            <td class="whitespace-nowrap px-4 py-3">
+              <% action = queue_row_action(row[:status]) %>
+              <% if action %>
+                <% if action[:transition] %>
+                  <%= link_to t(action[:label]), dental_visit_path(id: row[:id]),
+                    class: "inline-flex items-center rounded-md bg-app-brand-primary px-3 py-1.5 text-xs font-semibold text-app-brand-inverse transition hover:bg-app-brand-active",
+                    data: { turbo_frame: "_top", turbo_prefetch: false } %>
+                <% else %>
+                  <%= link_to t(action[:label]), dental_visit_path(id: row[:id]),
+                    class: "inline-flex items-center rounded-md border border-app-border-primary bg-app-surface-secondary px-3 py-1.5 text-xs font-semibold text-app-text-primary transition hover:bg-app-surface-primary",
+                    data: { turbo_frame: "_top", turbo_prefetch: false } %>
+                <% end %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       <% end %>
     </tbody>
   </table>
+
+  <% if result[:rows].any? %>
+    <div class="border-t border-app-border-primary bg-app-surface-secondary/50 px-4 py-2">
+      <p class="text-xs text-app-text-tertiary"><%= t("workspace.table.showing_count", count: result[:rows].size) %></p>
+    </div>
+  <% end %>
 </div>

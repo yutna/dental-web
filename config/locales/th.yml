@@ -2,7 +2,6 @@
 th:
   admin:
     clinic_services:
-      back_to_admin: กลับหน้าแอดมิน
       confirm_delete: ลบบริการนี้หรือไม่?
       created: สร้างบริการสำเร็จ
       description: จัดการข้อมูลบริการอ้างอิงสำหรับงาน CRUD ฝั่งผู้ดูแลระบบ
@@ -40,10 +39,8 @@ th:
       manage_services: จัดการบริการ
       title: แดชบอร์ดผู้ดูแลระบบ
       total_services: จำนวนบริการทั้งหมด
-      workspace_link: กลับพื้นที่ทำงาน
     dental:
       audit_events:
-        back_to_dashboard: กลับแดชบอร์ด
         description: บันทึกเหตุการณ์แบบ append-only สำหรับงานผู้ดูแลระบบที่มีความอ่อนไหว
         filters:
           action: กรองตาม action
@@ -63,7 +60,6 @@ th:
         title: บันทึกเหตุการณ์ผู้ดูแลระบบทันตกรรม
       dashboard:
         audit_events: บันทึกเหตุการณ์ตรวจสอบ
-        back_to_admin: กลับหน้าแอดมิน
         breakdown:
           heading: สรุปรายการทรัพยากร
           medication_profiles: โปรไฟล์ยา
@@ -81,7 +77,6 @@ th:
         title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
       procedure_items:
         already_inactive: รายการหัตถการนี้ถูกปิดใช้งานอยู่แล้ว
-        back_to_dashboard: กลับแดชบอร์ด
         change_request_approved: อนุมัติคำขอเปลี่ยนราคาและบันทึกเรียบร้อยแล้ว
         change_request_submitted: ส่งคำขอเปลี่ยนราคาเพื่อรออนุมัติเรียบร้อยแล้ว
         created: สร้างรายการหัตถการสำเร็จ
@@ -117,6 +112,9 @@ th:
     name: เดนทัล เว็บ
   auth:
     sessions:
+      brand_description: จัดการลงทะเบียนผู้ป่วย บันทึกข้อมูลคลินิก วางแผนการรักษา
+        และเรียกเก็บค่ารักษาพยาบาลในระบบเดียว
+      brand_headline: ระบบบริหารจัดการคลินิกทันตกรรมยุคใหม่
       contract_mismatch: 'โครงสร้างสัญญาข้อมูลไม่ตรงกัน: %{message}'
       demo_hint: ใช้ชื่อผู้ใช้และรหัสผ่านของระบบคลินิกในการลงชื่อเข้าใช้
       description: ลงชื่อเข้าใช้เพื่อเข้าสู่พื้นที่ทำงานคลินิก
@@ -132,7 +130,204 @@ th:
       submit: ลงชื่อเข้าใช้
       title: ลงชื่อเข้าใช้
       username_label: ชื่อผู้ใช้
+  components:
+    data_table:
+      no_data: ไม่มีข้อมูล
+    filter_bar:
+      apply: ค้นหา
+      reset: รีเซ็ต
+      search_placeholder: ค้นหา…
+    sticky_save_bar:
+      save: บันทึก
+      unsaved_changes: มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก
+    tooth_chart:
+      legend:
+        missing: สูญหาย
+        planned: วางแผน
+        problematic: มีปัญหา
+        selected: เลือกแล้ว
+        treated: รักษาแล้ว
+      selected_count:
+        one: เลือก %{count} ซี่
+        other: เลือก %{count} ซี่
   dental:
+    clinical:
+      chart:
+        actions:
+          back: กลับ
+          save: บันทึกชาร์ต
+        add_entry: เพิ่มรายการชาร์ต
+        description: บันทึกผลตรวจชาร์ตทันตกรรมรายซี่
+        detail_panel:
+          existing_records: รายการที่บันทึกไว้
+          heading: รายละเอียดซี่ฟัน
+          no_records: ยังไม่มีรายการสำหรับซี่ฟันนี้
+        form:
+          charting_code: รหัสชาร์ต
+          note: หมายเหตุ
+          surface: ผิวฟัน
+          tooth: ซี่ฟัน
+        heading: ชาร์ตทันตกรรม
+        saved: บันทึกชาร์ตสำเร็จ
+        table:
+          charting_code: รหัส
+          note: หมายเหตุ
+          surface: ผิวฟัน
+          tooth: ซี่ฟัน
+      history:
+        chart_count: รายการชาร์ต
+        drawer_summary: แผนผังฟันและไทม์ไลน์
+        no_entries: ยังไม่มีประวัติคลินิกที่บันทึกไว้
+        patient: ผู้ป่วย
+        procedure_count: หัตถการ
+        timeline: ไทม์ไลน์
+        title: ประวัติคลินิกสะสม
+        tooth_code: ซี่ฟัน
+        tooth_label: ซี่ฟัน
+        tooth_map: แผนผังฟัน
+        tooth_summary: สรุปซี่ฟัน
+        unknown: ไม่ทราบ
+      images:
+        actions:
+          back: กลับ
+          save: บันทึกภาพ
+        add_image: เพิ่มบันทึกภาพ
+        description: บันทึกข้อมูลอ้างอิงภาพสำหรับการเข้ารับบริการนี้
+        form:
+          file: อัปโหลดภาพ
+          file_hint: 'รูปแบบที่รับ: PNG, JPEG, WebP ขนาดไม่เกิน 10MB'
+          note: หมายเหตุ
+          reference: อ้างอิง
+          type: ประเภทภาพ
+        heading: ภาพทางคลินิก
+        saved: บันทึกภาพสำเร็จ
+        table:
+          note: หมายเหตุ
+          reference: อ้างอิง
+          type: ประเภท
+        types:
+          dicom: DICOM
+          photo: ภาพถ่าย
+          xray: ภาพเอกซเรย์
+      medication:
+        actions:
+          back: กลับ
+          save: บันทึกยา
+        add_medication: เพิ่มยา
+        allergy_alert:
+          heading: ประวัติแพ้ยา
+        allergy_modal:
+          blocked_text: คำสั่งนี้ถูกบล็อก เว้นแต่จะมีการ override โดยผู้มีอำนาจ
+          override_reason_label: เหตุผลการ override
+          override_reason_placeholder: ระบุเหตุผลทางคลินิกสำหรับการ override...
+          remove: ลบยาออก
+          request_override: ขอ override
+          title: ตรวจพบข้อขัดแย้งกับประวัติแพ้ยา
+        allergy_warning:
+          description: ยาชนิดนี้อาจขัดแย้งกับประวัติแพ้ยาของผู้ป่วย การ override ต้องมีเหตุผลประกอบ
+          heading: ตรวจพบข้อขัดแย้งกับประวัติแพ้ยา
+          override_label: เหตุผลในการ override
+        description: สั่งจ่ายยาพร้อมตรวจสอบความปลอดภัย
+        form:
+          medication_code: รหัสยา
+          note: หมายเหตุ
+          quantity: จำนวน
+        heading: คำสั่งจ่ายยา
+        high_alert:
+          confirm_label: ข้าพเจ้ายืนยันคำสั่งนี้หลังตรวจสอบแล้ว
+          description: ยาชนิดนี้จัดอยู่ในกลุ่ม High-Alert กรุณาตรวจสอบข้อบ่งใช้และขนาดยาก่อนยืนยัน
+          heading: ยา High-Alert
+        high_alert_modal:
+          cancel: ยกเลิก
+          category_label: ประเภท
+          category_value: High-Alert
+          confirm: ยืนยันและดำเนินการต่อ
+          item_label: รายการ
+          patient_label: ผู้ป่วย
+          title: ยา High-Alert
+          warning_text: ยืนยันคำสั่งนี้หลังตรวจสอบข้อบ่งใช้และขนาดยาแล้ว
+        saved: บันทึกแบบฟอร์มยาสำเร็จ
+        table:
+          medication_code: ยา
+          note: หมายเหตุ
+          quantity: จำนวน
+      screening:
+        actions:
+          back: กลับ
+          save: บันทึกคัดกรอง
+          save_and_continue: บันทึกและดำเนินการต่อ
+          save_draft: บันทึกร่าง
+        allergy:
+          heading: หมายเหตุการแพ้
+          placeholder: บันทึกข้อมูลการแพ้ที่ทราบ (ยา, ลาเท็กซ์ ฯลฯ)...
+        description: บันทึกสัญญาณชีพ อาการหลัก และผลการตรวจเบื้องต้น
+        findings:
+          heading: ผลการตรวจเบื้องต้น
+          placeholder: บันทึกผลการตรวจทางคลินิกเบื้องต้น...
+        heading: แบบฟอร์มคัดกรอง
+        saved: บันทึกแบบฟอร์มคัดกรองสำเร็จ
+        symptoms:
+          chief_complaint: อาการหลัก
+          heading: อาการหลัก
+          placeholder: อธิบายอาการหลักของผู้ป่วย...
+        vitals:
+          blood_pressure: ความดันโลหิต
+          heading: สัญญาณชีพ
+          height: ส่วนสูง
+          pulse: ชีพจร
+          temperature: อุณหภูมิ
+          weight: น้ำหนัก
+      tabs:
+        chart: ชาร์ต
+        history: ประวัติ
+        images: ภาพ
+        medication: ยา
+        screening: คัดกรอง
+        treatment: การรักษา
+      treatment:
+        actions:
+          back: กลับ
+          save: บันทึกการรักษา
+          void: ยกเลิก
+        add_procedure: เพิ่มหัตถการ
+        complete_no_charge: เสร็จสิ้น (ไม่มีค่าใช้จ่าย)
+        complete_no_charge_confirm: ต้องการเสร็จสิ้นการเข้ารับบริการนี้โดยไม่มีค่าใช้จ่ายหรือไม่?
+        description: สร้างแผนหัตถการพร้อมการแม็ปซี่ฟัน/ผิวฟัน
+        form:
+          note: หมายเหตุ
+          procedure_code: รหัสหัตถการ
+          quantity: จำนวน
+          surface: ผิวฟัน
+          tooth: ซี่ฟัน
+        heading: แผนการรักษา
+        notes_heading: หมายเหตุ
+        notes_placeholder: หมายเหตุเพิ่มเติมเกี่ยวกับการรักษา...
+        refer_out: ส่งต่อผู้ป่วย
+        refer_out_confirm: ต้องการส่งต่อผู้ป่วยนี้ไปยังผู้ให้บริการอื่นหรือไม่?
+        row_count_label: หัตถการ
+        saved: บันทึกแบบฟอร์มการรักษาสำเร็จ
+        search_procedure: ค้นหาหัตถการ
+        search_procedure_placeholder: พิมพ์เพื่อค้นหารหัสหรือชื่อหัตถการ...
+        send_cashier: ส่งแคชเชียร์
+        send_cashier_confirm: ต้องการส่งการเข้ารับบริการนี้เข้าแคชเชียร์เพื่อชำระเงินหรือไม่?
+        table:
+          actions: จัดการ
+          coverage: สิทธิ์
+          note: หมายเหตุ
+          price: ราคา
+          procedure: หัตถการ
+          qty: จำนวน
+          surface: ผิวฟัน
+          tooth: ซี่ฟัน
+      workspace:
+        back_to_visit: กลับหน้าการเข้ารับบริการ
+        dentist_label: ทันตแพทย์
+        lock_version_label: เวอร์ชัน
+        service_label: บริการ
+        stage_label: สถานะ
+        tabs_label: แท็บแบบฟอร์มคลินิก
+        title: คลินิก — %{id}
+        visit_id_label: รหัสการเข้ารับบริการ
     enums:
       payment_status:
         not-required: ไม่ต้องชำระเงิน
@@ -176,16 +371,63 @@ th:
       state_guard_violation: ไม่ผ่านเงื่อนไขการเปลี่ยนสถานะ
       unauthorized: ต้องลงชื่อเข้าใช้
       validation_error: ข้อมูลไม่ถูกต้อง
+    home:
+      back_to_home: กลับหน้าหลัก
+      cards:
+        admin:
+          description: จัดการข้อมูลหลัก รายการหัตถการ และบันทึกเหตุการณ์
+          title: คอนโซลผู้ดูแลระบบ
+        workspace:
+          description: เข้าถึงคิวผู้ป่วย นัดหมาย และเวิร์กโฟลว์คลินิก
+          title: พื้นที่ทำงานคลินิก
+      description: เข้าถึงพื้นที่ทำงานคลินิก เครื่องมือผู้ดูแลระบบ และการจัดการผู้ป่วย
+      heading: ศูนย์เวิร์กโฟลว์ทันตกรรม
+      nav_label: เมนูนำทางทันตกรรม
     labels:
       admin_dashboard_title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
       namespace_title: เวิร์กโฟลว์ทันตกรรม
       visit_not_found: ไม่พบข้อมูลการเข้ารับบริการ
+    queue_actions:
+      check_in: เช็กอิน
+      ready_treatment: พร้อมรักษา
+      send_cashier: ส่งแคชเชียร์
+      start_screening: เริ่มคัดกรอง
+      start_treatment: เริ่มรักษา
+      sync_payment: ซิงก์ชำระเงิน
+    visits:
+      actions:
+        confirm_transition: เปลี่ยนสถานะเป็น %{stage} ?
+        description: สถานะถัดไปที่สามารถทำได้
+        heading: การดำเนินการ
+        transition_to: "%{stage}"
+      back_to_queue: กลับไปคิว
+      check_in_success: 'เช็กอินสำเร็จ เลขที่ %{visit_id} ลำดับคิว #%{position}'
+      clinical:
+        description: เปิดพื้นที่ทำงานคลินิกเพื่อกรอกแบบฟอร์มสำหรับการเข้ารับบริการนี้
+        heading: แบบฟอร์มคลินิก
+        open_forms: เปิดแบบฟอร์มคลินิก
+      heading: การเข้ารับบริการ %{id}
+      sync_success: ซิงก์นัดหมาย %{count} รายการเข้าคิว
+      timeline:
+        count:
+          one: "%{count} เหตุการณ์"
+          other: "%{count} เหตุการณ์"
+        empty: ยังไม่มีรายการไทม์ไลน์
+        heading: ไทม์ไลน์
+      title: การเข้ารับบริการ %{id}
+      transition_success: 'เปลี่ยนสถานะสำเร็จ: %{from} → %{to}'
   home:
     authenticated:
+      admin:
+        description: ตั้งค่าบริการคลินิก แคตตาล็อกหัตถการ และตรวจสอบบันทึกกิจกรรม
+        heading: การบริหารจัดการ
+      dental:
+        description: จัดการการเข้ารับบริการ บันทึกข้อมูลคลินิก และเครื่องมือการรักษา
+        heading: โมดูลทันตกรรม
       description: เข้าถึงพื้นที่ทำงานคลินิกและจัดการโปรไฟล์ของคุณ
       heading: ยินดีต้อนรับ %{user}
+      quick_access: ทางลัด
       workspace:
-        access_link: เปิดพื้นที่ทำงานคลินิก
         description: จัดการข้อมูลผู้ป่วย ตั้งตารางนัด และการไหลงานทางคลินิก
         heading: พื้นที่ทำงานคลินิก
     permission_denied:
@@ -193,6 +435,28 @@ th:
       help: กรุณาติดต่อผู้ดูแลระบบเพื่อขอสิทธิ์ workspace:read
       title: ไม่ได้รับสิทธิ์เข้าใช้งานพื้นที่ทำงาน
     title: เดนทัล เว็บ
+  layouts:
+    sidebar:
+      nav:
+        admin_dashboard: แดชบอร์ดผู้ดูแล
+        audit_log: บันทึกตรวจสอบ
+        clinic_services: บริการคลินิก
+        clinical: แบบฟอร์มคลินิก
+        dashboard: แดชบอร์ด
+        dental: ทันตกรรม
+        dental_admin: ผู้ดูแลทันตกรรม
+        procedure_items: รายการหัตถการ
+        workspace: พื้นที่ทำงาน
+      nav_label: เมนูหลัก
+      sections:
+        administration: การจัดการ
+        clinical: คลินิก
+      subtitle: ระบบทันตกรรม
+    topbar:
+      breadcrumb_label: เส้นทาง
+      sign_out: ออกจากระบบ
+      toggle_sidebar: เปิด/ปิดเมนูด้านข้าง
+      toggle_theme: เปลี่ยนธีม
   public_menu:
     language:
       english: EN
@@ -208,68 +472,36 @@ th:
       resolved_label: 'ธีมที่ใช้งาน:'
       saved: บันทึกการตั้งค่าธีมแล้ว
   workspace:
-    description: โครงแอปทันตกรรมปี 2026+ ที่ใช้ BFF ฝั่งเซิร์ฟเวอร์เป็นแกนและออกแบบ
-      UI ให้รองรับข้อมูลหนาแน่น
     filters:
-      all_statuses: ทุกสถานะ
       all_sources: ทุกแหล่งที่มา
+      all_statuses: ทุกสถานะ
       apply: ใช้งาน
       reset: ล้างค่า
       search_label: ค้นหาคิว
       search_placeholder: ค้นหาด้วยชื่อผู้ป่วย HN บริการ หรือทันตแพทย์
-      source_label: แหล่งที่มา
-      status_label: สถานะ
     heading: พื้นที่ทำงานคลินิก
-    profile:
-      language:
-        english: EN
-        label: ภาษา
-        thai: TH
-      open_menu: เมนูโปรไฟล์
-      theme:
-        label: ธีม
-        modes:
-          dark: มืด
-          light: สว่าง
-          system: ตามระบบ
-        resolved_label: 'ธีมที่ใช้งาน:'
-        saved: บันทึกการตั้งค่าธีมแล้ว
     queue:
-      description: ใช้การกรองฝั่งเซิร์ฟเวอร์เพื่อคง canonical payload ให้เหมือนเดิมทุก
-        provider mode
-      create_check_in: สร้างเช็คอิน
-      heading: คิวนัดหมาย (พื้นฐาน data grid)
+      create_check_in: เช็กอิน Walk-in
+      description: คิวผู้ป่วยแบบเรียลไทม์ พร้อมติดตามสถานะอัตโนมัติ
+      heading: คิวนัดหมาย
       sync_appointments: ซิงก์นัดหมาย
-    shell:
-      nav:
-        overview: ภาพรวม
-        queue: คิวนัดหมาย
-      navigation_label: เมนูนำทางพื้นที่ทำงาน
-      sign_out: ออกจากระบบ
-      subtitle: โครงปฏิบัติการแบบ BFF-first
-    side_context:
-      description: พื้นที่นี้สงวนไว้สำหรับสรุปผลัดงานและประกาศภายใน
-      heading: ข้อมูลประกอบ
-      item_one: สรุปส่งเวร
-      item_three: ประกาศทีมงาน
-      item_two: คิวยืนยันที่รอดำเนินการ
+    sources:
+      appointment_sync: ซิงก์นัดหมาย
+      referral: ส่งต่อ
+      walk_in: ผู้ป่วย walk-in
     statuses:
       completed: เสร็จสิ้น
       in_progress: กำลังให้บริการ
       ready: พร้อมให้บริการ
       scheduled: นัดหมายแล้ว
       waiting_payment: รอชำระเงิน
-    sources:
-      appointment_sync: ซิงก์นัดหมาย
-      referral: ส่งต่อ
-      walk_in: ผู้ป่วย walk-in
     summary:
-      completed: เสร็จสิ้น
       in_progress: กำลังให้บริการ
       ready: พร้อมให้บริการ
       total: จำนวนเข้ารับบริการทั้งหมด
       waiting_payment: รอชำระเงิน
     table:
+      actions_col: การดำเนินการ
       appointment_id: เลขนัด
       dentist: ทันตแพทย์
       empty_description: ลองค้นหาแบบกว้างขึ้นหรือล้างตัวกรองสถานะ
@@ -281,6 +513,9 @@ th:
       patient: ผู้ป่วย
       retry: ลองใหม่
       service: บริการ
+      showing_count:
+        one: แสดง %{count} นัดหมาย
+        other: แสดง %{count} นัดหมาย
       source: แหล่งที่มา
       start_time: เวลาเริ่ม
       status: สถานะ

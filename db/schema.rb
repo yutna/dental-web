@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_170000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_11_000500) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -32,6 +32,70 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_170000) do
     t.index ["actor_id"], name: "index_dental_admin_audit_events_on_actor_id"
     t.index ["created_at"], name: "index_dental_admin_audit_events_on_created_at"
     t.index ["resource_type", "resource_id"], name: "index_dental_admin_audit_events_on_resource"
+  end
+
+  create_table "dental_clinical_chart_records", force: :cascade do |t|
+    t.string "charting_code", null: false
+    t.integer "clinical_post_id", null: false
+    t.datetime "created_at", null: false
+    t.text "note"
+    t.datetime "occurred_at", null: false
+    t.string "patient_hn", null: false
+    t.text "piece_codes_json", default: "[]", null: false
+    t.text "root_codes_json", default: "[]", null: false
+    t.text "surface_codes_json", default: "[]", null: false
+    t.string "tooth_code", null: false
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["clinical_post_id"], name: "index_dental_clinical_chart_records_on_clinical_post_id"
+    t.index ["patient_hn", "tooth_code", "occurred_at"], name: "index_dental_chart_records_on_patient_tooth_time"
+  end
+
+  create_table "dental_clinical_image_records", force: :cascade do |t|
+    t.datetime "captured_at", null: false
+    t.integer "clinical_post_id", null: false
+    t.datetime "created_at", null: false
+    t.string "image_ref", null: false
+    t.string "image_type_code", null: false
+    t.text "note"
+    t.string "patient_hn", null: false
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["clinical_post_id"], name: "index_dental_clinical_image_records_on_clinical_post_id"
+    t.index ["patient_hn", "captured_at"], name: "index_dental_image_records_on_patient_time"
+  end
+
+  create_table "dental_clinical_posts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "form_type", null: false
+    t.string "patient_hn", null: false
+    t.text "payload_json", default: "{}", null: false
+    t.datetime "posted_at", null: false
+    t.string "posted_by_id", null: false
+    t.string "stage"
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.text "void_reason"
+    t.datetime "voided_at"
+    t.index ["form_type"], name: "index_dental_clinical_posts_on_form_type"
+    t.index ["patient_hn"], name: "index_dental_clinical_posts_on_patient_hn"
+    t.index ["visit_id", "posted_at"], name: "index_dental_clinical_posts_on_visit_posted"
+  end
+
+  create_table "dental_clinical_procedure_records", force: :cascade do |t|
+    t.integer "clinical_post_id", null: false
+    t.datetime "created_at", null: false
+    t.text "note"
+    t.datetime "occurred_at", null: false
+    t.string "patient_hn", null: false
+    t.string "procedure_item_code", null: false
+    t.decimal "quantity", precision: 6, scale: 2, default: "1.0", null: false
+    t.text "surface_codes_json", default: "[]", null: false
+    t.string "tooth_code"
+    t.datetime "updated_at", null: false
+    t.string "visit_id", null: false
+    t.index ["clinical_post_id"], name: "index_dental_clinical_procedure_records_on_clinical_post_id"
+    t.index ["patient_hn", "occurred_at"], name: "index_dental_procedure_records_on_patient_time"
   end
 
   create_table "dental_image_type_references", force: :cascade do |t|
@@ -231,6 +295,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_170000) do
     t.index ["visit_id", "created_at"], name: "index_dental_workflow_timeline_on_visit_created"
   end
 
+  add_foreign_key "dental_clinical_chart_records", "dental_clinical_posts", column: "clinical_post_id"
+  add_foreign_key "dental_clinical_image_records", "dental_clinical_posts", column: "clinical_post_id"
+  add_foreign_key "dental_clinical_procedure_records", "dental_clinical_posts", column: "clinical_post_id"
   add_foreign_key "dental_procedure_item_coverages", "dental_procedure_items", column: "procedure_item_id"
   add_foreign_key "dental_procedure_items", "dental_procedure_groups", column: "procedure_group_id"
   add_foreign_key "dental_supply_item_coverages", "dental_supply_items", column: "supply_item_id"

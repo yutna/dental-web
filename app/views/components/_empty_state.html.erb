@@ -1,0 +1,22 @@
+<%# Empty state component
+  Locals: title:, description: (optional), icon: (optional SVG string)
+  Block: optional action buttons %>
+<% description ||= nil %>
+<% icon ||= nil %>
+
+<div class="flex flex-col items-center px-6 py-12 text-center">
+  <% if icon %>
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-app-surface-secondary text-app-text-tertiary">
+      <%= icon.html_safe %>
+    </div>
+  <% end %>
+  <h3 class="text-sm font-semibold text-app-text-primary"><%= title %></h3>
+  <% if description %>
+    <p class="mt-1 max-w-sm text-sm text-app-text-tertiary"><%= description %></p>
+  <% end %>
+  <% if block_given? %>
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+      <%= yield %>
+    </div>
+  <% end %>
+</div>

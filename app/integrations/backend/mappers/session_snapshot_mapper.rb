@@ -2,6 +2,37 @@ module Backend
   module Mappers
     class SessionSnapshotMapper
       class << self
+        # Build snapshot from a raw Bearer JWT (for API v1 endpoints).
+        # Unlike from_remote, this doesn't expect refresh/csrf tokens —
+        # it only decodes the access token to extract the principal.
+        def from_bearer(access_token)
+          return Security::SessionSnapshot.guest if access_token.blank?
+
+          user_session = decode_jwt_payload(access_token)["user_session"].presence || {}
+          email        = user_session["email"]
+
+          return Security::SessionSnapshot.guest if email.blank?
+
+          principal = Security::Principal.new(
+            id:           user_session["id"],
+            username:     user_session["username"],
+            email:        email,
+            display_name: build_display_name(user_session),
+            roles:        Array(user_session["roles"]),
+            permissions:  inject_bff_permissions(user_session)
+          )
+
+          Security::SessionSnapshot.new(
+            access_token:  access_token,
+            refresh_token: nil,
+            csrf_token:    nil,
+            principal:     principal
+          )
+        rescue StandardError => e
+          Rails.logger.warn("[SessionSnapshotMapper] from_bearer failed: #{e.class} - #{e.message}")
+          Security::SessionSnapshot.guest
+        end
+
         def from_remote(payload)
           payload = payload.to_h.deep_stringify_keys
 
@@ -60,9 +91,13 @@ module Backend
         end
 
         def inject_bff_permissions(user_session)
-          permissions = [ "workspace:read" ]
+          permissions = [ "workspace:read", "dental:read", "dental:workflow:read", "dental:workflow:write" ]
           api_roles   = Array(user_session["roles"]).map(&:to_s)
-          permissions << "admin:access" if api_roles.include?("admin")
+
+          if api_roles.include?("admin")
+            permissions << "admin:access"
+          end
+
           permissions
         end
       end

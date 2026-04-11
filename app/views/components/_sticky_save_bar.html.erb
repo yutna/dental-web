@@ -1,0 +1,55 @@
+<%# Sticky save bar — fixed bottom bar with save actions and dirty indicator
+  Locals:
+    form_id:     ID of the form this bar submits (optional, uses closest form if omitted)
+    dirty_text:  Text shown when form has unsaved changes (optional)
+    save_label:  Primary save button label (optional)
+    secondary_actions: Array of { label:, name:, value: } for extra submit buttons (optional)
+  Block: additional action buttons
+%>
+<% form_id ||= nil %>
+<% dirty_text ||= t("components.sticky_save_bar.unsaved_changes") %>
+<% save_label ||= t("components.sticky_save_bar.save") %>
+<% secondary_actions ||= [] %>
+
+<div
+  data-controller="autosave"
+  data-autosave-form-id-value="<%= form_id %>"
+  class="fixed inset-x-0 bottom-0 z-app-sticky border-t border-app-border-primary bg-app-surface-primary shadow-lg transition-transform duration-200"
+  data-autosave-target="bar"
+>
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+    <%# Dirty indicator %>
+    <div class="flex items-center gap-2 text-sm text-app-text-tertiary" data-autosave-target="indicator" hidden>
+      <span class="inline-block h-2 w-2 rounded-full bg-border-semantic-warning-primary"></span>
+      <span><%= dirty_text %></span>
+    </div>
+    <div class="hidden" data-autosave-target="indicator">&nbsp;</div>
+
+    <%# Actions %>
+    <div class="flex items-center gap-2">
+      <% if block_given? %>
+        <%= yield %>
+      <% end %>
+
+      <% secondary_actions.each do |action| %>
+        <button
+          type="submit"
+          <% if form_id %>form="<%= form_id %>"<% end %>
+          name="<%= action[:name] %>"
+          value="<%= action[:value] %>"
+          class="inline-flex items-center rounded-lg border border-app-border-primary bg-app-surface-primary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary"
+        >
+          <%= action[:label] %>
+        </button>
+      <% end %>
+
+      <button
+        type="submit"
+        <% if form_id %>form="<%= form_id %>"<% end %>
+        class="inline-flex items-center rounded-lg bg-app-brand-primary px-4 py-2 text-sm font-semibold text-app-brand-inverse transition hover:bg-app-brand-active"
+      >
+        <%= save_label %>
+      </button>
+    </div>
+  </div>
+</div>

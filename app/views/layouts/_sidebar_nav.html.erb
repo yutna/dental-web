@@ -1,0 +1,59 @@
+<%# Sidebar navigation — collapsible on desktop, drawer on mobile %>
+<aside
+  data-sidebar-target="sidebar"
+  class="fixed inset-y-0 left-0 z-app-drawer flex w-64 -translate-x-full flex-col border-r border-app-border-primary bg-app-surface-primary transition-transform duration-200 ease-in-out lg:static lg:z-auto lg:translate-x-0"
+>
+  <%# Brand header %>
+  <div class="flex h-16 shrink-0 items-center gap-3 border-b border-app-border-primary px-4">
+    <%= link_to root_path, class: "flex items-center gap-3" do %>
+      <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-app-brand-primary">
+        <svg class="h-5 w-5 text-app-brand-inverse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+        </svg>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-sm font-bold text-app-text-primary"><%= t("app.name") %></span>
+        <span class="text-xs text-app-text-tertiary"><%= t("layouts.sidebar.subtitle", default: "Dental Workflow") %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Navigation links %>
+  <nav class="flex-1 space-y-0.5 overflow-y-auto p-3" aria-label="<%= t("layouts.sidebar.nav_label", default: "Main navigation") %>">
+    <% sidebar_nav_items.each do |item| %>
+      <% if item[:section] %>
+        <p class="mb-1 mt-5 px-3 text-[0.6875rem] font-semibold uppercase tracking-wider text-app-text-tertiary first:mt-0">
+          <%= item[:label] %>
+        </p>
+      <% else %>
+        <%= link_to item[:path],
+          class: "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors #{item[:active] ? 'bg-app-surface-secondary text-app-brand-primary' : 'text-app-text-secondary hover:bg-app-surface-secondary hover:text-app-text-primary'}",
+          "aria-current": (item[:active] ? "page" : nil) do %>
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center <%= item[:active] ? 'text-app-brand-primary' : 'text-app-text-tertiary group-hover:text-app-text-secondary' %>">
+            <%= item[:icon].html_safe %>
+          </span>
+          <span><%= item[:label] %></span>
+          <% if item[:badge] %>
+            <span class="ml-auto inline-flex items-center rounded-full bg-app-brand-primary px-2 py-0.5 text-xs font-medium text-app-brand-inverse">
+              <%= item[:badge] %>
+            </span>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </nav>
+
+  <%# Version indicator at bottom %>
+  <div class="shrink-0 border-t border-app-border-primary px-4 py-3">
+    <p class="text-[0.6875rem] text-app-text-tertiary">
+      <%= t("app.name") %> · v1.0
+    </p>
+  </div>
+</aside>
+
+<%# Mobile backdrop %>
+<div
+  data-sidebar-target="backdrop"
+  data-action="click->sidebar#close"
+  class="fixed inset-0 z-app-drawer-backdrop hidden bg-black/50 transition-opacity lg:hidden"
+></div>

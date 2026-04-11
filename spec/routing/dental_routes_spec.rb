@@ -28,6 +28,72 @@ RSpec.describe "Dental routes", type: :routing do
       "dental/visits#sync_appointments",
       locale: "en"
     )
+
+    expect(get: "/en/dental/clinical/visits/VISIT-1/screening").to route_to(
+      "dental/clinical/screening_forms#show",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(patch: "/en/dental/clinical/visits/VISIT-1/screening").to route_to(
+      "dental/clinical/screening_forms#update",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(get: "/en/dental/clinical/visits/VISIT-1/treatment").to route_to(
+      "dental/clinical/treatment_forms#show",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(patch: "/en/dental/clinical/visits/VISIT-1/treatment").to route_to(
+      "dental/clinical/treatment_forms#update",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(get: "/en/dental/clinical/visits/VISIT-1/medication").to route_to(
+      "dental/clinical/medication_forms#show",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(patch: "/en/dental/clinical/visits/VISIT-1/medication").to route_to(
+      "dental/clinical/medication_forms#update",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(get: "/en/dental/clinical/visits/VISIT-1/chart").to route_to(
+      "dental/clinical/chart_forms#show",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(patch: "/en/dental/clinical/visits/VISIT-1/chart").to route_to(
+      "dental/clinical/chart_forms#update",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(get: "/en/dental/clinical/visits/VISIT-1/images").to route_to(
+      "dental/clinical/image_forms#show",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(patch: "/en/dental/clinical/visits/VISIT-1/images").to route_to(
+      "dental/clinical/image_forms#update",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
+
+    expect(get: "/en/dental/clinical/visits/VISIT-1/history").to route_to(
+      "dental/clinical/history_drawers#show",
+      locale: "en",
+      visit_id: "VISIT-1"
+    )
   end
 
   it "routes localized admin dental root" do

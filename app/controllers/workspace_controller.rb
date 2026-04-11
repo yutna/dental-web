@@ -10,6 +10,11 @@ class WorkspaceController < ApplicationController
       status: filter_params[:status],
       source: filter_params[:source]
     )
+
+    respond_to do |format|
+      format.turbo_stream if turbo_frame_request?
+      format.html
+    end
   rescue StandardError
     @result = {
       state: "error",

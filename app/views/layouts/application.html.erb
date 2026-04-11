@@ -43,8 +43,19 @@
   <body class="bg-app-surface-primary text-app-text-primary transition-colors">
     <%= render "layouts/flash_toasts", entries: flash_toast_entries(flash) %>
 
-    <%= render "layouts/public_corner_menu" unless signed_in? %>
-
-    <%= yield %>
+    <% if signed_in? %>
+      <div class="flex h-dvh overflow-hidden" data-controller="sidebar">
+        <%= render "layouts/sidebar_nav" %>
+        <div class="flex flex-1 flex-col overflow-hidden">
+          <%= render "layouts/top_bar" %>
+          <main class="flex-1 overflow-y-auto bg-app-surface-secondary">
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+    <% else %>
+      <%= render "layouts/public_corner_menu" %>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

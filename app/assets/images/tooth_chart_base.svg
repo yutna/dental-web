@@ -1,0 +1,247 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
+  <!-- Dental chart – Universal Numbering System -->
+  <!-- Upper arch (teeth 1-16, right to left) -->
+  <g id="upper-arch">
+    <text x="400" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" opacity="0.5">UPPER</text>
+    <!-- Upper right quadrant (1-8) -->
+    <g id="tooth-1" data-tooth="1" class="tooth" transform="translate(58,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">1</text>
+    </g>
+    <g id="tooth-2" data-tooth="2" class="tooth" transform="translate(100,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">2</text>
+    </g>
+    <g id="tooth-3" data-tooth="3" class="tooth" transform="translate(142,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">3</text>
+    </g>
+    <g id="tooth-4" data-tooth="4" class="tooth" transform="translate(184,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">4</text>
+    </g>
+    <g id="tooth-5" data-tooth="5" class="tooth" transform="translate(226,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">5</text>
+    </g>
+    <g id="tooth-6" data-tooth="6" class="tooth" transform="translate(268,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">6</text>
+    </g>
+    <g id="tooth-7" data-tooth="7" class="tooth" transform="translate(310,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">7</text>
+    </g>
+    <g id="tooth-8" data-tooth="8" class="tooth" transform="translate(352,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">8</text>
+    </g>
+    <!-- Upper left quadrant (9-16) -->
+    <g id="tooth-9" data-tooth="9" class="tooth" transform="translate(404,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">9</text>
+    </g>
+    <g id="tooth-10" data-tooth="10" class="tooth" transform="translate(446,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">10</text>
+    </g>
+    <g id="tooth-11" data-tooth="11" class="tooth" transform="translate(488,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">11</text>
+    </g>
+    <g id="tooth-12" data-tooth="12" class="tooth" transform="translate(530,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">12</text>
+    </g>
+    <g id="tooth-13" data-tooth="13" class="tooth" transform="translate(572,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">13</text>
+    </g>
+    <g id="tooth-14" data-tooth="14" class="tooth" transform="translate(614,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">14</text>
+    </g>
+    <g id="tooth-15" data-tooth="15" class="tooth" transform="translate(656,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">15</text>
+    </g>
+    <g id="tooth-16" data-tooth="16" class="tooth" transform="translate(698,40)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">16</text>
+    </g>
+  </g>
+
+  <!-- Deciduous upper arch (A-J) -->
+  <g id="upper-deciduous">
+    <text x="400" y="140" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.4">PRIMARY</text>
+    <g id="tooth-A" data-tooth="A" class="tooth" transform="translate(142,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">A</text>
+    </g>
+    <g id="tooth-B" data-tooth="B" class="tooth" transform="translate(178,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">B</text>
+    </g>
+    <g id="tooth-C" data-tooth="C" class="tooth" transform="translate(214,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">C</text>
+    </g>
+    <g id="tooth-D" data-tooth="D" class="tooth" transform="translate(250,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">D</text>
+    </g>
+    <g id="tooth-E" data-tooth="E" class="tooth" transform="translate(286,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">E</text>
+    </g>
+    <g id="tooth-F" data-tooth="F" class="tooth" transform="translate(370,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">F</text>
+    </g>
+    <g id="tooth-G" data-tooth="G" class="tooth" transform="translate(406,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">G</text>
+    </g>
+    <g id="tooth-H" data-tooth="H" class="tooth" transform="translate(442,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">H</text>
+    </g>
+    <g id="tooth-I" data-tooth="I" class="tooth" transform="translate(478,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">I</text>
+    </g>
+    <g id="tooth-J" data-tooth="J" class="tooth" transform="translate(514,150)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">J</text>
+    </g>
+  </g>
+
+  <!-- Divider -->
+  <line x1="50" y1="215" x2="750" y2="215" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+  <text x="30" y="220" font-size="10" fill="currentColor" opacity="0.3">R</text>
+  <text x="770" y="220" font-size="10" fill="currentColor" opacity="0.3">L</text>
+
+  <!-- Deciduous lower arch (K-T) -->
+  <g id="lower-deciduous">
+    <g id="tooth-K" data-tooth="K" class="tooth" transform="translate(142,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">K</text>
+    </g>
+    <g id="tooth-L" data-tooth="L" class="tooth" transform="translate(178,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">L</text>
+    </g>
+    <g id="tooth-M" data-tooth="M" class="tooth" transform="translate(214,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">M</text>
+    </g>
+    <g id="tooth-N" data-tooth="N" class="tooth" transform="translate(250,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">N</text>
+    </g>
+    <g id="tooth-O" data-tooth="O" class="tooth" transform="translate(286,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">O</text>
+    </g>
+    <g id="tooth-P" data-tooth="P" class="tooth" transform="translate(370,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">P</text>
+    </g>
+    <g id="tooth-Q" data-tooth="Q" class="tooth" transform="translate(406,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">Q</text>
+    </g>
+    <g id="tooth-R" data-tooth="R" class="tooth" transform="translate(442,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">R</text>
+    </g>
+    <g id="tooth-S" data-tooth="S" class="tooth" transform="translate(478,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">S</text>
+    </g>
+    <g id="tooth-T" data-tooth="T" class="tooth" transform="translate(514,228)">
+      <rect width="30" height="36" rx="6" stroke="currentColor" stroke-width="1.2" fill="transparent" opacity="0.6"/>
+      <text x="15" y="50" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6">T</text>
+    </g>
+  </g>
+
+  <!-- Lower arch (teeth 17-32, left to right) -->
+  <g id="lower-arch">
+    <text x="400" y="316" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" opacity="0.5">LOWER</text>
+    <g id="tooth-32" data-tooth="32" class="tooth" transform="translate(58,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">32</text>
+    </g>
+    <g id="tooth-31" data-tooth="31" class="tooth" transform="translate(100,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">31</text>
+    </g>
+    <g id="tooth-30" data-tooth="30" class="tooth" transform="translate(142,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">30</text>
+    </g>
+    <g id="tooth-29" data-tooth="29" class="tooth" transform="translate(184,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">29</text>
+    </g>
+    <g id="tooth-28" data-tooth="28" class="tooth" transform="translate(226,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">28</text>
+    </g>
+    <g id="tooth-27" data-tooth="27" class="tooth" transform="translate(268,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">27</text>
+    </g>
+    <g id="tooth-26" data-tooth="26" class="tooth" transform="translate(310,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">26</text>
+    </g>
+    <g id="tooth-25" data-tooth="25" class="tooth" transform="translate(352,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">25</text>
+    </g>
+    <g id="tooth-24" data-tooth="24" class="tooth" transform="translate(404,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">24</text>
+    </g>
+    <g id="tooth-23" data-tooth="23" class="tooth" transform="translate(446,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">23</text>
+    </g>
+    <g id="tooth-22" data-tooth="22" class="tooth" transform="translate(488,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">22</text>
+    </g>
+    <g id="tooth-21" data-tooth="21" class="tooth" transform="translate(530,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">21</text>
+    </g>
+    <g id="tooth-20" data-tooth="20" class="tooth" transform="translate(572,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">20</text>
+    </g>
+    <g id="tooth-19" data-tooth="19" class="tooth" transform="translate(614,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">19</text>
+    </g>
+    <g id="tooth-18" data-tooth="18" class="tooth" transform="translate(656,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">18</text>
+    </g>
+    <g id="tooth-17" data-tooth="17" class="tooth" transform="translate(698,325)">
+      <rect width="36" height="44" rx="8" stroke="currentColor" stroke-width="1.5" fill="transparent"/>
+      <text x="18" y="60" text-anchor="middle" font-size="10" fill="currentColor">17</text>
+    </g>
+  </g>
+
+  <!-- Styles applied via CSS class hooks for Stimulus controller -->
+  <style>
+    .tooth { cursor: pointer; }
+    .tooth:hover rect { stroke-width: 2.5; }
+    .tooth.selected rect { fill: color-mix(in srgb, currentColor 12%, transparent); stroke-width: 2.5; }
+    .tooth.condition-treated rect { fill: #22c55e30; stroke: #22c55e; }
+    .tooth.condition-planned rect { fill: #3b82f630; stroke: #3b82f6; }
+    .tooth.condition-problematic rect { fill: #ef444430; stroke: #ef4444; }
+    .tooth.condition-missing rect { fill: #6b728030; stroke: #6b7280; stroke-dasharray: 4 2; }
+  </style>
+</svg>

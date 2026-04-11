@@ -48,6 +48,11 @@ module Dental
       DEFAULT_MESSAGE = "State guard violation".freeze
     end
 
+    class ValidationError < BaseError
+      CODE = Dental::ErrorCode::VALIDATION_ERROR
+      DEFAULT_MESSAGE = "Validation failed".freeze
+    end
+
     class InsufficientStock < BaseError
       CODE = Dental::ErrorCode::INSUFFICIENT_STOCK
       DEFAULT_MESSAGE = "Insufficient stock".freeze

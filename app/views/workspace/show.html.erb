@@ -1,192 +1,75 @@
 <% content_for :title, t("workspace.title") %>
+<% set_breadcrumbs({ label: t("layouts.sidebar.nav.dashboard"), path: root_path }, { label: t("workspace.heading") }) %>
 
-<main
-  class="min-h-dvh bg-app-surface-secondary"
-  data-controller="theme"
-  data-theme-light-label-value="<%= t("workspace.profile.theme.modes.light") %>"
-  data-theme-dark-label-value="<%= t("workspace.profile.theme.modes.dark") %>"
->
-  <div class="mx-auto flex min-h-dvh w-full max-w-480">
-    <aside class="hidden w-72 border-r border-app-border-primary bg-app-surface-primary p-6 lg:flex lg:flex-col">
-      <h1 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.title") %></h1>
-      <p class="mt-1 text-xs text-app-text-tertiary"><%= t("workspace.shell.subtitle") %></p>
+<div class="space-y-6 p-6">
+  <%# Summary cards %>
+  <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <%= render "components/stat_card", label: t("workspace.summary.total"), value: @result[:summary][:total],
+      icon: '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg>' %>
+    <%= render "components/stat_card", label: t("workspace.summary.in_progress"), value: @result[:summary][:in_progress], color: "info",
+      icon: '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>' %>
+    <%= render "components/stat_card", label: t("workspace.summary.ready"), value: @result[:summary][:ready], color: "success",
+      icon: '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>' %>
+    <%= render "components/stat_card", label: t("workspace.summary.waiting_payment"), value: @result[:summary][:waiting_payment], color: "warning",
+      icon: '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/></svg>' %>
+  </section>
 
-      <nav aria-label="<%= t("workspace.shell.navigation_label") %>" class="mt-6 space-y-2">
-        <a href="#overview" class="block rounded-lg bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary"><%= t("workspace.shell.nav.overview") %></a>
-        <a href="#queue" class="block rounded-lg px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary"><%= t("workspace.shell.nav.queue") %></a>
-      </nav>
-    </aside>
-
-    <section class="flex-1">
-      <header class="z-app-sticky sticky top-0 border-b border-app-border-primary bg-app-surface-primary/95 px-6 py-4 backdrop-blur">
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <h2 class="text-xl font-semibold text-app-text-primary"><%= t("workspace.heading") %></h2>
-            <p class="mt-1 text-sm text-app-text-secondary"><%= t("workspace.description") %></p>
-          </div>
-
-          <div
-            class="relative"
-            data-controller="profile-menu"
-            data-action="keydown.esc@window->profile-menu#close"
-            data-profile-menu-theme-saved-message-value="<%= t("workspace.profile.theme.saved") %>"
-          >
-            <button
-              type="button"
-              class="inline-flex items-center gap-2 rounded-xl border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-brand-primary"
-              data-profile-menu-target="button"
-              data-action="profile-menu#toggle"
-              aria-haspopup="menu"
-              aria-expanded="false"
-              aria-controls="workspace-profile-menu"
-            >
-              <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-app-brand-primary text-xs font-semibold text-app-brand-inverse">
-                <%= current_principal.display_name.to_s.first&.upcase || "U" %>
-              </span>
-              <span class="hidden text-left sm:block">
-                <span class="block leading-none"><%= current_principal.display_name %></span>
-                <span class="mt-1 block text-xs font-normal text-app-text-tertiary"><%= t("workspace.profile.open_menu") %></span>
-              </span>
-              <span aria-hidden="true" class="text-app-text-tertiary">▾</span>
-            </button>
-
-            <div
-              id="workspace-profile-menu"
-              class="z-app-floating absolute right-0 mt-2 hidden w-80 rounded-2xl border border-app-border-primary bg-app-surface-primary p-4 shadow-xl"
-              data-profile-menu-target="menu"
-              data-action="click->profile-menu#keepOpen keydown->profile-menu#onMenuKeydown"
-              role="menu"
-            >
-              <div class="rounded-xl border border-app-border-primary bg-app-surface-secondary p-3">
-                <p class="text-sm font-semibold text-app-text-primary"><%= current_principal.display_name %></p>
-                <p class="mt-1 text-xs text-app-text-tertiary"><%= current_principal.email %></p>
-              </div>
-
-              <div class="mt-4 border-t border-app-border-primary pt-3">
-                <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.profile.theme.label") %></p>
-                <fieldset class="mt-2 space-y-2">
-                  <% ["light", "dark", "system"].each do |mode| %>
-                    <label class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-sm text-app-text-secondary transition hover:bg-app-surface-secondary hover:text-app-text-primary">
-                      <input
-                        type="radio"
-                        name="workspace-theme-mode"
-                        value="<%= mode %>"
-                        class="form-radio border-app-border-primary text-app-brand-primary focus:ring-app-brand-primary"
-                        data-action="change->theme#selectMode"
-                        <%= "checked" if mode == "system" %>
-                      >
-                      <span><%= t("workspace.profile.theme.modes.#{mode}") %></span>
-                    </label>
-                  <% end %>
-                </fieldset>
-                <p class="mt-2 text-xs text-app-text-tertiary">
-                  <%= t("workspace.profile.theme.resolved_label") %>
-                  <span data-theme-target="resolvedLabel" class="font-semibold text-app-text-secondary"></span>
-                </p>
-              </div>
-
-              <div class="mt-4 border-t border-app-border-primary pt-3">
-                <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.profile.language.label") %></p>
-                <div class="mt-2 inline-flex items-center rounded-xl border border-app-border-primary bg-app-surface-secondary p-1">
-                  <% [ :en, :th ].each do |locale| %>
-                    <% active = I18n.locale.to_sym == locale %>
-                    <%= link_to t("workspace.profile.language.#{locale == :en ? :english : :thai}"), workspace_path(locale: locale, search: @result[:filters][:search], status: @result[:filters][:status]), class: ["rounded-lg px-3 py-1 text-xs font-semibold transition", (active ? "bg-app-brand-primary text-app-brand-inverse" : "text-app-text-secondary hover:bg-app-surface-primary hover:text-app-text-primary")].join(" "), role: "menuitem" %>
-                  <% end %>
-                </div>
-              </div>
-
-              <div class="mt-4 border-t border-app-border-primary pt-3">
-                <%= button_to t("workspace.shell.sign_out"), session_path, method: :delete, class: "inline-flex w-full items-center justify-center rounded-lg border border-app-border-primary bg-app-surface-secondary px-3 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-primary" %>
-              </div>
-
-              <p class="mt-3 hidden text-xs text-app-text-secondary" data-profile-menu-target="announcement" aria-live="polite"></p>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div class="space-y-6 px-6 py-6">
-        <section id="overview" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.total") %></p>
-            <p class="mt-2 text-2xl font-semibold text-app-text-primary"><%= @result[:summary][:total] %></p>
-          </article>
-          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.in_progress") %></p>
-            <p class="mt-2 text-2xl font-semibold text-text-semantic-info-primary"><%= @result[:summary][:in_progress] %></p>
-          </article>
-          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.ready") %></p>
-            <p class="mt-2 text-2xl font-semibold text-text-semantic-success-primary"><%= @result[:summary][:ready] %></p>
-          </article>
-          <article class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-4">
-            <p class="text-xs font-semibold uppercase tracking-wide text-app-text-tertiary"><%= t("workspace.summary.waiting_payment") %></p>
-            <p class="mt-2 text-2xl font-semibold text-text-semantic-warning-primary"><%= @result[:summary][:waiting_payment] %></p>
-          </article>
-        </section>
-
-        <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
-          <section
-            id="queue"
-            class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm"
-            data-controller="frame-loading queue-polling"
-            data-queue-polling-frame-value="appointments_grid"
-            data-queue-polling-interval-value="30000"
-          >
-            <div class="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <h3 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.queue.heading") %></h3>
-                <p class="text-sm text-app-text-secondary"><%= t("workspace.queue.description") %></p>
-              </div>
-              <%= link_to t("workspace.table.retry"), workspace_path(search: @result.dig(:filters, :search), status: @result.dig(:filters, :status), source: @result.dig(:filters, :source)), class: "inline-flex h-10 items-center justify-center rounded-lg border border-app-border-primary bg-app-surface-primary px-4 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary", data: { turbo_frame: "appointments_grid" } %>
-            </div>
-
-            <%= form_with url: workspace_path, method: :get, class: "mt-4 grid gap-3 md:grid-cols-[1fr_200px_200px_auto]", data: { turbo_frame: "appointments_grid", queue_polling_target: "filtersForm" } do %>
-              <div>
-                <label for="search" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.search_label") %></label>
-                <%= text_field_tag :search, @result[:filters][:search], id: "search", class: "form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary", placeholder: t("workspace.filters.search_placeholder") %>
-              </div>
-
-              <div>
-                <label for="status" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.status_label") %></label>
-                <%= select_tag :status, options_for_select([[t("workspace.filters.all_statuses"), ""]] + @result[:status_options].map { |status| [t("workspace.statuses.#{status}"), status] }, @result[:filters][:status]), id: "status", class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
-              </div>
-
-              <div>
-                <label for="source" class="block text-sm font-medium text-app-text-secondary"><%= t("workspace.filters.source_label") %></label>
-                <%= select_tag :source, options_for_select([[t("workspace.filters.all_sources"), ""]] + @result[:source_options].map { |source| [t("workspace.sources.#{source}"), source] }, @result[:filters][:source]), id: "source", class: "form-select mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
-              </div>
-
-              <div class="flex items-end gap-2">
-                <button type="submit" class="inline-flex h-10 items-center justify-center rounded-lg bg-app-brand-primary px-4 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
-                  <%= t("workspace.filters.apply") %>
-                </button>
-                <%= link_to t("workspace.filters.reset"), workspace_path, class: "inline-flex h-10 items-center justify-center rounded-lg border border-app-border-primary bg-app-surface-primary px-4 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
-              </div>
-            <% end %>
-
-            <div data-frame-loading-target="skeleton" class="mt-4 hidden space-y-2" aria-hidden="true">
-              <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
-              <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
-              <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
-            </div>
-
-            <turbo-frame id="appointments_grid" data-frame-loading-target="frame" class="mt-4 block">
-              <%= render "appointments_grid", result: @result %>
-            </turbo-frame>
-          </section>
-
-          <aside class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
-            <h3 class="text-base font-semibold text-app-text-primary"><%= t("workspace.side_context.heading") %></h3>
-            <p class="mt-2 text-sm text-app-text-secondary"><%= t("workspace.side_context.description") %></p>
-            <div class="mt-4 space-y-2 text-xs text-app-text-tertiary">
-              <p>• <%= t("workspace.side_context.item_one") %></p>
-              <p>• <%= t("workspace.side_context.item_two") %></p>
-              <p>• <%= t("workspace.side_context.item_three") %></p>
-            </div>
-          </aside>
-        </section>
+  <%# Queue section %>
+  <section
+    class="rounded-xl border border-app-border-primary bg-app-surface-primary shadow-sm"
+    data-controller="frame-loading queue-polling"
+    data-queue-polling-frame-value="appointments_grid"
+    data-queue-polling-interval-value="30000"
+    data-action="queue-polling:loading->frame-loading#start queue-polling:loaded->frame-loading#finish"
+  >
+    <div class="flex flex-wrap items-start justify-between gap-3 border-b border-app-border-primary px-5 py-4">
+      <div>
+        <h2 class="text-lg font-semibold text-app-text-primary"><%= t("workspace.queue.heading") %></h2>
+        <p class="text-sm text-app-text-secondary"><%= t("workspace.queue.description") %></p>
       </div>
-    </section>
-  </div>
-</main>
+      <div class="flex gap-2">
+        <%= form_with url: dental_visit_sync_appointments_path, method: :post, data: { turbo: false }, class: "inline-flex" do %>
+          <button type="submit" class="inline-flex h-9 items-center gap-1.5 rounded-lg border border-app-border-primary bg-app-surface-primary px-3 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>
+            <%= t("workspace.queue.sync_appointments") %>
+          </button>
+        <% end %>
+        <%= link_to t("workspace.table.retry"), workspace_path(search: @result.dig(:filters, :search), status: @result.dig(:filters, :status), source: @result.dig(:filters, :source)), class: "inline-flex h-9 items-center rounded-lg border border-app-border-primary bg-app-surface-primary px-3 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary", data: { turbo_frame: "appointments_grid" } %>
+      </div>
+    </div>
+
+    <%# Filters %>
+    <div class="border-b border-app-border-primary bg-app-surface-secondary/50 px-5 py-3">
+      <%= form_with url: workspace_path, method: :get, class: "grid gap-3 md:grid-cols-[1fr_180px_180px_auto]", data: { turbo_frame: "appointments_grid", queue_polling_target: "filtersForm" } do %>
+        <div>
+          <label for="search" class="sr-only"><%= t("workspace.filters.search_label") %></label>
+          <%= text_field_tag :search, @result[:filters][:search], id: "search", class: "form-input block w-full rounded-lg border-app-border-primary bg-app-surface-primary text-sm text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary", placeholder: t("workspace.filters.search_placeholder") %>
+        </div>
+        <div>
+          <%= select_tag :status, options_for_select([[t("workspace.filters.all_statuses"), ""]] + @result[:status_options].map { |status| [t("workspace.statuses.#{status}"), status] }, @result[:filters][:status]), id: "status", class: "form-select block w-full rounded-lg border-app-border-primary bg-app-surface-primary text-sm text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+        </div>
+        <div>
+          <%= select_tag :source, options_for_select([[t("workspace.filters.all_sources"), ""]] + @result[:source_options].map { |source| [t("workspace.sources.#{source}"), source] }, @result[:filters][:source]), id: "source", class: "form-select block w-full rounded-lg border-app-border-primary bg-app-surface-primary text-sm text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="submit" class="inline-flex h-9 items-center rounded-lg bg-app-brand-primary px-4 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
+            <%= t("workspace.filters.apply") %>
+          </button>
+          <%= link_to t("workspace.filters.reset"), workspace_path, class: "inline-flex h-9 items-center rounded-lg border border-app-border-primary bg-app-surface-primary px-3 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-secondary" %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Loading skeleton %>
+    <div data-frame-loading-target="skeleton" class="hidden space-y-2 p-5" aria-hidden="true">
+      <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+      <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+      <div class="h-9 w-full rounded-md bg-app-surface-secondary skeleton-shimmer"></div>
+    </div>
+
+    <%# Data table %>
+    <turbo-frame id="appointments_grid" data-frame-loading-target="frame" class="block">
+      <%= render "appointments_grid", result: @result %>
+    </turbo-frame>
+  </section>
+</div>

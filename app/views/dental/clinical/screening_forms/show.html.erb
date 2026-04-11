@@ -1,0 +1,108 @@
+<turbo-frame id="clinical_form">
+  <div class="rounded-2xl border border-app-border-primary bg-app-surface-primary p-5 shadow-sm">
+    <div class="mb-5">
+      <h2 class="text-lg font-semibold text-app-text-primary"><%= t("dental.clinical.screening.heading") %></h2>
+      <p class="mt-1 text-sm text-app-text-secondary"><%= t("dental.clinical.screening.description") %></p>
+    </div>
+
+    <% vitals = @result[:payload].is_a?(Hash) ? (@result.dig(:payload, "vitals") || @result.dig(:payload, :vitals) || {}) : {} %>
+    <% symptoms = @result[:payload].is_a?(Hash) ? (@result.dig(:payload, "symptoms") || @result.dig(:payload, :symptoms) || []) : [] %>
+    <% allergy_notes = @result[:payload].is_a?(Hash) ? (@result.dig(:payload, "allergy_notes") || @result.dig(:payload, :allergy_notes) || "") : "" %>
+    <% preliminary_findings = @result[:payload].is_a?(Hash) ? (@result.dig(:payload, "preliminary_findings") || @result.dig(:payload, :preliminary_findings) || "") : "" %>
+
+    <%= form_with url: dental_clinical_screening_form_path(visit_id: @visit_id), method: :patch, class: "space-y-6", data: { turbo: false } do |f| %>
+      <% if @queue_entry %>
+        <%= f.hidden_field :patient_hn, value: @queue_entry.mrn %>
+      <% end %>
+
+      <%# Vitals section %>
+      <fieldset class="rounded-xl border border-app-border-primary p-4">
+        <legend class="px-2 text-sm font-semibold text-app-text-primary"><%= t("dental.clinical.screening.vitals.heading") %></legend>
+        <div class="mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div>
+            <label for="vitals_blood_pressure" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.screening.vitals.blood_pressure") %></label>
+            <input type="text" name="vitals[blood_pressure]" id="vitals_blood_pressure" value="<%= vitals["blood_pressure"] || vitals[:blood_pressure] %>"
+              placeholder="120/80" class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+          </div>
+          <div>
+            <label for="vitals_pulse" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.screening.vitals.pulse") %></label>
+            <div class="relative mt-1">
+              <input type="number" name="vitals[pulse]" id="vitals_pulse" value="<%= vitals["pulse"] || vitals[:pulse] %>" aria-describedby="pulse_unit"
+                placeholder="72" class="form-input block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+              <span id="pulse_unit" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-app-text-tertiary">bpm</span>
+            </div>
+          </div>
+          <div>
+            <label for="vitals_temperature" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.screening.vitals.temperature") %></label>
+            <div class="relative mt-1">
+              <input type="number" step="0.1" name="vitals[temperature]" id="vitals_temperature" value="<%= vitals["temperature"] || vitals[:temperature] %>" aria-describedby="temp_unit"
+                placeholder="36.5" class="form-input block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+              <span id="temp_unit" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-app-text-tertiary">°C</span>
+            </div>
+          </div>
+          <div>
+            <label for="vitals_weight" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.screening.vitals.weight") %></label>
+            <div class="relative mt-1">
+              <input type="number" step="0.1" name="vitals[weight]" id="vitals_weight" value="<%= vitals["weight"] || vitals[:weight] %>" aria-describedby="weight_unit"
+                placeholder="60" class="form-input block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+              <span id="weight_unit" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-app-text-tertiary">kg</span>
+            </div>
+          </div>
+          <div>
+            <label for="vitals_height" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.screening.vitals.height") %></label>
+            <div class="relative mt-1">
+              <input type="number" step="0.1" name="vitals[height]" id="vitals_height" value="<%= vitals["height"] || vitals[:height] %>" aria-describedby="height_unit"
+                placeholder="170" class="form-input block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary">
+              <span id="height_unit" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-app-text-tertiary">cm</span>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <%# Allergy notes %>
+      <fieldset class="rounded-xl border border-app-border-primary p-4">
+        <legend class="px-2 text-sm font-semibold text-app-text-primary"><%= t("dental.clinical.screening.allergy.heading") %></legend>
+        <div class="mt-2">
+          <label for="allergy_notes" class="sr-only"><%= t("dental.clinical.screening.allergy.heading") %></label>
+          <textarea name="allergy_notes" id="allergy_notes" rows="2"
+            class="form-textarea block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary"
+            placeholder="<%= t("dental.clinical.screening.allergy.placeholder") %>"><%= allergy_notes %></textarea>
+        </div>
+      </fieldset>
+
+      <%# Chief complaint %>
+      <fieldset class="rounded-xl border border-app-border-primary p-4">
+        <legend class="px-2 text-sm font-semibold text-app-text-primary"><%= t("dental.clinical.screening.symptoms.heading") %></legend>
+        <div class="mt-2">
+          <label for="symptoms_0" class="sr-only"><%= t("dental.clinical.screening.symptoms.chief_complaint") %></label>
+          <textarea name="symptoms[]" id="symptoms_0" rows="3"
+            class="form-textarea block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary"
+            placeholder="<%= t("dental.clinical.screening.symptoms.placeholder") %>"><%= symptoms.first %></textarea>
+        </div>
+      </fieldset>
+
+      <%# Preliminary findings %>
+      <fieldset class="rounded-xl border border-app-border-primary p-4">
+        <legend class="px-2 text-sm font-semibold text-app-text-primary"><%= t("dental.clinical.screening.findings.heading") %></legend>
+        <div class="mt-2">
+          <label for="preliminary_findings" class="sr-only"><%= t("dental.clinical.screening.findings.heading") %></label>
+          <textarea name="preliminary_findings" id="preliminary_findings" rows="3"
+            class="form-textarea block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary"
+            placeholder="<%= t("dental.clinical.screening.findings.placeholder") %>"><%= preliminary_findings %></textarea>
+        </div>
+      </fieldset>
+
+      <%# Sticky save bar %>
+      <div class="z-app-sticky sticky bottom-0 flex items-center justify-end gap-3 border-t border-app-border-primary bg-app-surface-primary px-1 py-4">
+        <%= link_to t("dental.clinical.screening.actions.back"), dental_clinical_workspace_path(visit_id: @visit_id, tab: "screening"),
+          class: "rounded-lg border border-app-border-primary bg-app-surface-secondary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-primary" %>
+        <button type="submit" name="commit" value="save_draft" class="rounded-lg border border-app-border-primary bg-app-surface-secondary px-4 py-2 text-sm font-medium text-app-text-primary transition hover:bg-app-surface-primary">
+          <%= t("dental.clinical.screening.actions.save_draft") %>
+        </button>
+        <button type="submit" name="commit" value="save_and_continue" class="rounded-lg bg-app-brand-primary px-6 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active">
+          <%= t("dental.clinical.screening.actions.save_and_continue") %>
+        </button>
+      </div>
+    <% end %>
+  </div>
+</turbo-frame>
