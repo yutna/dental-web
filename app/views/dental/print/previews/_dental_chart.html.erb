@@ -1,0 +1,72 @@
+<% content_for :print_subtitle do %>
+  <%= [
+    data[:patient_name].presence,
+    data[:patient_hn].presence && "#{t("dental.print.templates.dental_chart.hn_label")}: #{data[:patient_hn]}",
+    data[:visit_date].presence && "#{t("dental.print.templates.dental_chart.visit_date")}: #{data[:visit_date]}"
+  ].compact.join(" • ") %>
+<% end %>
+
+<section class="rounded-md border border-gray-300 bg-white p-8 shadow-sm print:border-none print:shadow-none">
+  <header class="print-header">
+    <h2 class="text-2xl font-bold text-gray-900"><%= t("dental.print.preview.type_heading.dental_chart") %></h2>
+    <p class="mt-2 text-sm text-gray-600">
+      <%= t("dental.print.templates.dental_chart.visit_label") %>: <strong><%= visit_id %></strong>
+      <% if data[:patient_hn].present? %>
+        | <%= t("dental.print.templates.dental_chart.hn_label") %>: <strong><%= data[:patient_hn] %></strong>
+      <% end %>
+      <% if data[:patient_name].present? %>
+        | <strong><%= data[:patient_name] %></strong>
+      <% end %>
+    </p>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium text-gray-600">
+      <% if data[:visit_date].present? %>
+        <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1"><%= t("dental.print.templates.dental_chart.visit_date") %>: <%= data[:visit_date] %></span>
+      <% end %>
+      <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1"><%= t("dental.print.templates.dental_chart.total_teeth") %>: <%= data[:total_teeth] %></span>
+      <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1"><%= t("dental.print.templates.dental_chart.total_entries") %>: <%= data[:total_entries] %></span>
+    </div>
+  </header>
+
+  <div class="space-y-6">
+    <section class="print-avoid-break">
+      <h3 class="mb-2 text-base font-semibold text-gray-900"><%= t("dental.print.templates.dental_chart.chart_entries") %></h3>
+      <table class="print-table">
+        <thead>
+          <tr>
+            <th><%= t("dental.print.templates.dental_chart.table.tooth") %></th>
+            <th><%= t("dental.print.templates.dental_chart.table.charting_code") %></th>
+            <th><%= t("dental.print.templates.dental_chart.table.surface") %></th>
+            <th><%= t("dental.print.templates.dental_chart.table.root") %></th>
+            <th><%= t("dental.print.templates.dental_chart.table.piece") %></th>
+            <th><%= t("dental.print.templates.dental_chart.table.note") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if data[:teeth].present? %>
+            <% data[:teeth].each do |tooth_code, entries| %>
+              <% entries.each_with_index do |entry, index| %>
+                <tr>
+                  <td><%= index.zero? ? tooth_code : "" %></td>
+                  <td><%= entry[:charting_code] %></td>
+                  <td><%= Array(entry[:surface_codes]).join(", ").presence || "-" %></td>
+                  <td><%= Array(entry[:root_codes]).join(", ").presence || "-" %></td>
+                  <td><%= Array(entry[:piece_codes]).join(", ").presence || "-" %></td>
+                  <td><%= entry[:note].presence || "-" %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="6" class="text-center">-</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="rounded-md border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">
+      <p class="font-semibold"><%= t("dental.print.templates.dental_chart.legend_title") %></p>
+      <p><%= t("dental.print.templates.dental_chart.legend_text") %></p>
+    </section>
+  </div>
+</section>

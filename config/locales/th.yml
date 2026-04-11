@@ -405,6 +405,83 @@ th:
       admin_dashboard_title: แดชบอร์ดผู้ดูแลระบบทันตกรรม
       namespace_title: เวิร์กโฟลว์ทันตกรรม
       visit_not_found: ไม่พบข้อมูลการเข้ารับบริการ
+    print:
+      forbidden:
+        audit_ref: 'รหัสอ้างอิงการตรวจสอบ:'
+        back_to_visit: กลับไปหน้าข้อมูลการรักษา
+        heading: สิทธิ์การพิมพ์
+        message: คุณไม่มีสิทธิ์พิมพ์เอกสารประเภท %{type} สำหรับ visit %{visit_id}
+        request_access: ขอสิทธิ์ชั่วคราว
+        required_permission: 'สิทธิ์ที่ต้องมี:'
+        title: ไม่อนุญาตให้พิมพ์
+      not_found:
+        heading: ไม่พบเอกสารสำหรับพิมพ์
+        message: ไม่รองรับประเภทเอกสาร %{type}
+        title: ไม่พบเอกสาร
+      preview:
+        back_to_visit: กลับไปหน้าข้อมูลการรักษา
+        export_pdf: ส่งออก PDF
+        heading: ตัวอย่างเอกสารก่อนพิมพ์
+        print_button: พิมพ์
+        title: "%{type} - Visit %{id}"
+        type_heading:
+          certificate: ใบรับรองทางทันตกรรม
+          dental_chart: แผนผังทันตกรรม
+          treatment_summary: สรุปการรักษา
+        visit_not_found: ไม่พบข้อมูล visit สำหรับการพิมพ์
+        watermark:
+          final: ฉบับจริง
+          internal: ใช้ภายใน
+          provisional: ฉบับชั่วคราว
+      templates:
+        certificate:
+          authorized_dentist: ทันตแพทย์ผู้รับรอง
+          hn_label: HN
+          issued_note: ออกเอกสารฉบับนี้เพื่อใช้ประกอบการยื่นต่อหน่วยงานที่เกี่ยวข้อง
+          official_stamp: ตราประทับหน่วยงาน
+          service: บริการ
+          statement_1: ขอรับรองว่า
+          statement_2: ได้รับการตรวจและรักษาทางทันตกรรมที่คลินิกของเรา
+          visit_date: วันที่เข้ารับบริการ
+          visit_label: เลขที่เข้ารับบริการ
+        dental_chart:
+          chart_entries: รายการบันทึกผังฟัน
+          hn_label: HN
+          legend_text: C = ฟันผุ, F = อุดฟัน, X = ถอนฟัน, RCT = รักษารากฟัน
+          legend_title: คำอธิบายสัญลักษณ์
+          table:
+            charting_code: รหัสผังฟัน
+            note: หมายเหตุ
+            piece: ชิ้นส่วน
+            root: รากฟัน
+            surface: ผิวฟัน
+            tooth: ซี่ฟัน
+          total_entries: จำนวนรายการทั้งหมด
+          total_teeth: จำนวนซี่ฟันที่บันทึก
+          visit_date: วันที่เข้ารับบริการ
+          visit_label: เลขที่เข้ารับบริการ
+        treatment_summary:
+          billing_items: รายการค่าใช้จ่าย
+          billing_table:
+            amount: จำนวนเงิน
+            item: รายการ
+            qty: จำนวน
+            unit_price: ราคาต่อหน่วย
+          dentist_signature: ลายเซ็นทันตแพทย์
+          diagnosis: การวินิจฉัย
+          hn_label: HN
+          medications: ยาที่ได้รับ
+          procedures: หัตถการ
+          service: บริการ
+          stage: สถานะ
+          stamp: ตราประทับ
+          table:
+            code: รหัส
+            qty: จำนวน
+            surface: ผิวฟัน
+            tooth: ซี่ฟัน
+          visit_date: วันที่เข้ารับบริการ
+          visit_label: เลขที่เข้ารับบริการ
     queue_actions:
       check_in: เช็กอิน
       ready_treatment: พร้อมรักษา

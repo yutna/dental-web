@@ -1,0 +1,129 @@
+/* Print stylesheet — loaded on print preview pages */
+
+/* Hide on-screen-only controls when printing */
+@media print {
+  .print-hide {
+    display: none !important;
+  }
+}
+
+/* Screen-only hide class (used for watermark that should only print) */
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block !important;
+  }
+}
+
+/* A4 page sizing for print output */
+@page {
+  size: A4 portrait;
+  margin: 15mm 12mm 15mm 12mm;
+}
+
+/* Printable page area */
+.print-page {
+  width: 100%;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  .print-page {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+}
+
+/* Page break utilities */
+.print-break-before {
+  page-break-before: always;
+  break-before: page;
+}
+
+.print-break-after {
+  page-break-after: always;
+  break-after: page;
+}
+
+.print-avoid-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Print table styling */
+@media print {
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 0.5pt solid #333;
+    padding: 4pt 6pt;
+    text-align: left;
+    font-size: 10pt;
+  }
+
+  .print-table th {
+    background-color: #f3f4f6 !important;
+    font-weight: 600;
+  }
+}
+
+/* Print header block */
+.print-header {
+  border-bottom: 2pt solid #111;
+  padding-bottom: 8pt;
+  margin-bottom: 12pt;
+}
+
+/* Signature line */
+.print-signature-line {
+  border-bottom: 1pt solid #666;
+  display: inline-block;
+  min-width: 200px;
+  margin-top: 24pt;
+}
+
+/* Watermark overlay — positioned and cannot be removed by CSS manipulation */
+.print-watermark {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-32deg);
+  transform-origin: center;
+  font-size: clamp(40pt, 10vw, 58pt);
+  line-height: 1;
+  font-weight: 700;
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  letter-spacing: 3pt;
+  text-align: center;
+  box-sizing: border-box;
+  padding-inline: 10mm;
+  color: #000;
+}
+
+@media print {
+  .print-watermark {
+    opacity: 0.06;
+    color: #000 !important;
+  }
+}

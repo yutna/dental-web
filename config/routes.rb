@@ -21,6 +21,10 @@ Rails.application.routes.draw do
       end
 
       post "visits/check_in", to: "visits#check_in", as: :visit_check_in
+
+      namespace :print do
+        get "documents/:visit_id/:type", to: "documents#show", as: :document
+      end
     end
   end
 
@@ -45,6 +49,10 @@ Rails.application.routes.draw do
       namespace :billing do
         get "waiting", to: "waiting#show", as: :waiting
         post "waiting/sync", to: "waiting#sync", as: :waiting_sync
+      end
+
+      namespace :print do
+        get ":visit_id/:type", to: "previews#show", as: :preview
       end
 
       namespace :clinical do
