@@ -8,6 +8,7 @@ module Dental
         scoped = scoped.where(actor_id: filters[:actor_id]) if filters[:actor_id].present?
         scoped = scoped.where(action: filters[:event_action]) if filters[:event_action].present?
         scoped = scoped.where(resource_type: filters[:resource_type]) if filters[:resource_type].present?
+        scoped = scoped.by_event_type(filters[:event_type])
 
         if filters[:from].present?
           scoped = scoped.where("created_at >= ?", Time.zone.parse(filters[:from]))

@@ -55,19 +55,18 @@ module Backend
         end
         def build_principal(username)
           roles       = username.include?("admin") ? [ "admin" ] : [ "clinician" ]
-          permissions = [ "workspace:read" ]
+          permissions = %w[workspace:read]
+
           if roles.include?("admin")
-            permissions << "admin:access"
-            permissions << "dental:read"
-            permissions << "dental:workflow:read"
-            permissions << "dental:workflow:write"
-            permissions << "dental:billing:read"
-            permissions << "dental:billing:sync"
-            permissions << "dental:requisition:read"
-            permissions << "dental:requisition:write"
-            permissions << "dental:requisition:approve"
-            permissions << "dental:requisition:dispense"
-            permissions << "dental:requisition:receive"
+            permissions.push(
+              "admin:access",
+              "dental:read", "dental:workflow:read", "dental:workflow:write",
+              "dental:clinical:read", "dental:clinical:write",
+              "dental:billing:read", "dental:billing:sync",
+              "dental:requisition:read", "dental:requisition:write",
+              "dental:requisition:approve", "dental:requisition:dispense", "dental:requisition:receive",
+              "dental:print:read"
+            )
           end
 
           Security::Principal.new(

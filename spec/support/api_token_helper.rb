@@ -23,8 +23,8 @@ module ApiTokenHelper
     "#{header}.#{payload}.unsigned"
   end
 
-  def api_auth_headers(username: "admin.test", email: "admin@test.com")
-    token = api_token_for(username: username, email: email)
+  def api_auth_headers(username: "admin.test", email: "admin@test.com", roles: [ "admin" ])
+    token = api_token_for(username: username, email: email, roles: roles)
     { "Authorization" => "Bearer #{token}" }
   end
 

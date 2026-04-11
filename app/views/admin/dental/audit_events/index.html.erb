@@ -11,6 +11,7 @@
     <%= form_with url: admin_dental_audit_events_path, method: :get, local: true, class: "grid gap-3 sm:grid-cols-3" do |f| %>
       <%= f.text_field :actor_id, value: @filters[:actor_id], placeholder: t("admin.dental.audit_events.filters.actor_id"), class: "rounded-lg border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
       <%= f.text_field :event_action, value: @filters[:event_action], placeholder: t("admin.dental.audit_events.filters.action"), class: "rounded-lg border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
+      <%= f.select :event_type, options_for_select(DentalAdminAuditEvent::EVENT_TYPES.map { |t| [t.capitalize, t] }, @filters[:event_type]), { include_blank: t("admin.dental.audit_events.filters.all_types") }, class: "rounded-lg border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
       <%= f.text_field :resource_type, value: @filters[:resource_type], placeholder: t("admin.dental.audit_events.filters.resource_type"), class: "rounded-lg border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
       <%= f.text_field :from, value: @filters[:from], placeholder: t("admin.dental.audit_events.filters.from"), class: "rounded-lg border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
       <%= f.text_field :to, value: @filters[:to], placeholder: t("admin.dental.audit_events.filters.to"), class: "rounded-lg border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary" %>
@@ -27,6 +28,7 @@
         <tr>
           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("admin.dental.audit_events.table.time") %></th>
           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("admin.dental.audit_events.table.actor") %></th>
+          <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("admin.dental.audit_events.table.type") %></th>
           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("admin.dental.audit_events.table.action") %></th>
           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("admin.dental.audit_events.table.resource") %></th>
           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-app-text-secondary"><%= t("admin.dental.audit_events.table.metadata") %></th>
@@ -38,13 +40,14 @@
             <tr class="transition hover:bg-app-surface-secondary">
               <td class="whitespace-nowrap px-4 py-3 text-app-text-secondary"><%= l(event.created_at, format: :long) %></td>
               <td class="px-4 py-3"><%= event.actor_id %></td>
+              <td class="px-4 py-3"><span class="inline-flex rounded-md bg-app-surface-secondary px-2 py-0.5 text-xs font-medium text-app-text-secondary"><%= event.event_type %></span></td>
               <td class="px-4 py-3"><span class="inline-flex rounded-md bg-app-surface-secondary px-2 py-0.5 text-xs font-medium"><%= event.action %></span></td>
               <td class="px-4 py-3 text-app-text-secondary"><%= [event.resource_type, event.resource_id].compact.join("#") %></td>
               <td class="max-w-xs truncate px-4 py-3 font-mono text-xs text-app-text-tertiary"><%= event.metadata_json %></td>
             </tr>
           <% end %>
         <% else %>
-          <tr><td colspan="5" class="px-4 py-10 text-center">
+          <tr><td colspan="6" class="px-4 py-10 text-center">
             <%= render "components/empty_state", title: t("admin.dental.audit_events.table.empty"), description: t("admin.dental.audit_events.description") %>
           </td></tr>
         <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_11_160000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_11_160001) do
   create_table "clinic_services", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "code", null: false
@@ -25,12 +25,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_11_160000) do
     t.string "action", null: false
     t.string "actor_id", null: false
     t.datetime "created_at", null: false
+    t.string "event_type", default: "admin"
     t.text "metadata_json", default: "{}", null: false
     t.integer "resource_id"
     t.string "resource_type", null: false
     t.index ["action"], name: "index_dental_admin_audit_events_on_action"
     t.index ["actor_id"], name: "index_dental_admin_audit_events_on_actor_id"
     t.index ["created_at"], name: "index_dental_admin_audit_events_on_created_at"
+    t.index ["event_type"], name: "index_dental_admin_audit_events_on_event_type"
     t.index ["resource_type", "resource_id"], name: "index_dental_admin_audit_events_on_resource"
   end
 

@@ -1,5 +1,10 @@
 module Security
   class Principal
+    RECOGNIZED_DENTAL_ROLES = %w[
+      dentist dental_assistant hygienist registration cashier
+      pharmacist admin admin_finance clinic_manager
+    ].freeze
+
     attr_reader :id, :username, :email, :display_name, :roles, :permissions
 
     def self.guest
@@ -42,6 +47,10 @@ module Security
 
     def allowed?(permission)
       permissions.include?(permission.to_s)
+    end
+
+    def dental_roles
+      roles.select { |r| RECOGNIZED_DENTAL_ROLES.include?(r) }
     end
 
     def to_h

@@ -1,0 +1,33 @@
+{
+  "success": {
+    "payload": {
+      "visit_id": "VISIT-001",
+      "patient_name": "Somchai Jaidee",
+      "mrn": "HN-0001",
+      "current_stage": "checked-in",
+      "timeline": [
+        {
+          "from_stage": "registered",
+          "to_stage": "checked-in",
+          "actor_id": "user-1",
+          "transitioned_at": "2025-01-15T09:00:00Z"
+        }
+      ]
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  },
+  "failure_not_found": {
+    "payload": {},
+    "error_code": "NOT_FOUND",
+    "error_message": "Visit not found",
+    "details": { "visit_id": "VISIT-MISSING" }
+  },
+  "failure_invalid_transition": {
+    "payload": {},
+    "error_code": "INVALID_STAGE_TRANSITION",
+    "error_message": "Cannot transition from checked-in to completed",
+    "details": { "from_stage": "checked-in", "to_stage": "completed" }
+  }
+}

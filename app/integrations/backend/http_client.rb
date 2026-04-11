@@ -2,6 +2,11 @@ require "json"
 
 module Backend
   class HttpClient
+    MAX_RETRIES    = 2
+    RETRY_INTERVAL = 0.2
+    BACKOFF_FACTOR = 2
+    RETRY_STATUSES = [ 500, 502, 503, 504 ].freeze
+
     def initialize(
       base_url: Rails.configuration.x.backend_api.base_url,
       open_timeout: Rails.configuration.x.backend_api.open_timeout,
@@ -48,7 +53,13 @@ module Backend
 
     def connection
       @connection ||= Faraday.new(url: base_url) do |faraday|
-        faraday.request :retry, max: 2, interval: 0.2, backoff_factor: 2
+        faraday.request :retry,
+          max: MAX_RETRIES,
+          interval: RETRY_INTERVAL,
+          backoff_factor: BACKOFF_FACTOR,
+          methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS + [ :post ],
+          retry_statuses: RETRY_STATUSES,
+          exceptions: [ Faraday::RetriableResponse, Faraday::ConnectionFailed, Faraday::TimeoutError ]
         faraday.options.timeout = read_timeout
         faraday.options.open_timeout = open_timeout
         faraday.adapter Faraday.default_adapter
@@ -61,6 +72,11 @@ module Backend
     end
 
     def parse_response(response)
+      if RETRY_STATUSES.include?(response.status)
+        raise Errors::RetryExhaustedError,
+          "Backend API returned #{response.status} after #{MAX_RETRIES} retries"
+      end
+
       if [ 401, 403 ].include?(response.status)
         raise Errors::AuthenticationError, "Invalid backend credentials (#{response.status})"
       end
