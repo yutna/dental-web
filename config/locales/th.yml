@@ -151,6 +151,22 @@ th:
         one: เลือก %{count} ซี่
         other: เลือก %{count} ซี่
   dental:
+    billing:
+      waiting:
+        auto_refresh: 'รีเฟรชอัตโนมัติ: 30 วินาที'
+        columns:
+          actions: การดำเนินการ
+          amount: จำนวนเงิน
+          invoice_id: เลขใบแจ้งหนี้
+          patient: ผู้ป่วย
+          payment_status: สถานะชำระ
+          visit: เยี่ยม
+        description: ใบแจ้งหนี้ที่รอยืนยันการชำระจากแคชเชียร์
+        empty: ไม่มีใบแจ้งหนี้ที่รอชำระเงิน
+        heading: บอร์ดรอชำระเงิน
+        sync_now: ซิงค์เดี๋ยวนี้
+        sync_requested: ส่งคำขอซิงค์การชำระเงินแล้ว
+        title: รอชำระเงิน
     clinical:
       chart:
         actions:

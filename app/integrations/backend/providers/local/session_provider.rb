@@ -61,6 +61,13 @@ module Backend
             permissions << "dental:read"
             permissions << "dental:workflow:read"
             permissions << "dental:workflow:write"
+            permissions << "dental:billing:read"
+            permissions << "dental:billing:sync"
+            permissions << "dental:requisition:read"
+            permissions << "dental:requisition:write"
+            permissions << "dental:requisition:approve"
+            permissions << "dental:requisition:dispense"
+            permissions << "dental:requisition:receive"
           end
 
           Security::Principal.new(
