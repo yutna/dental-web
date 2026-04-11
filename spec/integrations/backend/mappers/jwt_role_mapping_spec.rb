@@ -22,7 +22,7 @@ RSpec.describe "JWT claims-to-policy context binding" do
             "email" => "#{role}@clinic.com",
             "username" => role,
             "fullname" => role.tr("_", " ").capitalize,
-            "roles" => [role]
+            "roles" => [ role ]
           )
         end
 
@@ -80,7 +80,7 @@ RSpec.describe "JWT claims-to-policy context binding" do
     end
 
     it "returns guest for missing email in JWT" do
-      token = build_jwt("id" => "no-email", "roles" => ["admin"])
+      token = build_jwt("id" => "no-email", "roles" => [ "admin" ])
       snapshot = mapper.from_bearer(token)
       expect(snapshot.principal.guest?).to be true
     end
@@ -89,7 +89,7 @@ RSpec.describe "JWT claims-to-policy context binding" do
       token = build_jwt(
         "id" => "unknown-1",
         "email" => "unknown@clinic.com",
-        "roles" => ["random_role"]
+        "roles" => [ "random_role" ]
       )
       snapshot = mapper.from_bearer(token)
       principal = snapshot.principal
@@ -120,7 +120,7 @@ RSpec.describe "JWT claims-to-policy context binding" do
       token = build_jwt(
         "id" => "upper-1",
         "email" => "upper@clinic.com",
-        "roles" => ["ADMIN"]
+        "roles" => [ "ADMIN" ]
       )
       snapshot = mapper.from_bearer(token)
       expect(snapshot.principal.allowed?("admin:access")).to be true

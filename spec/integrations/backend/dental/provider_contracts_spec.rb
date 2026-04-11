@@ -102,13 +102,13 @@ RSpec.describe "Dental provider contract parity" do
 
       result = if expected_ok
                  result_class.success(payload: fixture["payload"])
-               else
+      else
                  result_class.failure(
                    error_code: fixture["error_code"],
                    error_message: fixture["error_message"],
                    details: fixture["details"]
                  )
-               end
+      end
 
       expect(result.ok?).to eq(expected_ok)
       expect(result.payload).to eq(fixture["payload"].deep_stringify_keys)

@@ -18,7 +18,7 @@ RSpec.describe "Full Pundit policy matrix for 9 dental roles" do
       id: "test-#{role}",
       email: "#{role}@test.com",
       display_name: role.tr("_", " ").capitalize,
-      roles: [role],
+      roles: [ role ],
       permissions: perms
     )
   end
@@ -350,7 +350,7 @@ RSpec.describe "Full Pundit policy matrix for 9 dental roles" do
   describe "SessionSnapshotMapper role→permission mapping" do
     ALL_ROLES.each do |role|
       it "maps #{role} to expected permissions" do
-        user_session = { "roles" => [role], "email" => "#{role}@test.com" }
+        user_session = { "roles" => [ role ], "email" => "#{role}@test.com" }
         permissions = Backend::Mappers::SessionSnapshotMapper.send(:inject_bff_permissions, user_session)
 
         expected = (BASE_PERMISSIONS + (ROLE_PERMISSIONS[role] || [])).uniq
@@ -359,7 +359,7 @@ RSpec.describe "Full Pundit policy matrix for 9 dental roles" do
     end
 
     it "gives only base permissions for unrecognized roles" do
-      user_session = { "roles" => ["unknown_role"], "email" => "u@test.com" }
+      user_session = { "roles" => [ "unknown_role" ], "email" => "u@test.com" }
       permissions = Backend::Mappers::SessionSnapshotMapper.send(:inject_bff_permissions, user_session)
       expect(permissions).to match_array(BASE_PERMISSIONS)
     end
@@ -373,7 +373,7 @@ RSpec.describe "Full Pundit policy matrix for 9 dental roles" do
     end
 
     it "normalizes role names case-insensitively" do
-      user_session = { "roles" => ["ADMIN"], "email" => "upper@test.com" }
+      user_session = { "roles" => [ "ADMIN" ], "email" => "upper@test.com" }
       permissions = Backend::Mappers::SessionSnapshotMapper.send(:inject_bff_permissions, user_session)
       expect(permissions).to include("admin:access")
     end
