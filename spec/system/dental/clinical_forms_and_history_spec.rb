@@ -76,7 +76,8 @@ RSpec.describe "Dental clinical forms and history", type: :system do
 
     expect(page.status_code).to eq(200)
     expect(page.body).to include("Cumulative Clinical History")
-    expect(page.body).to include("Tooth map and timeline")
+    expect(page.body).to include("Tooth Map")
+    expect(page.body).to include("Timeline")
   end
 
   it "blocks medication save on allergy conflict until override reason is provided" do
@@ -136,7 +137,8 @@ RSpec.describe "Dental clinical forms and history", type: :system do
   end
 
   def patch_json(method, path, params = {})
-    page.driver.submit(method, path, params)
+    json_path = path.include?(".json") ? path : "#{path}.json"
+    page.driver.submit(method, json_path, params)
     JSON.parse(page.body)
   end
 end

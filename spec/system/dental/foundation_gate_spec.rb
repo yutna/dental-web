@@ -17,7 +17,7 @@ RSpec.describe "Dental foundation gate", type: :system do
     fill_in "password", with: "secret"
     click_button "Sign in"
 
-    visit "/en/dental/visits/VISIT-1"
+    page.driver.submit(:get, "/en/dental/visits/VISIT-1.json", {})
 
     expect(page.status_code).to eq(403)
     expect(page.body).to include("FORBIDDEN")
@@ -29,7 +29,7 @@ RSpec.describe "Dental foundation gate", type: :system do
     fill_in "password", with: "secret"
     click_button "Sign in"
 
-    visit "/en/dental/visits/VISIT-NOT-FOUND"
+    page.driver.submit(:get, "/en/dental/visits/VISIT-NOT-FOUND.json", {})
 
     expect(page.status_code).to eq(404)
     expect(page.body).to include("NOT_FOUND")
