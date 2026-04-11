@@ -345,6 +345,7 @@ en:
       sync_payment: Sync payment
     visits:
       actions:
+        confirm_transition: Transition to %{stage}?
         description: Available transitions for this visit.
         heading: Stage actions
         transition_to: "%{stage}"
@@ -357,6 +358,9 @@ en:
       heading: Visit %{id}
       sync_success: Synced %{count} appointments to queue
       timeline:
+        count:
+          one: "%{count} event"
+          other: "%{count} events"
         empty: No timeline entries yet.
         heading: Timeline
       title: Visit %{id}
@@ -428,10 +432,9 @@ en:
       search_placeholder: Search by patient, HN, service, or dentist
     heading: Clinical Workspace
     queue:
-      create_check_in: Create Check-in
-      description: Server-side filtering keeps the canonical payload stable regardless
-        of provider mode.
-      heading: Appointment queue (data grid baseline)
+      create_check_in: Walk-in Check-in
+      description: Real-time patient queue with automated status tracking and polling.
+      heading: Appointment Queue
       sync_appointments: Sync Appointments
     sources:
       appointment_sync: Appointment sync

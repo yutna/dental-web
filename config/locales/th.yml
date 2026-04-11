@@ -341,6 +341,7 @@ th:
       sync_payment: ซิงก์ชำระเงิน
     visits:
       actions:
+        confirm_transition: เปลี่ยนสถานะเป็น %{stage} ?
         description: สถานะถัดไปที่สามารถทำได้
         heading: การดำเนินการ
         transition_to: "%{stage}"
@@ -353,6 +354,9 @@ th:
       heading: การเข้ารับบริการ %{id}
       sync_success: ซิงก์นัดหมาย %{count} รายการเข้าคิว
       timeline:
+        count:
+          one: "%{count} เหตุการณ์"
+          other: "%{count} เหตุการณ์"
         empty: ยังไม่มีรายการไทม์ไลน์
         heading: ไทม์ไลน์
       title: การเข้ารับบริการ %{id}
@@ -422,10 +426,9 @@ th:
       search_placeholder: ค้นหาด้วยชื่อผู้ป่วย HN บริการ หรือทันตแพทย์
     heading: พื้นที่ทำงานคลินิก
     queue:
-      create_check_in: สร้างเช็คอิน
-      description: ใช้การกรองฝั่งเซิร์ฟเวอร์เพื่อคง canonical payload ให้เหมือนเดิมทุก
-        provider mode
-      heading: คิวนัดหมาย (พื้นฐาน data grid)
+      create_check_in: เช็กอิน Walk-in
+      description: คิวผู้ป่วยแบบเรียลไทม์ พร้อมติดตามสถานะอัตโนมัติ
+      heading: คิวนัดหมาย
       sync_appointments: ซิงก์นัดหมาย
     sources:
       appointment_sync: ซิงก์นัดหมาย

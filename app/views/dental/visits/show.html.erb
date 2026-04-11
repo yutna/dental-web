@@ -12,23 +12,40 @@
         <div class="flex items-center gap-3">
           <h1 class="text-xl font-bold text-app-text-primary"><%= @visit_id %></h1>
           <%= render "components/status_badge", label: t("dental.enums.visit_stage.#{@snapshot[:current_stage]}"), status: @snapshot[:current_stage] %>
-          <span class="text-xs text-app-text-tertiary">v<%= @snapshot[:lock_version] %></span>
+          <span class="rounded bg-app-surface-secondary px-1.5 py-0.5 text-xs tabular-nums text-app-text-tertiary">v<%= @snapshot[:lock_version] %></span>
         </div>
         <% if @queue_entry %>
-          <p class="mt-2 text-sm text-app-text-secondary">
-            <span class="font-medium text-app-text-primary"><%= @queue_entry.patient_name %></span>
-            · HN: <%= @queue_entry.mrn %> · <%= @queue_entry.service %>
+          <dl class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm">
+            <div class="flex gap-1.5">
+              <dt class="text-app-text-tertiary"><%= t("workspace.table.patient") %>:</dt>
+              <dd class="font-medium text-app-text-primary"><%= @queue_entry.patient_name %></dd>
+            </div>
+            <div class="flex gap-1.5">
+              <dt class="text-app-text-tertiary"><%= t("workspace.table.mrn") %>:</dt>
+              <dd class="tabular-nums text-app-text-secondary"><%= @queue_entry.mrn %></dd>
+            </div>
+            <div class="flex gap-1.5">
+              <dt class="text-app-text-tertiary"><%= t("workspace.table.service") %>:</dt>
+              <dd class="text-app-text-secondary"><%= @queue_entry.service %></dd>
+            </div>
             <% if @queue_entry.dentist.present? %>
-              · Dr. <%= @queue_entry.dentist %>
+              <div class="flex gap-1.5">
+                <dt class="text-app-text-tertiary"><%= t("workspace.table.dentist") %>:</dt>
+                <dd class="text-app-text-secondary">Dr. <%= @queue_entry.dentist %></dd>
+              </div>
             <% end %>
-          </p>
+          </dl>
         <% end %>
       </div>
-      <% if %w[screening ready-for-treatment in-treatment].include?(@snapshot[:current_stage]) %>
-        <%= link_to t("dental.visits.clinical.open_forms"),
-          dental_clinical_screening_form_path(visit_id: @visit_id),
-          class: "inline-flex items-center gap-2 rounded-lg bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
-      <% end %>
+      <div class="flex flex-wrap items-center gap-2">
+        <% if %w[screening ready-for-treatment in-treatment].include?(@snapshot[:current_stage]) %>
+          <%= link_to t("dental.visits.clinical.open_forms"),
+            dental_clinical_screening_form_path(visit_id: @visit_id),
+            class: "inline-flex items-center gap-2 rounded-lg bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse transition hover:bg-app-brand-active" %>
+        <% end %>
+        <%= link_to t("dental.visits.back_to_queue"), workspace_path,
+          class: "inline-flex items-center gap-1.5 rounded-lg border border-app-border-primary bg-app-surface-primary px-3 py-2 text-sm font-medium text-app-text-secondary transition hover:bg-app-surface-secondary" %>
+      </div>
     </div>
   </div>
 
@@ -42,7 +59,7 @@
 
           <div class="mt-4 flex flex-wrap gap-2">
             <% @allowed_transitions.each do |target_stage| %>
-              <%= form_with url: dental_visit_transition_path(id: @visit_id), method: :patch, class: "inline-flex", data: { turbo: false } do |f| %>
+              <%= form_with url: dental_visit_transition_path(id: @visit_id), method: :patch, class: "inline-flex", data: { turbo: false, turbo_confirm: t("dental.visits.actions.confirm_transition", stage: t("dental.enums.visit_stage.#{target_stage}")) } do |f| %>
                 <%= f.hidden_field :from_stage, value: @snapshot[:current_stage] %>
                 <%= f.hidden_field :to_stage, value: target_stage %>
                 <%= f.hidden_field :lock_version, value: @snapshot[:lock_version] %>
@@ -82,20 +99,26 @@
     </section>
 
     <%# Timeline sidebar %>
-    <aside class="rounded-xl border border-app-border-primary bg-app-surface-primary shadow-sm">
+    <aside class="rounded-xl border border-app-border-primary bg-app-surface-primary shadow-sm lg:sticky lg:top-6 lg:self-start">
       <div class="border-b border-app-border-primary px-5 py-4">
         <h3 class="text-base font-semibold text-app-text-primary"><%= t("dental.visits.timeline.heading") %></h3>
+        <p class="mt-0.5 text-xs text-app-text-tertiary"><%= t("dental.visits.timeline.count", count: @timeline.size) %></p>
       </div>
-      <div class="p-5">
+      <div class="max-h-[28rem] overflow-y-auto p-5">
         <% if @timeline.any? %>
           <ol class="relative space-y-4 border-l-2 border-app-border-primary pl-5">
-            <% @timeline.each do |entry| %>
+            <% @timeline.each_with_index do |entry, idx| %>
               <li class="relative">
-                <div class="absolute -left-[1.625rem] top-1 h-3 w-3 rounded-full border-2 border-app-brand-primary bg-app-surface-primary"></div>
+                <div class="absolute -left-[1.625rem] top-1 h-3 w-3 rounded-full border-2 <%= idx.zero? ? 'border-app-brand-primary bg-app-brand-primary' : 'border-app-border-primary bg-app-surface-secondary' %>"></div>
                 <p class="text-sm font-medium text-app-text-primary">
                   <%= t("dental.enums.visit_stage.#{entry.from_stage}") %> → <%= t("dental.enums.visit_stage.#{entry.to_stage}") %>
                 </p>
-                <p class="mt-0.5 text-xs text-app-text-tertiary"><%= l(entry.created_at, format: :short) rescue entry.created_at %></p>
+                <div class="mt-0.5 flex flex-wrap items-center gap-2 text-xs text-app-text-tertiary">
+                  <span><%= l(entry.created_at, format: :short) rescue entry.created_at %></span>
+                  <% if entry.respond_to?(:actor_id) && entry.actor_id.present? %>
+                    <span>· <%= entry.actor_id %></span>
+                  <% end %>
+                </div>
               </li>
             <% end %>
           </ol>

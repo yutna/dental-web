@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import { Turbo } from "@hotwired/turbo-rails"
 
 export default class extends Controller {
   static targets = [ "filtersForm" ]
@@ -49,9 +48,9 @@ export default class extends Controller {
 
     url.searchParams.set("queue_only", "1")
 
-    Turbo.visit(url.toString(), {
-      frame: this.frameValue,
-      action: "replace"
-    })
+    const frame = document.getElementById(this.frameValue)
+    if (frame) {
+      frame.src = url.toString()
+    }
   }
 }
