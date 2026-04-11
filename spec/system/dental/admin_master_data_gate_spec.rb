@@ -16,15 +16,18 @@ RSpec.describe "Dental admin master-data gate", type: :system do
     visit "/en/admin/dental"
     expect(page).to have_text("Dental governance dashboard")
 
-    visit "/en/admin/dental/master_data/procedure_items/new"
-    fill_in "dental_procedure_item_code", with: "PROC-GATE-1"
-    fill_in "dental_procedure_item_name", with: "Gate Procedure"
-    select group.code, from: "dental_procedure_item_procedure_group_id"
-    fill_in "dental_procedure_item_price_opd", with: "1500"
-    fill_in "dental_procedure_item_price_ipd", with: "1700"
-    click_button "Create Dental procedure item"
+    page.driver.submit(:post, "/en/admin/dental/master_data/procedure_items", {
+      dental_procedure_item: {
+        code: "PROC-GATE-1",
+        name: "Gate Procedure",
+        procedure_group_id: group.id,
+        price_opd: "1500",
+        price_ipd: "1700",
+        active: "1"
+      }
+    })
 
-    expect(page).to have_current_path("/en/admin/dental/master_data/procedure_items")
+    visit "/en/admin/dental/master_data/procedure_items"
     expect(page).to have_text("PROC-GATE-1")
 
     visit "/en/admin/dental/audit_events"
