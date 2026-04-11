@@ -158,6 +158,10 @@ th:
           save: บันทึกชาร์ต
         add_entry: เพิ่มรายการชาร์ต
         description: บันทึกผลตรวจชาร์ตทันตกรรมรายซี่
+        detail_panel:
+          existing_records: รายการที่บันทึกไว้
+          heading: รายละเอียดซี่ฟัน
+          no_records: ยังไม่มีรายการสำหรับซี่ฟันนี้
         form:
           charting_code: รหัสชาร์ต
           note: หมายเหตุ
@@ -286,6 +290,8 @@ th:
           save: บันทึกการรักษา
           void: ยกเลิก
         add_procedure: เพิ่มหัตถการ
+        complete_no_charge: เสร็จสิ้น (ไม่มีค่าใช้จ่าย)
+        complete_no_charge_confirm: ต้องการเสร็จสิ้นการเข้ารับบริการนี้โดยไม่มีค่าใช้จ่ายหรือไม่?
         description: สร้างแผนหัตถการพร้อมการแม็ปซี่ฟัน/ผิวฟัน
         form:
           note: หมายเหตุ
@@ -296,8 +302,12 @@ th:
         heading: แผนการรักษา
         notes_heading: หมายเหตุ
         notes_placeholder: หมายเหตุเพิ่มเติมเกี่ยวกับการรักษา...
+        refer_out: ส่งต่อผู้ป่วย
+        refer_out_confirm: ต้องการส่งต่อผู้ป่วยนี้ไปยังผู้ให้บริการอื่นหรือไม่?
         row_count_label: หัตถการ
         saved: บันทึกแบบฟอร์มการรักษาสำเร็จ
+        search_procedure: ค้นหาหัตถการ
+        search_procedure_placeholder: พิมพ์เพื่อค้นหารหัสหรือชื่อหัตถการ...
         send_cashier: ส่งแคชเชียร์
         send_cashier_confirm: ต้องการส่งการเข้ารับบริการนี้เข้าแคชเชียร์เพื่อชำระเงินหรือไม่?
         table:

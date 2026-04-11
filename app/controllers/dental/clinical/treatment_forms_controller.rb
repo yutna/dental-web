@@ -8,6 +8,7 @@ module Dental
         @result = Dental::Clinical::TreatmentFormQuery.call(visit_id: params[:visit_id])
         @queue_entry = DentalQueueEntry.find_by(visit_id: @visit_id)
         @snapshot = Dental::Workflow::VisitSnapshotQuery.call(visit_id: @visit_id)
+        @procedure_items = DentalProcedureItem.active.order(:code).select(:id, :code, :name, :price_opd)
 
         respond_to do |format|
           format.html

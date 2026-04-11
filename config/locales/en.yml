@@ -160,6 +160,10 @@ en:
           save: Save chart
         add_entry: Add chart entry
         description: Record dental charting findings per tooth.
+        detail_panel:
+          existing_records: Existing records
+          heading: Tooth detail
+          no_records: No records for this tooth yet.
         form:
           charting_code: Charting code
           note: Note
@@ -290,6 +294,8 @@ en:
           save: Save treatment
           void: Void
         add_procedure: Add procedure
+        complete_no_charge: Complete (no charge)
+        complete_no_charge_confirm: Complete this visit without charge?
         description: Build procedure plan with tooth/surface mapping.
         form:
           note: Note
@@ -300,8 +306,12 @@ en:
         heading: Treatment Plan
         notes_heading: Notes
         notes_placeholder: Additional treatment notes...
+        refer_out: Refer out
+        refer_out_confirm: Refer this patient to another provider?
         row_count_label: procedures
         saved: Treatment form saved successfully.
+        search_procedure: Search procedure item
+        search_procedure_placeholder: Type to search procedure code or name...
         send_cashier: Send to cashier
         send_cashier_confirm: Send this visit to cashier for payment?
         table:
