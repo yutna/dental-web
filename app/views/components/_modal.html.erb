@@ -3,7 +3,7 @@
 <% size ||= "md" %>
 <% size_class = { "sm" => "max-w-sm", "md" => "max-w-lg", "lg" => "max-w-2xl", "xl" => "max-w-4xl" }.fetch(size, "max-w-lg") %>
 
-<div data-controller="modal" data-action="keydown.esc@window->modal#closeOnEsc">
+<div<%= " id=\"#{id}\"".html_safe if local_assigns[:id] %> data-controller="modal" data-action="keydown.esc@window->modal#closeOnEsc">
   <%# Backdrop %>
   <div data-modal-target="backdrop" class="fixed inset-0 z-app-modal-backdrop hidden bg-black/50 transition-opacity"></div>
 

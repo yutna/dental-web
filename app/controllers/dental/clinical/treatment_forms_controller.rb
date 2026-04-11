@@ -37,12 +37,19 @@ module Dental
       private
 
       def treatment_params
-        params.permit(:patient_hn, procedures: [ :procedure_item_code, :tooth_code, :quantity, :note, { surface_codes: [] } ])
+        params.permit(:patient_hn, :notes, procedures: [ :procedure_item_code, :tooth_code, :surface_codes, :quantity, :note, :price, :coverage, { surface_codes: [] } ])
       end
 
       def treatment_payload
         {
-          "procedures" => Array(treatment_params[:procedures]).map { |line| line.respond_to?(:to_h) ? line.to_h : line }
+          "procedures" => Array(treatment_params[:procedures]).map { |line|
+            h = line.respond_to?(:to_h) ? line.to_h : line
+            h = h.deep_stringify_keys
+            sc = h["surface_codes"]
+            h["surface_codes"] = sc.is_a?(Array) ? sc.map(&:to_s).reject(&:blank?) : sc.to_s.split(",").map(&:strip).reject(&:blank?)
+            h
+          },
+          "notes" => treatment_params[:notes].to_s
         }
       end
     end

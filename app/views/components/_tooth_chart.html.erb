@@ -30,26 +30,26 @@
       <%= t("components.tooth_chart.legend.selected") %>
     </div>
     <div class="flex items-center gap-1.5">
-      <span class="inline-block h-3 w-3 rounded border-2 border-green-500 bg-green-500/20"></span>
+      <span class="inline-block h-3 w-3 rounded border-2 border-border-semantic-success-secondary bg-bg-semantic-success-default"></span>
       <%= t("components.tooth_chart.legend.treated") %>
     </div>
     <div class="flex items-center gap-1.5">
-      <span class="inline-block h-3 w-3 rounded border-2 border-blue-500 bg-blue-500/20"></span>
+      <span class="inline-block h-3 w-3 rounded border-2 border-border-semantic-info-secondary bg-bg-semantic-info-default"></span>
       <%= t("components.tooth_chart.legend.planned") %>
     </div>
     <div class="flex items-center gap-1.5">
-      <span class="inline-block h-3 w-3 rounded border-2 border-red-500 bg-red-500/20"></span>
+      <span class="inline-block h-3 w-3 rounded border-2 border-border-semantic-error-secondary bg-bg-semantic-error-default"></span>
       <%= t("components.tooth_chart.legend.problematic") %>
     </div>
     <div class="flex items-center gap-1.5">
-      <span class="inline-block h-3 w-3 rounded border-2 border-gray-500 border-dashed bg-gray-500/20"></span>
+      <span class="inline-block h-3 w-3 rounded border-2 border-app-border-secondary border-dashed bg-app-surface-tertiary"></span>
       <%= t("components.tooth_chart.legend.missing") %>
     </div>
   </div>
 
   <%# Chart SVG — inline for Stimulus interaction %>
   <div class="overflow-x-auto rounded-xl border border-app-border-primary bg-app-surface-primary p-4 text-app-text-primary" data-tooth-chart-target="chart">
-    <%= render file: Rails.root.join("app/assets/images/tooth_chart_base.svg") %>
+    <%= Rails.root.join("app/assets/images/tooth_chart_base.svg").read.html_safe %>
   </div>
 
   <%# Selection summary %>

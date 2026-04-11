@@ -173,11 +173,17 @@ en:
           surface: Surface
           tooth: Tooth
       history:
+        chart_count: Chart entries
         drawer_summary: Tooth map and timeline
+        no_entries: No clinical history recorded yet.
         patient: Patient
+        procedure_count: Procedures
         timeline: Timeline
         title: Cumulative Clinical History
+        tooth_code: Tooth
+        tooth_label: Tooth
         tooth_map: Tooth Map
+        tooth_summary: Tooth summary
         unknown: Unknown
       images:
         actions:
@@ -186,6 +192,8 @@ en:
         add_image: Add image record
         description: Record image references for this visit.
         form:
+          file: Upload image
+          file_hint: 'Accepted formats: PNG, JPEG, WebP. Max 10MB.'
           note: Note
           reference: Reference
           type: Image type
@@ -206,6 +214,13 @@ en:
         add_medication: Add medication
         allergy_alert:
           heading: Known allergies
+        allergy_modal:
+          blocked_text: This order is blocked unless an authorized override is provided.
+          override_reason_label: Override reason
+          override_reason_placeholder: Provide clinical justification for override...
+          remove: Remove medication
+          request_override: Request override
+          title: Allergy conflict detected
         allergy_warning:
           description: This medication may conflict with known patient allergies.
             Override requires a documented reason.
@@ -222,6 +237,15 @@ en:
           description: This medication is classified as high-alert. Please double-check
             indication and dose before confirming.
           heading: High-alert medication
+        high_alert_modal:
+          cancel: Cancel
+          category_label: Category
+          category_value: High-alert
+          confirm: Confirm and continue
+          item_label: Item
+          patient_label: Patient
+          title: High-alert medication
+          warning_text: Confirm this order after double-checking indication and dose.
         saved: Medication form saved successfully.
         table:
           medication_code: Medication
@@ -231,7 +255,15 @@ en:
         actions:
           back: Back
           save: Save screening
+          save_and_continue: Save and continue
+          save_draft: Save draft
+        allergy:
+          heading: Allergy notes
+          placeholder: Record known allergies (medications, latex, etc.)...
         description: Record vital signs, chief complaint, and preliminary findings.
+        findings:
+          heading: Preliminary findings
+          placeholder: Record preliminary clinical findings...
         heading: Screening Form
         saved: Screening form saved successfully.
         symptoms:
@@ -241,6 +273,7 @@ en:
         vitals:
           blood_pressure: Blood pressure
           heading: Vital signs
+          height: Height
           pulse: Pulse
           temperature: Temperature
           weight: Weight
@@ -255,6 +288,7 @@ en:
         actions:
           back: Back
           save: Save treatment
+          void: Void
         add_procedure: Add procedure
         description: Build procedure plan with tooth/surface mapping.
         form:
@@ -264,19 +298,30 @@ en:
           surface: Surface
           tooth: Tooth
         heading: Treatment Plan
+        notes_heading: Notes
+        notes_placeholder: Additional treatment notes...
+        row_count_label: procedures
         saved: Treatment form saved successfully.
         send_cashier: Send to cashier
         send_cashier_confirm: Send this visit to cashier for payment?
         table:
+          actions: Actions
+          coverage: Coverage
           note: Note
+          price: Price
           procedure: Procedure
           qty: Qty
           surface: Surface
           tooth: Tooth
       workspace:
         back_to_visit: Back to visit
+        dentist_label: Dentist
+        lock_version_label: Version
+        service_label: Service
+        stage_label: Stage
         tabs_label: Clinical form tabs
         title: Clinical — %{id}
+        visit_id_label: Visit ID
     enums:
       payment_status:
         not-required: No payment required

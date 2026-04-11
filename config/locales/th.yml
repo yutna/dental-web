@@ -171,11 +171,17 @@ th:
           surface: ผิวฟัน
           tooth: ซี่ฟัน
       history:
+        chart_count: รายการชาร์ต
         drawer_summary: แผนผังฟันและไทม์ไลน์
+        no_entries: ยังไม่มีประวัติคลินิกที่บันทึกไว้
         patient: ผู้ป่วย
+        procedure_count: หัตถการ
         timeline: ไทม์ไลน์
         title: ประวัติคลินิกสะสม
+        tooth_code: ซี่ฟัน
+        tooth_label: ซี่ฟัน
         tooth_map: แผนผังฟัน
+        tooth_summary: สรุปซี่ฟัน
         unknown: ไม่ทราบ
       images:
         actions:
@@ -184,6 +190,8 @@ th:
         add_image: เพิ่มบันทึกภาพ
         description: บันทึกข้อมูลอ้างอิงภาพสำหรับการเข้ารับบริการนี้
         form:
+          file: อัปโหลดภาพ
+          file_hint: 'รูปแบบที่รับ: PNG, JPEG, WebP ขนาดไม่เกิน 10MB'
           note: หมายเหตุ
           reference: อ้างอิง
           type: ประเภทภาพ
@@ -204,6 +212,13 @@ th:
         add_medication: เพิ่มยา
         allergy_alert:
           heading: ประวัติแพ้ยา
+        allergy_modal:
+          blocked_text: คำสั่งนี้ถูกบล็อก เว้นแต่จะมีการ override โดยผู้มีอำนาจ
+          override_reason_label: เหตุผลการ override
+          override_reason_placeholder: ระบุเหตุผลทางคลินิกสำหรับการ override...
+          remove: ลบยาออก
+          request_override: ขอ override
+          title: ตรวจพบข้อขัดแย้งกับประวัติแพ้ยา
         allergy_warning:
           description: ยาชนิดนี้อาจขัดแย้งกับประวัติแพ้ยาของผู้ป่วย การ override ต้องมีเหตุผลประกอบ
           heading: ตรวจพบข้อขัดแย้งกับประวัติแพ้ยา
@@ -218,6 +233,15 @@ th:
           confirm_label: ข้าพเจ้ายืนยันคำสั่งนี้หลังตรวจสอบแล้ว
           description: ยาชนิดนี้จัดอยู่ในกลุ่ม High-Alert กรุณาตรวจสอบข้อบ่งใช้และขนาดยาก่อนยืนยัน
           heading: ยา High-Alert
+        high_alert_modal:
+          cancel: ยกเลิก
+          category_label: ประเภท
+          category_value: High-Alert
+          confirm: ยืนยันและดำเนินการต่อ
+          item_label: รายการ
+          patient_label: ผู้ป่วย
+          title: ยา High-Alert
+          warning_text: ยืนยันคำสั่งนี้หลังตรวจสอบข้อบ่งใช้และขนาดยาแล้ว
         saved: บันทึกแบบฟอร์มยาสำเร็จ
         table:
           medication_code: ยา
@@ -227,7 +251,15 @@ th:
         actions:
           back: กลับ
           save: บันทึกคัดกรอง
+          save_and_continue: บันทึกและดำเนินการต่อ
+          save_draft: บันทึกร่าง
+        allergy:
+          heading: หมายเหตุการแพ้
+          placeholder: บันทึกข้อมูลการแพ้ที่ทราบ (ยา, ลาเท็กซ์ ฯลฯ)...
         description: บันทึกสัญญาณชีพ อาการหลัก และผลการตรวจเบื้องต้น
+        findings:
+          heading: ผลการตรวจเบื้องต้น
+          placeholder: บันทึกผลการตรวจทางคลินิกเบื้องต้น...
         heading: แบบฟอร์มคัดกรอง
         saved: บันทึกแบบฟอร์มคัดกรองสำเร็จ
         symptoms:
@@ -237,6 +269,7 @@ th:
         vitals:
           blood_pressure: ความดันโลหิต
           heading: สัญญาณชีพ
+          height: ส่วนสูง
           pulse: ชีพจร
           temperature: อุณหภูมิ
           weight: น้ำหนัก
@@ -251,6 +284,7 @@ th:
         actions:
           back: กลับ
           save: บันทึกการรักษา
+          void: ยกเลิก
         add_procedure: เพิ่มหัตถการ
         description: สร้างแผนหัตถการพร้อมการแม็ปซี่ฟัน/ผิวฟัน
         form:
@@ -260,19 +294,30 @@ th:
           surface: ผิวฟัน
           tooth: ซี่ฟัน
         heading: แผนการรักษา
+        notes_heading: หมายเหตุ
+        notes_placeholder: หมายเหตุเพิ่มเติมเกี่ยวกับการรักษา...
+        row_count_label: หัตถการ
         saved: บันทึกแบบฟอร์มการรักษาสำเร็จ
         send_cashier: ส่งแคชเชียร์
         send_cashier_confirm: ต้องการส่งการเข้ารับบริการนี้เข้าแคชเชียร์เพื่อชำระเงินหรือไม่?
         table:
+          actions: จัดการ
+          coverage: สิทธิ์
           note: หมายเหตุ
+          price: ราคา
           procedure: หัตถการ
           qty: จำนวน
           surface: ผิวฟัน
           tooth: ซี่ฟัน
       workspace:
         back_to_visit: กลับหน้าการเข้ารับบริการ
+        dentist_label: ทันตแพทย์
+        lock_version_label: เวอร์ชัน
+        service_label: บริการ
+        stage_label: สถานะ
         tabs_label: แท็บแบบฟอร์มคลินิก
         title: คลินิก — %{id}
+        visit_id_label: รหัสการเข้ารับบริการ
     enums:
       payment_status:
         not-required: ไม่ต้องชำระเงิน

@@ -1,0 +1,27 @@
+<%# Allergy conflict warning modal (state-12) %>
+<%= render layout: "components/modal", locals: { id: "allergy-warning-modal", title: t("dental.clinical.medication.allergy_modal.title"), size: "md" } do %>
+  <div class="space-y-4">
+    <div class="rounded-lg border border-border-semantic-error-primary bg-bg-semantic-error-default p-3 text-sm">
+      <p class="font-semibold text-text-semantic-error-primary" data-medication-form-target="allergyDetail">—</p>
+      <p class="mt-1 text-text-semantic-error-primary"><%= t("dental.clinical.medication.allergy_modal.blocked_text") %></p>
+    </div>
+
+    <div>
+      <label for="override_reason" class="block text-sm font-medium text-app-text-secondary"><%= t("dental.clinical.medication.allergy_modal.override_reason_label") %></label>
+      <input type="text" id="override_reason" data-medication-form-target="overrideReasonInput"
+        class="form-input mt-1 block w-full border-app-border-primary bg-app-surface-primary text-app-text-primary placeholder:text-app-text-tertiary focus:border-app-brand-primary focus:ring-app-brand-primary"
+        placeholder="<%= t("dental.clinical.medication.allergy_modal.override_reason_placeholder") %>">
+    </div>
+
+    <div class="flex items-center justify-end gap-3 border-t border-app-border-primary pt-4">
+      <button type="button" data-action="medication-form#removeMedication modal#close"
+        class="rounded-lg border border-border-semantic-error-primary bg-app-surface-secondary px-4 py-2 text-sm font-medium text-text-semantic-error-primary transition hover:bg-bg-semantic-error-default">
+        <%= t("dental.clinical.medication.allergy_modal.remove") %>
+      </button>
+      <button type="button" data-action="medication-form#requestOverride"
+        class="rounded-lg bg-bg-semantic-error-default px-6 py-2 text-sm font-semibold text-text-semantic-error-primary transition hover:opacity-90">
+        <%= t("dental.clinical.medication.allergy_modal.request_override") %>
+      </button>
+    </div>
+  </div>
+<% end %>

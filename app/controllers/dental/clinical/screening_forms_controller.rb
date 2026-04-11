@@ -28,7 +28,11 @@ module Dental
         respond_to do |format|
           format.html do
             flash[:notice] = t("dental.clinical.screening.saved")
-            redirect_to dental_clinical_screening_form_path(visit_id: params[:visit_id])
+            if params[:commit] == "save_and_continue"
+              redirect_to dental_clinical_workspace_path(visit_id: params[:visit_id], tab: "treatment")
+            else
+              redirect_to dental_clinical_screening_form_path(visit_id: params[:visit_id])
+            end
           end
           format.json { render json: result, status: :ok }
         end
@@ -37,13 +41,16 @@ module Dental
       private
 
       def screening_params
-        params.permit(:patient_hn, vitals: [ :blood_pressure, :pulse, :weight, :temperature ], symptoms: [])
+        params.permit(:patient_hn, :allergy_notes, :preliminary_findings, :commit,
+          vitals: [ :blood_pressure, :pulse, :weight, :temperature, :height ], symptoms: [])
       end
 
       def screening_payload
         {
           "vitals" => screening_params.fetch(:vitals, {}).to_h,
-          "symptoms" => Array(screening_params[:symptoms])
+          "symptoms" => Array(screening_params[:symptoms]),
+          "allergy_notes" => screening_params[:allergy_notes].to_s,
+          "preliminary_findings" => screening_params[:preliminary_findings].to_s
         }
       end
     end
