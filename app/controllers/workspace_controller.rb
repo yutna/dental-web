@@ -12,8 +12,8 @@ class WorkspaceController < ApplicationController
     )
 
     respond_to do |format|
+      format.turbo_stream if turbo_frame_request?
       format.html
-      format.turbo_stream
     end
   rescue StandardError
     @result = {

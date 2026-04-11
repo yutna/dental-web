@@ -50,6 +50,8 @@ export default class extends Controller {
 
     const frame = document.getElementById(this.frameValue)
     if (frame) {
+      this.dispatch("loading")
+      frame.addEventListener("turbo:frame-load", () => this.dispatch("loaded"), { once: true })
       frame.src = url.toString()
     }
   }
