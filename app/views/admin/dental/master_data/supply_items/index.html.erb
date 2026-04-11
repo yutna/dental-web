@@ -1,0 +1,38 @@
+<% content_for :title, t("admin.dental.supply_items.title") %>
+
+<div class="mx-auto w-full max-w-6xl space-y-5 px-6 py-10">
+  <div class="flex items-center justify-between gap-4">
+    <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("admin.dental.supply_items.heading") %></h1>
+    <%= link_to t("admin.dental.supply_items.new"), new_admin_dental_master_data_supply_item_path, class: "inline-flex items-center rounded-lg bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse" %>
+  </div>
+
+  <table class="min-w-full divide-y divide-app-border-primary text-sm">
+    <thead class="bg-app-surface-secondary">
+      <tr>
+        <th class="px-4 py-3 text-left"><%= t("admin.dental.supply_items.table.code") %></th>
+        <th class="px-4 py-3 text-left"><%= t("admin.dental.supply_items.table.name") %></th>
+        <th class="px-4 py-3 text-left"><%= t("admin.dental.supply_items.table.category") %></th>
+        <th class="px-4 py-3 text-left"><%= t("admin.dental.supply_items.table.unit") %></th>
+        <th class="px-4 py-3 text-right"><%= t("admin.dental.supply_items.table.unit_price") %></th>
+        <th class="px-4 py-3 text-left"><%= t("admin.dental.supply_items.table.status") %></th>
+        <th class="px-4 py-3 text-right"><%= t("admin.dental.supply_items.table.actions") %></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-app-border-primary bg-app-surface-primary">
+      <% @supply_items.each do |item| %>
+        <tr>
+          <td class="px-4 py-3 font-medium"><%= item.code %></td>
+          <td class="px-4 py-3"><%= item.name %></td>
+          <td class="px-4 py-3"><%= item.supply_category&.code %></td>
+          <td class="px-4 py-3"><%= item.unit %></td>
+          <td class="px-4 py-3 text-right"><%= number_to_currency(item.unit_price, unit: "฿") %></td>
+          <td class="px-4 py-3"><%= item.active? ? t("admin.clinic_services.status.active") : t("admin.clinic_services.status.inactive") %></td>
+          <td class="px-4 py-3 text-right">
+            <%= link_to t("admin.clinic_services.table.edit"), edit_admin_dental_master_data_supply_item_path(item), class: "rounded-md border border-app-border-primary px-3 py-1.5 text-xs" %>
+            <%= button_to t("admin.clinic_services.table.delete"), admin_dental_master_data_supply_item_path(item), method: :delete, form: { class: "inline" }, class: "rounded-md border border-border-semantic-error-primary px-3 py-1.5 text-xs" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

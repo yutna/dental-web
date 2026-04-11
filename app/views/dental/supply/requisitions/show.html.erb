@@ -1,0 +1,26 @@
+<% content_for :title, @requisition.requisition_id %>
+
+<div class="p-6 space-y-4">
+  <h1 class="text-2xl font-bold text-app-text-primary"><%= @requisition.requisition_id %></h1>
+  <p class="text-sm text-app-text-secondary"><%= t("dental.supply.requisitions.show.status") %>: <%= @requisition.status %></p>
+  <p class="text-sm text-app-text-secondary"><%= t("dental.supply.requisitions.show.requester") %>: <%= @requisition.requester_id %></p>
+
+  <table class="min-w-full divide-y divide-app-border-primary text-sm">
+    <thead class="bg-app-surface-secondary">
+      <tr>
+        <th class="px-4 py-3 text-left"><%= t("dental.supply.requisitions.show.table.item") %></th>
+        <th class="px-4 py-3 text-left"><%= t("dental.supply.requisitions.show.table.qty") %></th>
+        <th class="px-4 py-3 text-left"><%= t("dental.supply.requisitions.show.table.unit") %></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-app-border-primary bg-app-surface-primary">
+      <% @requisition.line_items.each do |item| %>
+        <tr>
+          <td class="px-4 py-3"><%= item.item_name %> (<%= item.item_code %>)</td>
+          <td class="px-4 py-3"><%= item.quantity %></td>
+          <td class="px-4 py-3"><%= item.unit %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -17,13 +17,26 @@ Rails.application.routes.draw do
         member do
           patch :transition
         end
-        resources :clinical_posts, only: %i[index create], module: :visits
+        resources :clinical_posts, only: %i[index create], controller: :clinical_posts
       end
 
       post "visits/check_in", to: "visits#check_in", as: :visit_check_in
 
       namespace :print do
         get "documents/:visit_id/:type", to: "documents#show", as: :document
+      end
+
+      namespace :admin do
+        resources :procedure_items, only: :index
+        resources :medication_profiles, only: :index
+        resources :supply_items, only: :index
+      end
+
+      resources :requisitions, only: %i[index show]
+      resources :invoices, only: %i[index show]
+
+      namespace :billing do
+        post :sync, to: "sync#create"
       end
     end
   end
@@ -49,6 +62,11 @@ Rails.application.routes.draw do
       namespace :billing do
         get "waiting", to: "waiting#show", as: :waiting
         post "waiting/sync", to: "waiting#sync", as: :waiting_sync
+        get "waiting_payments", to: "waiting_payments#index", as: :waiting_payments
+      end
+
+      namespace :supply do
+        resources :requisitions, only: %i[index show]
       end
 
       namespace :print do
@@ -90,6 +108,12 @@ Rails.application.routes.draw do
               post :bulk_import_apply
             end
           end
+
+          resources :medication_profiles, except: :show
+          resources :supply_categories, except: :show
+          resources :supply_items, except: :show
+          resources :references, except: :show
+          resources :coverages, except: :show
         end
       end
     end

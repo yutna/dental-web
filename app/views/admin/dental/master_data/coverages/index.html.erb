@@ -1,0 +1,36 @@
+<% content_for :title, t("admin.dental.coverages.title") %>
+
+<div class="mx-auto w-full max-w-6xl space-y-5 px-6 py-10">
+  <div class="flex items-center justify-between gap-4">
+    <h1 class="text-2xl font-semibold text-app-text-primary"><%= t("admin.dental.coverages.heading") %></h1>
+    <%= link_to t("admin.dental.coverages.new"), new_admin_dental_master_data_coverage_path, class: "inline-flex items-center rounded-lg bg-app-brand-primary px-4 py-2 text-sm font-medium text-app-brand-inverse" %>
+  </div>
+
+  <table class="min-w-full divide-y divide-app-border-primary text-sm">
+    <thead class="bg-app-surface-secondary">
+      <tr>
+        <th class="px-4 py-3 text-left"><%= t("admin.dental.coverages.table.item") %></th>
+        <th class="px-4 py-3 text-left"><%= t("admin.dental.coverages.table.eligibility") %></th>
+        <th class="px-4 py-3 text-right"><%= t("admin.dental.coverages.table.price_opd") %></th>
+        <th class="px-4 py-3 text-right"><%= t("admin.dental.coverages.table.price_ipd") %></th>
+        <th class="px-4 py-3 text-right"><%= t("admin.dental.coverages.table.copay") %></th>
+        <th class="px-4 py-3 text-right"><%= t("admin.dental.coverages.table.actions") %></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-app-border-primary bg-app-surface-primary">
+      <% @coverages.each do |coverage| %>
+        <tr>
+          <td class="px-4 py-3 font-medium"><%= coverage.procedure_item&.code %></td>
+          <td class="px-4 py-3"><%= coverage.eligibility_code %></td>
+          <td class="px-4 py-3 text-right"><%= number_to_currency(coverage.price_opd, unit: "฿") %></td>
+          <td class="px-4 py-3 text-right"><%= number_to_currency(coverage.price_ipd, unit: "฿") %></td>
+          <td class="px-4 py-3 text-right"><%= coverage.copay_amount.presence || coverage.copay_percent.presence || "-" %></td>
+          <td class="px-4 py-3 text-right">
+            <%= link_to t("admin.clinic_services.table.edit"), edit_admin_dental_master_data_coverage_path(coverage), class: "rounded-md border border-app-border-primary px-3 py-1.5 text-xs" %>
+            <%= button_to t("admin.clinic_services.table.delete"), admin_dental_master_data_coverage_path(coverage), method: :delete, form: { class: "inline" }, class: "rounded-md border border-border-semantic-error-primary px-3 py-1.5 text-xs" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -33,7 +33,25 @@ RSpec.describe "API v1 Clinical Posts", type: :request do
         DentalClinicalPost.create!(
           visit_id: visit_id, patient_hn: "HN3333",
           form_type: "treatment",
-          payload_json: { procedures: [] }.to_json,
+          payload_json: {
+            procedures: [ { procedure_item_code: "PROC-100", quantity: 1 } ],
+            diagnoses: [ "PULPITIS" ],
+            extra_field: "ignored"
+          }.to_json,
+          posted_by_id: "test-user-1",
+          posted_at: Time.current
+        )
+
+        DentalClinicalPost.create!(
+          visit_id: visit_id, patient_hn: "HN3333",
+          form_type: "medication",
+          payload_json: {
+            medications: [ { medication_code: "AMOX-500", quantity: 1 } ],
+            confirm_high_alert: true,
+            allergies: [ { medication_code: "NSAID", reaction: "rash" } ],
+            allergy_override_reason: "benefit outweighs risk",
+            extra_field: "ignored"
+          }.to_json,
           posted_by_id: "test-user-1",
           posted_at: Time.current
         )
@@ -43,7 +61,7 @@ RSpec.describe "API v1 Clinical Posts", type: :request do
         get "/api/v1/visits/#{visit_id}/clinical_posts", headers: headers
 
         body = response.parsed_body
-        expect(body["data"].length).to eq(2)
+        expect(body["data"].length).to eq(3)
       end
 
       it "filters by form_type" do
@@ -63,6 +81,32 @@ RSpec.describe "API v1 Clinical Posts", type: :request do
           "visit_id", "patient_hn", "form_type", "payload",
           "posted_by_id", "posted_at", "created_at"
         )
+      end
+
+      it "serializes treatment payload via treatment form serializer" do
+        get "/api/v1/visits/#{visit_id}/clinical_posts", headers: headers,
+          params: { form_type: "treatment" }
+
+        payload = response.parsed_body.dig("data", 0, "payload")
+        expect(payload).to include(
+          "procedures" => [ include("procedure_item_code" => "PROC-100", "quantity" => 1) ],
+          "diagnoses" => [ "PULPITIS" ]
+        )
+        expect(payload).not_to have_key("extra_field")
+      end
+
+      it "serializes medication payload via medication form serializer" do
+        get "/api/v1/visits/#{visit_id}/clinical_posts", headers: headers,
+          params: { form_type: "medication" }
+
+        payload = response.parsed_body.dig("data", 0, "payload")
+        expect(payload).to include(
+          "medications" => [ include("medication_code" => "AMOX-500", "quantity" => 1) ],
+          "confirm_high_alert" => true,
+          "allergies" => [ include("medication_code" => "NSAID", "reaction" => "rash") ],
+          "allergy_override_reason" => "benefit outweighs risk"
+        )
+        expect(payload).not_to have_key("extra_field")
       end
     end
   end

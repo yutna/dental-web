@@ -1,0 +1,23 @@
+<% content_for :title, t("dental.supply.requisitions.title") %>
+
+<div class="p-6">
+  <h1 class="text-2xl font-bold text-app-text-primary"><%= t("dental.supply.requisitions.heading") %></h1>
+  <table class="mt-4 min-w-full divide-y divide-app-border-primary text-sm">
+    <thead class="bg-app-surface-secondary">
+      <tr>
+        <th class="px-4 py-3 text-left"><%= t("dental.supply.requisitions.table.requisition") %></th>
+        <th class="px-4 py-3 text-left"><%= t("dental.supply.requisitions.table.requester") %></th>
+        <th class="px-4 py-3 text-left"><%= t("dental.supply.requisitions.table.status") %></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-app-border-primary bg-app-surface-primary">
+      <% @requisitions.each do |requisition| %>
+        <tr>
+          <td class="px-4 py-3"><%= link_to requisition.requisition_id, dental_supply_requisition_path(requisition) %></td>
+          <td class="px-4 py-3"><%= requisition.requester_id %></td>
+          <td class="px-4 py-3"><%= requisition.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
