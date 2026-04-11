@@ -1,0 +1,53 @@
+{
+  "success_procedures": {
+    "payload": {
+      "items": [
+        {
+          "code": "PROC-001",
+          "name_en": "Composite Filling",
+          "name_th": "อุดฟันคอมโพสิต",
+          "unit_cost": "500.00",
+          "category": "restorative"
+        }
+      ],
+      "total_count": 1
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  },
+  "success_medications": {
+    "payload": {
+      "items": [
+        {
+          "code": "MED-001",
+          "name_en": "Amoxicillin 500mg",
+          "name_th": "อะม็อกซีซิลลิน 500 มก.",
+          "unit_cost": "15.00",
+          "category": "antibiotic"
+        }
+      ],
+      "total_count": 1
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  },
+  "success_supplies": {
+    "payload": {
+      "items": [
+        {
+          "code": "SUP-001",
+          "name_en": "Disposable Gloves (pair)",
+          "name_th": "ถุงมือยาง (คู่)",
+          "unit_cost": "5.00",
+          "category": "consumable"
+        }
+      ],
+      "total_count": 1
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  }
+}

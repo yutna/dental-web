@@ -1,0 +1,40 @@
+{
+  "success_screening": {
+    "payload": {
+      "visit_id": "VISIT-001",
+      "form_type": "screening",
+      "chief_complaint": "Toothache upper right",
+      "blood_pressure": "120/80",
+      "pulse_rate": 72,
+      "saved_at": "2025-01-15T09:15:00Z"
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  },
+  "success_treatment": {
+    "payload": {
+      "visit_id": "VISIT-001",
+      "form_type": "treatment",
+      "procedures": [
+        {
+          "procedure_item_code": "PROC-001",
+          "tooth_code": "16",
+          "surface_codes": ["M", "O"],
+          "quantity": 1
+        }
+      ],
+      "medications": [],
+      "saved_at": "2025-01-15T09:30:00Z"
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  },
+  "failure_validation": {
+    "payload": {},
+    "error_code": "VALIDATION_ERROR",
+    "error_message": "Invalid screening attributes",
+    "details": { "errors": ["chief_complaint is required"] }
+  }
+}

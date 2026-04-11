@@ -1,0 +1,30 @@
+{
+  "success_deduct_usage": {
+    "payload": {
+      "reference_id": "USAGE-001",
+      "visit_id": "VISIT-001",
+      "items_deducted": 3,
+      "deducted_at": "2025-01-15T10:00:00Z"
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  },
+  "success_create_requisition": {
+    "payload": {
+      "requisition_id": "REQ-001",
+      "status": "pending",
+      "line_items_count": 2,
+      "created_at": "2025-01-15T10:05:00Z"
+    },
+    "error_code": null,
+    "error_message": null,
+    "details": {}
+  },
+  "failure_insufficient_stock": {
+    "payload": {},
+    "error_code": "INSUFFICIENT_STOCK",
+    "error_message": "Not enough stock for deduction",
+    "details": { "item_code": "SUP-001", "requested": 10, "available": 3 }
+  }
+}
